@@ -1,5 +1,6 @@
 package com.dtech.smartpulsa;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,11 +34,13 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class TempActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     LayoutInflater layoutInflater ;
     View headerNav;
     TextView navemail, navusername, tbalance;
+    Button btnIsiPulsa;
+    Dialog dialogPulsa;
     PrefManager prefManager;
     public String textUser, txtEmail;
     private static final String PREF_NAME = "app-welcome";
@@ -75,8 +78,10 @@ public class TempActivity extends AppCompatActivity
 
         /*Embeks*/
 
+        btnIsiPulsa = (Button) findViewById(R.id.btnIsiPulsa);
+        btnIsiPulsa.setOnClickListener(this);
         layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-        /*headerNav = layoutInflater.inflate(R.layout.nav_header_temp,null, true);*/
+        /*headerNav = layoutInflater.inflate(R.dialog_pulsa.nav_header_temp,null, true);*/
         headerNav = navigationView.getHeaderView(0);
         SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         navusername = (TextView) headerNav.findViewById(R.id.navusername);
@@ -202,5 +207,22 @@ public class TempActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnIsiPulsa:
+                isiPulsa();
+                break;
+
+        }
+    }
+
+    private void isiPulsa() {
+        dialogPulsa = new Dialog(this);
+        dialogPulsa.setContentView(R.layout.dialog_pulsa);
+        dialogPulsa.setTitle("Choose One");
+        dialogPulsa.show();
     }
 }
