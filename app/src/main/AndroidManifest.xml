@@ -44,6 +44,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dtech.smartpulsa.AddSaldoActivity" />
         </activity>
+        <activity
+            android:name=".feature.PulsaActivity"
+            android:label="@string/title_activity_pulsa"
+            android:parentActivityName=".TempActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dtech.smartpulsa.TempActivity" />
+        </activity>
     </application>
 
 </manifest>

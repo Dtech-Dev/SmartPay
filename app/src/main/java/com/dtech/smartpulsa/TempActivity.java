@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
+import com.dtech.smartpulsa.feature.PulsaActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
 
 import org.json.JSONArray;
@@ -220,9 +221,32 @@ public class TempActivity extends AppCompatActivity
     }
 
     private void isiPulsa() {
+        final Intent intentPulsa = new Intent(getApplicationContext(), PulsaActivity.class);
+
         dialogPulsa = new Dialog(this);
         dialogPulsa.setContentView(R.layout.dialog_pulsa);
         dialogPulsa.setTitle("Choose One");
+
+        Button selfNumber = (Button) dialogPulsa.findViewById(R.id.selfNumber);
+        selfNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intentSelf = new Intent(TempActivity.this, PulsaActivity.class);
+                intentPulsa.putExtra("self", "selfNumber");
+                startActivity(intentPulsa);
+                dialogPulsa.dismiss();
+            }
+        });
+
+        Button otherNumber = (Button) dialogPulsa.findViewById(R.id.otherNumber);
+        otherNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intentPulsa.putExtra("self", "otherNumber");
+                startActivity(intentPulsa);
+                dialogPulsa.dismiss();
+            }
+        });
         dialogPulsa.show();
     }
 }
