@@ -66,6 +66,11 @@
         android:id="@+id/provider"
         android:layout_below="@+id/selfOrOther">
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bTransac"
+            android:text="Proses"/>
     </RelativeLayout>
 
 </RelativeLayout>

@@ -5,7 +5,7 @@ package com.dtech.smartpulsa.Configuration;
  */
 
 public class Config {
-    public static final String URL_KODE="http://samimi.web.id/dev/add-kode.php";
+    public static final String URL_KODE="http://samimi.web.id/dev/add-code.php";
     public static final String URL_SELECT_CUSTOMER="http://samimi.web.id/dev/select-customer.php";
     public static final String URL_SELECT_ALL="http://samimi.web.id/dev/select-all.php?email=";
     public static final String URL_ADD_SALDO="http://samimi.web.id/dev/tambah-saldo.php";

@@ -7,18 +7,24 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dtech.smartpulsa.R;
 
-public class PulsaActivity extends AppCompatActivity {
+public class PulsaActivity extends AppCompatActivity implements View.OnClickListener {
 
     Intent intent=getIntent();
     Bundle extras;
-    String selfIntent;
+    String selfIntent, stringOtherNumber;
 
-    TextView tuserNumber;
+    TextView tuserNumber, totherNumber, tuserProvider;
+    EditText edOtherNumber;
+    Button bTransac;
+
+    Transaksi transaksi;
     //otherIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +73,15 @@ public class PulsaActivity extends AppCompatActivity {
     }
 
     private void initUI() {
+
         tuserNumber = (TextView) findViewById(R.id.tuserNumber);
+        tuserProvider = (TextView) findViewById(R.id.tuserProvider);
+        totherNumber = (TextView) findViewById(R.id.txtOtherNumber);
+        edOtherNumber = (EditText) findViewById(R.id.editOtherNumber);
+        bTransac = (Button) findViewById(R.id.bTransac);
+        bTransac.setOnClickListener(this);
+
+
     }
 
     @Override
@@ -75,5 +89,23 @@ public class PulsaActivity extends AppCompatActivity {
         /*super.onBackPressed();
         this.closeContextMenu();*/
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bTransac:
+                prosesTransaksi();
+                break;
+
+        }
+    }
+
+    private void prosesTransaksi() {
+        String kodeTr = edOtherNumber.getText().toString();
+
+        transaksi = new Transaksi(this);
+        transaksi.setKode(kodeTr);
+        transaksi.execute();
     }
 }
