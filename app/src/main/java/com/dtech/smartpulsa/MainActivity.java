@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        predictNumber = new PredictNumber();
+        predictNumber = new PredictNumber(this);
         predictNumber.readNumber("081126");
 
         String kartu = predictNumber.getTypeNumber();

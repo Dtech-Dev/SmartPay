@@ -1,5 +1,14 @@
 package com.dtech.smartpulsa;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.dtech.smartpulsa.feature.PulsaActivity;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,6 +18,7 @@ import java.util.List;
 
 public class PredictNumber {
 
+    Context context;
     public String typeNumber;
     public String kodeTransaksi;
     public String typeSimpati;
@@ -22,18 +32,49 @@ public class PredictNumber {
             "082229", "082230", "082231", "082232", "082233", "082234", "082264", "082330",
             "082331", "082332", "082333", "082334", "082335", "082336", "082337", "082338");
 
+
+    public PredictNumber(Context context) {
+        this.context = context;
+    }
+
     public void readNumber(String typeNumber) {
         String subed = typeNumber.substring(0, 4);
-        switch (subed) {
-            case "0895":
-            case "0896":
+        if (subed.equals("0855") || subed.equals("0856") || subed.equals("0857") || subed.equals("0858") ||
+                subed.equals("0814") || subed.equals("0815") || subed.equals("0816")) {
+            setTypeNumber("Indosat");
+            setKodeTransaksi("i");
+        } else if (subed.equals("0811") || subed.equals("0812") || subed.equals("0813") || subed.equals("0821")
+                || subed.equals("0822") || subed.equals("0823") || subed.equals("0852") || subed.equals("0853")
+                || subed.equals("0851")) {
+            readSimpati(typeNumber);
+        } else {
+            /*final Dialog dialog = new Dialog(context);
+            dialog.setContentView(R.layout.dialog_provider);
+            dialog.setTitle("Oopss");
+            TextView txtError = (TextView) dialog.findViewById(R.id.textProviderNull);
+            txtError.setText("Nomor Tidak Dikenali");
+
+            Button btnError = (Button) dialog.findViewById(R.id.btnProviderNull);
+            btnError.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+            */
+            //Toast.makeText(context, "")
+        }
+        /**/
+        /*switch (subed) {
+            case "0895": case "0896":
                 setTypeNumber("xl");
                 setKodeTransaksi("xr");
                 break;
             case "0811":
                 readSimpati(typeNumber);
                 break;
-        }
+        }*/
     }
 
 

@@ -1,5 +1,6 @@
 package com.dtech.smartpulsa.feature;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,7 +35,7 @@ import java.util.List;
 
 public class PulsaActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
-    PredictNumber predictNumber = new PredictNumber();
+    PredictNumber predictNumber = new PredictNumber(this);
     Bundle extras;
     String selfIntent, stringOtherNumber;
     String kodeProvider, provider;
@@ -102,7 +103,7 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
         bTransac = (Button) findViewById(R.id.bTransac);
         bTransac.setOnClickListener(this);
         spinnerKode = (Spinner) findViewById(R.id.spinnerKode);
-
+        spinnerKode.setPrompt("Nominal");
         edOtherNumber.addTextChangedListener(this);
 
 
@@ -187,13 +188,32 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
                     for (int i=0; i<result.length(); i++) {
                         JSONObject jo = result.getJSONObject(i);
                         String nominal = jo.getString(Config.TAG_NOMINAL);
-                        list.add(nominal);
+                        list.add(nominal+".000");
                         /*HashMap<String, String> nominalList = new HashMap<>();
                         nominalList.put(Config.TAG_NOMINAL, nominal);
                         list.add(nominalList);*/
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    //Toast.makeText(PulsaActivity.this, "Nomor tidak dikenali", Toast.LENGTH_SHORT).show();
+
+                    final Dialog dialog = new Dialog(PulsaActivity.this);
+                    dialog.setContentView(R.layout.dialog_provider);
+                    dialog.setCancelable(false);
+                    dialog.setTitle("Oopss");
+                    TextView txtError = (TextView) dialog.findViewById(R.id.textProviderNull);
+                    txtError.setText("Nomor Tidak Dikenali");
+
+                    Button btnError = (Button) dialog.findViewById(R.id.btnProviderNull);
+                    btnError.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            edOtherNumber.setText("");
+                        }
+                    });
+
+                    dialog.show();
                 }
                 //ListAdapter adapter = new SimpleAdapter(PulsaActivity.this, list, android.R.layout.simple_spinner_item, null, null);
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(PulsaActivity.this, android.R.layout.simple_spinner_item, list);
