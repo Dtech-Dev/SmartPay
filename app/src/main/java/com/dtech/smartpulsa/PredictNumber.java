@@ -10,6 +10,7 @@ import java.util.List;
 public class PredictNumber {
 
     public String typeNumber;
+    public String kodeTransaksi;
     public String typeSimpati;
     List<String> jatim = Arrays.asList("081130", "081131", "081132", "081133",
             "081134", "081137", "081135", "081136", "081216", "081217", "081230", "081231",
@@ -27,6 +28,7 @@ public class PredictNumber {
             case "0895":
             case "0896":
                 setTypeNumber("xl");
+                setKodeTransaksi("xr");
                 break;
             case "0811":
                 readSimpati(typeNumber);
@@ -37,9 +39,11 @@ public class PredictNumber {
 
     public void readSimpati(String typeSimpati) {
         if (!jatim.contains(typeSimpati)) {
-            setTypeNumber("se");
+            setTypeNumber("Telkomsel");
+            setKodeTransaksi("se");
         } else {
-            setTypeNumber("s");
+            setTypeNumber("Telkomsel");
+            setKodeTransaksi("s");
         }
     }
 
@@ -59,8 +63,11 @@ public class PredictNumber {
         this.typeNumber = typeNumber;
     }
 
+    public String getKodeTransaksi() {
+        return kodeTransaksi;
+    }
 
-
-
-
+    public void setKodeTransaksi(String kodeTransaksi) {
+        this.kodeTransaksi = kodeTransaksi;
+    }
 }

@@ -38,10 +38,7 @@ public class Transaksi extends AsyncTask<Void, Void, String> {
         HashMap<String, String> paramsTransaksi = new HashMap<>();
         paramsTransaksi.put(Config.KEY_TKODE_NAME, "aris");
         paramsTransaksi.put(Config.KEY_TKODE_KODE, kode);
-        /*paramsAddSaldo.put(Config.TAG_NOREK_USER, noRekUser);
-        paramsAddSaldo.put(Config.TAG_NAMAREK_USER, namaRekUser);
-        paramsAddSaldo.put(Config.TAG_REK_TUJ, rekTujuan);
-        paramsAddSaldo.put(Config.TAG_JML_TRF, jmlTrf);*/
+
 
         RequestHandler reqHandler = new RequestHandler();
         String res = reqHandler.sendPostRequest(Config.URL_KODE, paramsTransaksi);

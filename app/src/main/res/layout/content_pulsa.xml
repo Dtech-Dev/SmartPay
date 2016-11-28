@@ -44,19 +44,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/otherLayout"
-            android:visibility="gone">
+            >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtOtherNumber"
                 android:text="Provider : "
                 android:layout_centerHorizontal="true"/>
+
             <EditText
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/editOtherNumber"
                 android:layout_below="@+id/txtOtherNumber"
                 android:layout_centerHorizontal="true"/>
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerKode"
+                android:layout_centerHorizontal="true"
+                android:prompt="@string/spinner_title"
+                android:layout_below="@+id/editOtherNumber"
+                style="@android:style/Widget.Spinner"
+                android:spinnerMode="dropdown" />
+
         </RelativeLayout>
     </RelativeLayout>
 
@@ -66,11 +78,16 @@
         android:id="@+id/provider"
         android:layout_below="@+id/selfOrOther">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/bTransac"
-            android:text="Proses"/>
     </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bTransac"
+        android:text="Proses"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="127dp" />
 
 </RelativeLayout>

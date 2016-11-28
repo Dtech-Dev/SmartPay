@@ -4,7 +4,7 @@
     <string name="signed_in_fmt">Signed In As:</string>
     <string name="next"><![CDATA[Next>]]></string>
     <string name="title_activity_temp">TempActivity</string>
-
+    <string name="spinner_title">Nominal</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_add_saldo">AddSaldoActivity</string>

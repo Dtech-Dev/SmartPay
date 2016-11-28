@@ -1,28 +1,49 @@
 package com.dtech.smartpulsa.feature;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dtech.smartpulsa.Configuration.Config;
+import com.dtech.smartpulsa.Configuration.RequestHandler;
+import com.dtech.smartpulsa.PredictNumber;
 import com.dtech.smartpulsa.R;
 
-public class PulsaActivity extends AppCompatActivity implements View.OnClickListener {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-    Intent intent=getIntent();
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class PulsaActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
+
+    PredictNumber predictNumber = new PredictNumber();
     Bundle extras;
     String selfIntent, stringOtherNumber;
+    String kodeProvider, provider;
+
 
     TextView tuserNumber, totherNumber, tuserProvider;
     EditText edOtherNumber;
     Button bTransac;
+    Spinner spinnerKode;
 
     Transaksi transaksi;
     //otherIntent;
@@ -80,6 +101,9 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
         edOtherNumber = (EditText) findViewById(R.id.editOtherNumber);
         bTransac = (Button) findViewById(R.id.bTransac);
         bTransac.setOnClickListener(this);
+        spinnerKode = (Spinner) findViewById(R.id.spinnerKode);
+
+        edOtherNumber.addTextChangedListener(this);
 
 
     }
@@ -107,5 +131,79 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
         transaksi = new Transaksi(this);
         transaksi.setKode(kodeTr);
         transaksi.execute();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (s.length() == 6) {
+            predictNumber.readNumber(s.toString());
+            provider = predictNumber.getTypeNumber();
+            kodeProvider = predictNumber.getKodeTransaksi();
+            totherNumber.setText("Provider : "+provider+" ("+kodeProvider+")");
+            queryKodeProvider(kodeProvider);
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
+
+    private void queryKodeProvider(final String providerCode) {
+
+        class QueryKodeAsync extends AsyncTask<Void, Void, String> {
+            @Override
+            protected String doInBackground(Void... params) {
+                HashMap<String, String> paramsProvider = new HashMap<>();
+                paramsProvider.put(Config.TAG_PROVIDER, providerCode);
+
+
+
+                RequestHandler reqHandler = new RequestHandler();
+                String s = reqHandler.sendPostRequest(Config.URL_QUERY_KODE, paramsProvider);
+
+                return s;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                JSONObject jsonObject = null;
+                //ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+                List<String> list = new ArrayList<String>();
+                try {
+                    jsonObject = new JSONObject(s);
+                    JSONArray result = jsonObject.getJSONArray("result");
+                    for (int i=0; i<result.length(); i++) {
+                        JSONObject jo = result.getJSONObject(i);
+                        String nominal = jo.getString(Config.TAG_NOMINAL);
+                        list.add(nominal);
+                        /*HashMap<String, String> nominalList = new HashMap<>();
+                        nominalList.put(Config.TAG_NOMINAL, nominal);
+                        list.add(nominalList);*/
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                //ListAdapter adapter = new SimpleAdapter(PulsaActivity.this, list, android.R.layout.simple_spinner_item, null, null);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(PulsaActivity.this, android.R.layout.simple_spinner_item, list);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerKode.setAdapter(adapter);
+            }
+        }
+
+        QueryKodeAsync queryKode = new QueryKodeAsync();
+        queryKode.execute();
+
     }
 }

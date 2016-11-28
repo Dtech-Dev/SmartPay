@@ -113,7 +113,7 @@ public class TempActivity extends AppCompatActivity
                 super.onPostExecute(s);
                 loading.dismiss();
                 JSON_STRING = s;
-                showEmployee(s);
+                showCustomer(s);
             }
 
             @Override
@@ -127,7 +127,7 @@ public class TempActivity extends AppCompatActivity
         gj.execute();
     }
 
-    public void showEmployee(String json) {
+    public void showCustomer(String json) {
         JSONObject jsonObject = null;
 
         try {
