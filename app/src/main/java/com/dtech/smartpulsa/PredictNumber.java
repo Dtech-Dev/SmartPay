@@ -47,6 +47,20 @@ public class PredictNumber {
                 || subed.equals("0822") || subed.equals("0823") || subed.equals("0852") || subed.equals("0853")
                 || subed.equals("0851")) {
             readSimpati(typeNumber);
+        } else if (subed.equals("0817") || subed.equals("0818") || subed.equals("0819")
+                || subed.equals("0859") || subed.equals("0877") || subed.equals("0878")
+                ) {
+            setTypeNumber("XL");
+            setKodeTransaksi("xr");
+        } else if (subed.equals("0896") || subed.equals("0897") || subed.equals("0898")
+                || subed.equals("0899")) {
+            setTypeNumber("Tri");
+            setKodeTransaksi("t");
+        } else if (subed.equals("0881") || subed.equals("0882") || subed.equals("0883")
+                || subed.equals("0884") || subed.equals("0885") || subed.equals("0886")
+                || subed.equals("0887") || subed.equals("0888") || subed.equals("0889")) {
+            setTypeNumber("Smartfren");
+            setKodeTransaksi("sf");
         } else {
             /*final Dialog dialog = new Dialog(context);
             dialog.setContentView(R.layout.dialog_provider);
