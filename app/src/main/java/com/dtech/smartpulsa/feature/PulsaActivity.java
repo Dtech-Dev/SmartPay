@@ -36,11 +36,18 @@ import java.util.List;
 
 public class PulsaActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
+
+    /*String Master*/
+    String trProvider;
+    String trNominal;
+    String transaksiKode;
+    /**/
     PredictNumber predictNumber = new PredictNumber(this);
     Bundle extras;
     String selfIntent, stringOtherNumber;
     String kodeProvider, provider;
-
+    String formatTransaksi;
+    String nominal;
 
     TextView tuserNumber, totherNumber, tuserProvider;
     EditText edOtherNumber;
@@ -129,10 +136,11 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
 
     private void prosesTransaksi() {
         String kodeTr = edOtherNumber.getText().toString();
-
-        transaksi = new Transaksi(this);
+        transaksiKode = trProvider+trNominal+"."+kodeTr+".3003";
+        Toast.makeText(this, transaksiKode,Toast.LENGTH_SHORT).show();
+        /*transaksi = new Transaksi(this);
         transaksi.setKode(kodeTr);
-        transaksi.execute();
+        transaksi.execute();*/
     }
 
     @Override
@@ -146,7 +154,8 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
             predictNumber.readNumber(s.toString());
             provider = predictNumber.getTypeNumber();
             kodeProvider = predictNumber.getKodeTransaksi();
-            totherNumber.setText("Provider : "+provider+" ("+kodeProvider+")");
+            setTrProvider(predictNumber.getKodeTransaksi());
+            totherNumber.setText("Provider : "+provider+" ("+trProvider+")");
             queryKodeProvider(kodeProvider);
         }
     }
@@ -167,9 +176,9 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
 
 
                 RequestHandler reqHandler = new RequestHandler();
-                String s = reqHandler.sendPostRequest(Config.URL_QUERY_KODE, paramsProvider);
+                String res = reqHandler.sendPostRequest(Config.URL_QUERY_KODE, paramsProvider);
 
-                return s;
+                return res;
             }
 
             @Override
@@ -180,19 +189,17 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                JSONObject jsonObject = null;
+                JSONObject jsonObject;
                 //ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
-                List<String> list = new ArrayList<String>();
+                List<String> list = new ArrayList<>();
                 try {
                     jsonObject = new JSONObject(s);
                     JSONArray result = jsonObject.getJSONArray("result");
                     for (int i=0; i<result.length(); i++) {
                         JSONObject jo = result.getJSONObject(i);
-                        String nominal = jo.getString(Config.TAG_NOMINAL);
+                        nominal = jo.getString(Config.TAG_NOMINAL);
                         list.add(nominal+".000");
-                        /*HashMap<String, String> nominalList = new HashMap<>();
-                        nominalList.put(Config.TAG_NOMINAL, nominal);
-                        list.add(nominalList);*/
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -217,7 +224,7 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
                     dialog.show();
                 }
                 //ListAdapter adapter = new SimpleAdapter(PulsaActivity.this, list, android.R.layout.simple_spinner_item, null, null);
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(PulsaActivity.this, android.R.layout.simple_spinner_item, list);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(PulsaActivity.this, android.R.layout.simple_spinner_item, list);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerKode.setAdapter(adapter);
             }
@@ -229,8 +236,11 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
         spinnerKode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String kodeTnsk = parent.getItemAtPosition(position).toString();
-                kodeProvider += kodeTnsk;
+
+                String nominalTemp = spinnerKode.getSelectedItem().toString();
+                String kodeTnsk = nominalTemp.replace(".000", "");
+                setTrNominal(kodeTnsk);
+
             }
 
             @Override
@@ -239,5 +249,21 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
+    }
+
+    public String getTrProvider() {
+        return trProvider;
+    }
+
+    public void setTrProvider(String trProvider) {
+        this.trProvider = trProvider;
+    }
+
+    public String getTrNominal() {
+        return trNominal;
+    }
+
+    public void setTrNominal(String trNominal) {
+        this.trNominal = trNominal;
     }
 }
