@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -224,6 +225,19 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
 
         QueryKodeAsync queryKode = new QueryKodeAsync();
         queryKode.execute();
+
+        spinnerKode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String kodeTnsk = parent.getItemAtPosition(position).toString();
+                kodeProvider += kodeTnsk;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
     }
 }
