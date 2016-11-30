@@ -6,6 +6,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -25,6 +28,7 @@ import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.PredictNumber;
 import com.dtech.smartpulsa.R;
+import com.dtech.smartpulsa.fragments.FrMultipleNumber;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,6 +58,8 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
     Button bTransac;
     Spinner spinnerKode;
 
+    Fragment fragment;
+    FragmentManager fragmentManager;
     Transaksi transaksi;
     //otherIntent;
     @Override
@@ -74,6 +80,14 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        setFragment();
+
+
+
+
+    }
+
+    public void setFragment() {
         extras=getIntent().getExtras();
         if (extras!=null) {
             selfIntent = extras.getString("self");
@@ -83,12 +97,16 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
                 UISelfNumber();
             } else {
                 //tuserNumber.setText("other");
-                UIOtherNumber();
+                //UIOtherNumber();
+                fragment = new FrMultipleNumber();
+
             }
         }
 
-
-
+        fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentPulsa, fragment);
+        fragmentTransaction.commit();
     }
 
     private void UIOtherNumber() {
