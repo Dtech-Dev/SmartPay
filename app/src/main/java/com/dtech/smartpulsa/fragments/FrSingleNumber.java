@@ -1,25 +1,19 @@
-package com.dtech.smartpulsa.feature;
+package com.dtech.smartpulsa.fragments;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,8 +22,7 @@ import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.PredictNumber;
 import com.dtech.smartpulsa.R;
-import com.dtech.smartpulsa.fragments.FrMultipleNumber;
-import com.dtech.smartpulsa.fragments.FrSingleNumber;
+import com.dtech.smartpulsa.feature.PulsaActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,126 +32,64 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class PulsaActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
+//import static com.dtech.smartpulsa.R.id.bTransac;
 
+/**
+ * Created by aris on 30/11/16.
+ */
 
-    /*String Master*/
+public class FrSingleNumber extends Fragment implements View.OnClickListener, TextWatcher {
+
+    PredictNumber predictNumber = new PredictNumber(getActivity());
+
     String trProvider;
     String trNominal;
     String transaksiKode;
-    /**/
-    PredictNumber predictNumber = new PredictNumber(this);
-    Bundle extras;
-    String selfIntent, stringOtherNumber;
+
     String kodeProvider, provider;
     String formatTransaksi;
     String nominal;
 
-    TextView tuserNumber, totherNumber, tuserProvider;
+    View view;
+    TextView totherNumber;
     EditText edOtherNumber;
-    Button bTransac;
     Spinner spinnerKode;
+    Button bTransac;
 
-    Fragment fragment;
-    FragmentManager fragmentManager;
-    Transaksi transaksi;
-    //otherIntent;
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pulsa);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        //initUI();
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        view = inflater.inflate(R.layout.fr_single_number, container, false);
 
-        setFragment();
-
-
-
-
-    }
-
-    public void setFragment() {
-        extras=getIntent().getExtras();
-        if (extras!=null) {
-            selfIntent = extras.getString("self");
-            //Toast.makeText(this, selfIntent, Toast.LENGTH_LONG).show();
-            if (selfIntent.equals("selfNumber") ) {
-                //tuserNumber.setText("Self");
-                //UISelfNumber();
-                fragment = new FrSingleNumber();
-            } else {
-                //tuserNumber.setText("other");
-                //UIOtherNumber();
-                fragment = new FrMultipleNumber();
-
-            }
-        }
-
-        fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentPulsa, fragment);
-        fragmentTransaction.commit();
-    }
-
-    private void UIOtherNumber() {
-        findViewById(R.id.otherLayout).setVisibility(View.VISIBLE);
-        //findViewById(R.id.selfLayout).setVisibility(View.GONE);
-
-    }
-
-    private void UISelfNumber() {
-        //findViewById(R.id.selfLayout).setVisibility(View.VISIBLE);
-        findViewById(R.id.otherLayout).setVisibility(View.GONE);
+        initUI();
+        return view;
     }
 
     private void initUI() {
-
-        //tuserNumber = (TextView) findViewById(R.id.tuserNumber);
-        //tuserProvider = (TextView) findViewById(R.id.tuserProvider);
-
-        /*totherNumber = (TextView) findViewById(R.id.txtOtherNumber);
-        edOtherNumber = (EditText) findViewById(R.id.editOtherNumber);
-        bTransac = (Button) findViewById(R.id.bTransac);
+        totherNumber = (TextView) view.findViewById(R.id.txtOtherNumber);
+        edOtherNumber = (EditText) view.findViewById(R.id.editOtherNumber);
+        bTransac = (Button) view.findViewById(R.id.bTransac);
         bTransac.setOnClickListener(this);
-        spinnerKode = (Spinner) findViewById(R.id.spinnerKode);
+        spinnerKode = (Spinner) view.findViewById(R.id.spinnerKode);
         spinnerKode.setPrompt("Nominal");
-        edOtherNumber.addTextChangedListener(this);*/
-
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        /*super.onBackPressed();
-        this.closeContextMenu();*/
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        edOtherNumber.addTextChangedListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            /*case R.id.bTransac:
+            case R.id.bTransac:
                 prosesTransaksi();
-                break;*/
+                break;
 
         }
     }
 
     private void prosesTransaksi() {
-        /*String kodeTr = edOtherNumber.getText().toString();
+        String kodeTr = edOtherNumber.getText().toString();
         transaksiKode = trProvider+trNominal+"."+kodeTr+".3003";
-        Toast.makeText(this, transaksiKode,Toast.LENGTH_SHORT).show();*/
+        Toast.makeText(getActivity(), transaksiKode,Toast.LENGTH_SHORT).show();
         /*transaksi = new Transaksi(this);
         transaksi.setKode(kodeTr);
         transaksi.execute();*/
@@ -171,15 +102,17 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        /*if (s.length() == 6) {
+        if (s.length() == 6) {
             predictNumber.readNumber(s.toString());
             provider = predictNumber.getTypeNumber();
             kodeProvider = predictNumber.getKodeTransaksi();
             setTrProvider(predictNumber.getKodeTransaksi());
             totherNumber.setText("Provider : "+provider+" ("+trProvider+")");
             queryKodeProvider(kodeProvider);
-        }*/
+        }
     }
+
+
 
     @Override
     public void afterTextChanged(Editable s) {
@@ -187,8 +120,7 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void queryKodeProvider(final String providerCode) {
-
-        /*class QueryKodeAsync extends AsyncTask<Void, Void, String> {
+        class QueryKodeAsync extends AsyncTask<Void, Void, String> {
             @Override
             protected String doInBackground(Void... params) {
                 HashMap<String, String> paramsProvider = new HashMap<>();
@@ -226,7 +158,7 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
                     e.printStackTrace();
                     //Toast.makeText(PulsaActivity.this, "Nomor tidak dikenali", Toast.LENGTH_SHORT).show();
 
-                    final Dialog dialog = new Dialog(PulsaActivity.this);
+                    final Dialog dialog = new Dialog(getActivity());
                     dialog.setContentView(R.layout.dialog_provider);
                     dialog.setCancelable(false);
                     dialog.setTitle("Oopss");
@@ -245,7 +177,7 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
                     dialog.show();
                 }
                 //ListAdapter adapter = new SimpleAdapter(PulsaActivity.this, list, android.R.layout.simple_spinner_item, null, null);
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(PulsaActivity.this, android.R.layout.simple_spinner_item, list);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, list);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerKode.setAdapter(adapter);
             }
@@ -268,8 +200,7 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });*/
-
+        });
     }
 
     public String getTrProvider() {
