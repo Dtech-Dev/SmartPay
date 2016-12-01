@@ -91,18 +91,18 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
     public void setFragment() {
         extras=getIntent().getExtras();
         if (extras!=null) {
-            selfIntent = extras.getString("self");
+            selfIntent = extras.getString("transaksi");
             //Toast.makeText(this, selfIntent, Toast.LENGTH_LONG).show();
-            if (selfIntent.equals("selfNumber") ) {
+            if (selfIntent.equals("isi pulsa") ) {
                 //tuserNumber.setText("Self");
                 //UISelfNumber();
                 fragment = new FrSingleNumber();
-            } else {
-                //tuserNumber.setText("other");
-                //UIOtherNumber();
+            }
+            /*else {
+
                 fragment = new FrMultipleNumber();
 
-            }
+            }*/
         }
 
         fragmentManager = getSupportFragmentManager();

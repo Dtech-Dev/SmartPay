@@ -221,7 +221,10 @@ public class TempActivity extends AppCompatActivity
     }
 
     private void isiPulsa() {
-        final Intent intentPulsa = new Intent(getApplicationContext(), PulsaActivity.class);
+        Intent intentTransaksi = new Intent(this, PulsaActivity.class);
+        intentTransaksi.putExtra("transaksi", "isi pulsa");
+        startActivity(intentTransaksi);
+        /*final Intent intentPulsa = new Intent(getApplicationContext(), PulsaActivity.class);
 
         dialogPulsa = new Dialog(this);
         dialogPulsa.setContentView(R.layout.dialog_pulsa);
@@ -247,6 +250,6 @@ public class TempActivity extends AppCompatActivity
                 dialogPulsa.dismiss();
             }
         });
-        dialogPulsa.show();
+        dialogPulsa.show();*/
     }
 }

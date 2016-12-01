@@ -14,18 +14,6 @@
     tools:showIn="@layout/activity_pulsa">
 
 
-
-    <!--<RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/provider"
-        android:layout_below="@+id/selfOrOther">
-
-    </RelativeLayout>-->
-
-
-
-
     <fragment
         android:name="com.dtech.smartpulsa.fragments.TempFragment"
         android:id="@+id/fragmentPulsa"
