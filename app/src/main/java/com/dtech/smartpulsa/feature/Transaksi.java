@@ -17,12 +17,21 @@ import java.util.HashMap;
 public class Transaksi extends AsyncTask<Void, Void, String> {
 
     String kode;
+    String user;
     ProgressDialog progress;
     Context context;
 
     public Transaksi(Context context) {
         //this.kode = kode;
         this.context = context;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public String getKode() {
@@ -36,7 +45,7 @@ public class Transaksi extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... params) {
         HashMap<String, String> paramsTransaksi = new HashMap<>();
-        paramsTransaksi.put(Config.KEY_TKODE_NAME, "aris");
+        paramsTransaksi.put(Config.KEY_TKODE_NAME, user);
         paramsTransaksi.put(Config.KEY_TKODE_KODE, kode);
 
 
