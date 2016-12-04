@@ -5,6 +5,13 @@ package com.dtech.smartpulsa.Configuration;
  */
 
 public class Config {
+    /*Shared Preference*/
+    public static final String PREF_NAME = "app-welcome";
+    public static final String DISPLAY_NAME = "displayName";
+    public static final String DISPLAY_NUMBER = "displayNumber";
+    public static final String DISPLAY_EMAIL = "displayEmail";
+    public static final String DISPLAY_FIREBASE_ID = "firebaseId";
+    /**/
     public static final String URL_KODE="http://samimi.web.id/dev/add-code.php";
     public static final String URL_SELECT_CUSTOMER="http://samimi.web.id/dev/select-customer.php";
     public static final String URL_SELECT_ALL="http://samimi.web.id/dev/select-all.php?email=";

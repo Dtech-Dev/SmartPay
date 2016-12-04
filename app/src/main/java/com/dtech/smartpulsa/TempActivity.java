@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -26,6 +27,7 @@ import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.feature.PulsaActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,8 +45,8 @@ public class TempActivity extends AppCompatActivity
     Button btnIsiPulsa;
     Dialog dialogPulsa;
     PrefManager prefManager;
-    public String textUser, txtEmail;
-    private static final String PREF_NAME = "app-welcome";
+    public String textUser, txtEmail, txtFirebaseId;
+    //private static final String PREF_NAME = "app-welcome";
     private static final String DISPLAY_NAME = "displayName";
     private static final String DISPLAY_EMAIL = "displayEmail";
 
@@ -59,6 +61,9 @@ public class TempActivity extends AppCompatActivity
 
         prefManager = new PrefManager(this);
 
+        String token = FirebaseInstanceId.getInstance().getToken();
+        prefManager.setFirebaseId(token);
+        Log.d("Firebase id", "Refreshed token: " + token);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,14 +89,15 @@ public class TempActivity extends AppCompatActivity
         layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         /*headerNav = layoutInflater.inflate(R.dialog_pulsa.nav_header_temp,null, true);*/
         headerNav = navigationView.getHeaderView(0);
-        SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
         navusername = (TextView) headerNav.findViewById(R.id.navusername);
         navemail = (TextView) headerNav.findViewById(R.id.navemail);
         tbalance = (TextView) findViewById(R.id.tbalance);
-        textUser = (sharedPreferences.getString(DISPLAY_NAME, ""));
-        txtEmail = (sharedPreferences.getString(DISPLAY_EMAIL, ""));
+        textUser = (sharedPreferences.getString(Config.DISPLAY_NAME, ""));
+        txtEmail = (sharedPreferences.getString(Config.DISPLAY_EMAIL, ""));
+        txtFirebaseId = (sharedPreferences.getString(Config.DISPLAY_FIREBASE_ID, ""));
 
-        navemail.setText(txtEmail);
+        navemail.setText(txtEmail+"\n"+txtFirebaseId);
 
         getJson();
 

@@ -24,6 +24,7 @@ public class PrefManager {
     private static final String DISPLAY_NAME = "displayName";
     private static final String DISPLAY_NUMBER = "displayNumber";
     private static final String DISPLAY_EMAIL = "displayEmail";
+    private static final String DISPLAY_FIREBASE_ID = "firebaseId";
 
 
     public PrefManager(Context context) {
@@ -59,6 +60,12 @@ public class PrefManager {
         editor.putString(DISPLAY_EMAIL, displayEmail);
         editor.commit();
     }
+
+    public void setFirebaseId(String firebaseId) {
+        editor.putString(DISPLAY_FIREBASE_ID, firebaseId);
+        editor.commit();
+    }
+
 
     public String getUserDisplay() {
         userDisplayName = PreferenceManager.getDefaultSharedPreferences(_context).getString(DISPLAY_NAME, "");
