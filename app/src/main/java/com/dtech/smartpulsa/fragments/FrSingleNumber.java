@@ -1,6 +1,7 @@
 package com.dtech.smartpulsa.fragments;
 
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,6 +24,8 @@ import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.PredictNumber;
 import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.feature.PulsaActivity;
+import com.dtech.smartpulsa.feature.Transaksi;
+import com.dtech.smartpulsa.preference.PrefManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +34,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 //import static com.dtech.smartpulsa.R.id.bTransac;
 
@@ -41,14 +46,18 @@ import java.util.List;
 public class FrSingleNumber extends Fragment implements View.OnClickListener, TextWatcher {
 
     PredictNumber predictNumber = new PredictNumber(getActivity());
+    PrefManager prefManager;
+    Transaksi transaksiPulsa;
 
     String trProvider;
     String trNominal;
     String transaksiKode;
 
     String kodeProvider, provider;
-    String formatTransaksi;
+    String formatTrx;
     String nominal;
+    String firebaseId;
+    String email;
 
     View view;
     TextView totherNumber;
@@ -61,6 +70,10 @@ public class FrSingleNumber extends Fragment implements View.OnClickListener, Te
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fr_single_number, container, false);
+        prefManager = new PrefManager(getActivity());
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
+        firebaseId = (sharedPreferences.getString(Config.DISPLAY_FIREBASE_ID, ""));
+        email = (sharedPreferences).getString(Config.DISPLAY_EMAIL, "");
 
         initUI();
         return view;
@@ -87,12 +100,17 @@ public class FrSingleNumber extends Fragment implements View.OnClickListener, Te
     }
 
     private void prosesTransaksi() {
-        String kodeTr = edOtherNumber.getText().toString();
-        transaksiKode = trProvider+trNominal+"."+kodeTr+".3003";
-        Toast.makeText(getActivity(), transaksiKode,Toast.LENGTH_SHORT).show();
-        /*transaksi = new Transaksi(this);
-        transaksi.setKode(kodeTr);
-        transaksi.execute();*/
+        String nomorTuj = edOtherNumber.getText().toString();
+        String transaksi = trProvider + trNominal;
+        formatTrx = transaksi+"."+nomorTuj+".3003";
+        Toast.makeText(getActivity(), formatTrx,Toast.LENGTH_SHORT).show();
+        transaksiPulsa = new Transaksi(this.getActivity());
+        transaksiPulsa.setUser(email);
+        transaksiPulsa.setNomorTuj(nomorTuj);
+        transaksiPulsa.setJenisTransaksi(transaksi);
+        transaksiPulsa.setFirebaseId(firebaseId);
+        transaksiPulsa.setKode(formatTrx);
+        transaksiPulsa.execute();
     }
 
     @Override

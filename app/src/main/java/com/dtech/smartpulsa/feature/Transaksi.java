@@ -18,12 +18,39 @@ public class Transaksi extends AsyncTask<Void, Void, String> {
 
     String kode;
     String user;
+    String jenisTransaksi;
+    String NomorTuj;
+    String firebaseId;
     ProgressDialog progress;
     Context context;
 
     public Transaksi(Context context) {
         //this.kode = kode;
         this.context = context;
+    }
+
+    public String getJenisTransaksi() {
+        return jenisTransaksi;
+    }
+
+    public void setJenisTransaksi(String jenisTransaksi) {
+        this.jenisTransaksi = jenisTransaksi;
+    }
+
+    public String getNomorTuj() {
+        return NomorTuj;
+    }
+
+    public void setNomorTuj(String nomorTuj) {
+        NomorTuj = nomorTuj;
+    }
+
+    public String getFirebaseId() {
+        return firebaseId;
+    }
+
+    public void setFirebaseId(String firebaseId) {
+        this.firebaseId = firebaseId;
     }
 
     public String getUser() {
@@ -45,12 +72,14 @@ public class Transaksi extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... params) {
         HashMap<String, String> paramsTransaksi = new HashMap<>();
-        paramsTransaksi.put(Config.KEY_TKODE_NAME, user);
-        paramsTransaksi.put(Config.KEY_TKODE_KODE, kode);
-
+        paramsTransaksi.put(Config.TRX_PULSA_EMAIL, user);
+        paramsTransaksi.put(Config.TRX_PULSA_FORMATTRX, kode);
+        paramsTransaksi.put(Config.TRX_PULSA_FIREBASEID, firebaseId);
+        paramsTransaksi.put(Config.TRX_PULSA_KODE, jenisTransaksi);
+        paramsTransaksi.put(Config.TRX_PULSA_NOMORTUJ, NomorTuj);
 
         RequestHandler reqHandler = new RequestHandler();
-        String res = reqHandler.sendPostRequest(Config.URL_KODE, paramsTransaksi);
+        String res = reqHandler.sendPostRequest(Config.TRX_URL, paramsTransaksi);
 
         return res;
     }

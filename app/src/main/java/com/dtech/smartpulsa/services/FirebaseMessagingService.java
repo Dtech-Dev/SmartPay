@@ -45,12 +45,16 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            //sendData(remoteMessage);
         }
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+
         }
+
+        sendNotification(remoteMessage);
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
@@ -62,7 +66,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
      *
      * @param messageBody FCM message body received.
      */
-    private void sendNotification(String messageBody) {
+    private void sendNotification(RemoteMessage messageBody) {
         Intent intent = new Intent(this, TempActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
@@ -71,8 +75,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_menu_slideshow)
-                .setContentTitle("FCM Message")
-                .setContentText(messageBody)
+                .setContentTitle("Smart Pulsa")
+                .setContentText(messageBody.getNotification().getBody())
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
@@ -82,4 +86,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
+
+
 }

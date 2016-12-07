@@ -33,7 +33,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.text.NumberFormat;
+import java.util.Arrays;
 import java.util.Locale;
 
 public class TempActivity extends AppCompatActivity
@@ -41,7 +43,7 @@ public class TempActivity extends AppCompatActivity
 
     LayoutInflater layoutInflater ;
     View headerNav;
-    TextView navemail, navusername, tbalance;
+    TextView navemail, navusername, tbalance, tTempor;
     Button btnIsiPulsa;
     Dialog dialogPulsa;
     PrefManager prefManager;
@@ -97,11 +99,40 @@ public class TempActivity extends AppCompatActivity
         txtEmail = (sharedPreferences.getString(Config.DISPLAY_EMAIL, ""));
         txtFirebaseId = (sharedPreferences.getString(Config.DISPLAY_FIREBASE_ID, ""));
 
+        tTempor = (TextView) findViewById(R.id.textViewTempor);
+
         navemail.setText(txtEmail+"\n"+txtFirebaseId);
 
         getJson();
 
+        splitString();
 
+
+    }
+
+    private void splitString() {
+        String kalimat = "Trx: 385716875, Pengisian SUKSES. Semua TRX Lancar: te100.085731706444.3003, Harga: 10550, sisa saldo: .3 133189 SN:00704700000195581837";
+        String kata;
+        String[] arrayKalimat = kalimat.split("\\s");
+        String search = ".3003";
+        int indexKode = Arrays.asList(arrayKalimat).indexOf(search);
+        int start = kalimat.indexOf(".3003")-18;
+        int end = kalimat.indexOf(".3003")+5;
+        String kode = kalimat.substring(start, end);
+        String[] arrayKodeA = kode.split("\\s");
+        //int indexKode = Arrays.binarySearch(arrayKalimat, ".3003");
+        int countKlimat = arrayKalimat.length;
+        //String tempor = arrayKalimat[indexKode];
+        for (int i = 0; i < countKlimat; i++) {
+            kata = arrayKalimat[i];
+             //int searcha = arrayKalimat;
+            int indexKodea = Arrays.binarySearch(arrayKalimat, kode);
+            Log.d("Tag Array Kalimat", "index ke " + i + " = " + kata + "\n");
+            //tempor = "index ke " + i + " = " + kata + "\n";
+
+        }
+        //tTempor.setText("array ke "+"="+ kata+"\n");
+        //tTempor.setText(tempor);
     }
 
     public void getJson() {

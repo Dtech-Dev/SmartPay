@@ -23,6 +23,21 @@ public class Config {
     public static final String TAG_PROVIDER = "provider";
     public static final String TAG_NOMINAL = "nominal";
 
+    /*post variables for transaksi pulsa
+    * $email = $_POST['email'];
+    $firebase = $_POST['firebaseId'];
+    $transaksi = $_POST['kodeTrans'];
+    $nomorTuj = $_POST['nomor'];
+    $status = $_POST['status'];
+    $formatTrx = $_POST['formatTrx'];
+    */
+    public static final String TRX_URL = "http://samimi.web.id/dev/insert-log-transaksi.php";
+    public static final String TRX_PULSA_EMAIL = "email";
+    public static final String TRX_PULSA_FIREBASEID = "firebaseId";
+    public static final String TRX_PULSA_KODE = "kodeTrans";
+    public static final String TRX_PULSA_NOMORTUJ = "nomor";
+    public static final String TRX_PULSA_FORMATTRX = "formatTrx";
+
     //
     public static final String KEY_TKODE_NAME = "name";
     public static final String KEY_TKODE_KODE = "kode";
