@@ -55,11 +55,11 @@ public class WelcomeActivity extends AppCompatActivity  implements
     SignInButton signInButton;
     PrefManager prefManager;
 
-    private FirebaseAuth mAuth;
+     FirebaseAuth mAuth;
     // [END declare_auth]
 
     // [START declare_auth_listener]
-    private FirebaseAuth.AuthStateListener mAuthListener;
+    FirebaseAuth.AuthStateListener mAuthListener;
 
     CheckBox cbx;
 
@@ -224,11 +224,12 @@ public class WelcomeActivity extends AppCompatActivity  implements
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        Log.d(TAG, "firebaseAuthWithGoogleToken:" + acct.getIdToken());
         // [START_EXCLUDE silent]
         //showProgressDialog();
         // [END_EXCLUDE]
 
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        /*AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -247,7 +248,7 @@ public class WelcomeActivity extends AppCompatActivity  implements
                         //hideProgressDialog();
                         // [END_EXCLUDE]
                     }
-                });
+                });*/
     }
 
     private void checkCustomer() {
