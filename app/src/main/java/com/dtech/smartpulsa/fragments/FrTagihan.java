@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
     String userId;
     String email;
     String name;
+    String trx;
 
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
@@ -77,11 +79,22 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnCek:
-                cekTagihan();
+                trx = edNmrTagihan.getText().toString();
+                if (TextUtils.isEmpty(userId)) {
+                    cekTagihan();
+                } else {
+                    updateUser();
+                }
                 break;
             case R.id.btnPay:
                 bayarTagihan();
                 break;
+        }
+    }
+
+    private void updateUser() {
+        if (!TextUtils.isEmpty(trx)) {
+            mFirebaseDatabase.child(userId).child("trx").setValue(trx);
         }
     }
 
@@ -91,13 +104,35 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
 
     private void cekTagihan() {
 
-        String trx = edNmrTagihan.getText().toString();
+
+        String tagihan = "";
         if (TextUtils.isEmpty(userId)) {
             userId = mFirebaseDatabase.push().getKey();
         }
 
-        DatabaseCek databaseCek = new DatabaseCek(name, email, trx);
+        DatabaseCek databaseCek = new DatabaseCek(name, email, trx, tagihan);
         mFirebaseDatabase.child(userId).setValue(databaseCek);
+        //addDbaseChangeListener();
 
+    }
+
+    private void addDbaseChangeListener() {
+        mFirebaseDatabase.child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DatabaseCek databaseCek = dataSnapshot.getValue(DatabaseCek.class);
+                if (databaseCek == null) {
+                    Log.e("DatabaseCek", "User data is null");
+                    return;
+                }
+                Log.e("Database Cek", "User data is changed");
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("Database Cek", "Failed Update User Data");
+            }
+        });
     }
 }
