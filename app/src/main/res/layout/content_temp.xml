@@ -45,4 +45,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="140dp"
         android:id="@+id/textViewTempor" />
+
+    <Button
+        android:text="Tagihan PLN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnIsiPulsa"
+        android:layout_alignLeft="@+id/btnIsiPulsa"
+        android:layout_alignStart="@+id/btnIsiPulsa"
+        android:layout_marginTop="20dp"
+        android:id="@+id/btnCekTagihan" />
 </RelativeLayout>

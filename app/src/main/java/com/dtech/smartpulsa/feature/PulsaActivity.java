@@ -30,6 +30,7 @@ import com.dtech.smartpulsa.PredictNumber;
 import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.fragments.FrMultipleNumber;
 import com.dtech.smartpulsa.fragments.FrSingleNumber;
+import com.dtech.smartpulsa.fragments.FrTagihan;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -97,6 +98,8 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
                 //tuserNumber.setText("Self");
                 //UISelfNumber();
                 fragment = new FrSingleNumber();
+            } else if (selfIntent.equals("cek")) {
+                fragment = new FrTagihan();
             }
             /*else {
 

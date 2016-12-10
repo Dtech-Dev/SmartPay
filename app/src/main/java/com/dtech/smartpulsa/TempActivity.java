@@ -44,7 +44,7 @@ public class TempActivity extends AppCompatActivity
     LayoutInflater layoutInflater ;
     View headerNav;
     TextView navemail, navusername, tbalance, tTempor;
-    Button btnIsiPulsa;
+    Button btnIsiPulsa, btnCekTagihan;
     Dialog dialogPulsa;
     PrefManager prefManager;
     public String textUser, txtEmail, txtFirebaseId;
@@ -87,6 +87,8 @@ public class TempActivity extends AppCompatActivity
         /*Embeks*/
 
         btnIsiPulsa = (Button) findViewById(R.id.btnIsiPulsa);
+        btnCekTagihan = (Button) findViewById(R.id.btnCekTagihan);
+        btnCekTagihan.setOnClickListener(this);
         btnIsiPulsa.setOnClickListener(this);
         layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         /*headerNav = layoutInflater.inflate(R.dialog_pulsa.nav_header_temp,null, true);*/
@@ -253,8 +255,16 @@ public class TempActivity extends AppCompatActivity
             case R.id.btnIsiPulsa:
                 isiPulsa();
                 break;
-
+            case R.id.btnCekTagihan:
+                frCekTagihan();
+                break;
         }
+    }
+
+    private void frCekTagihan() {
+        Intent intentCek = new Intent(this, PulsaActivity.class);
+        intentCek.putExtra("transaksi", "cek");
+        startActivity(intentCek);
     }
 
     private void isiPulsa() {
