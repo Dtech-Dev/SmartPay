@@ -38,6 +38,13 @@ public class Config {
     public static final String TRX_PULSA_NOMORTUJ = "nomor";
     public static final String TRX_PULSA_FORMATTRX = "formatTrx";
 
+    /*post variables cek tagihan
+    * $fbase = $_POST['fbaseUid'];
+      $nomorTagihan = $_POST['nomorTag'];*/
+    public static final String URL_INSERT_TAGIHAN ="http://samimi.web.id/dev/cek-tagihan.php";
+    public static final String FBASE_UID = "fbaseUid";
+    public static final String NO_TAGIHAN = "nomorTag";
+
     //
     public static final String KEY_TKODE_NAME = "name";
     public static final String KEY_TKODE_KODE = "kode";
@@ -67,8 +74,4 @@ public class Config {
     public static final String TAG_JML_TRF = "jmlTransfer";
     public static final String TAG_EMAIL_USER = "email";
 }
-/*
-"id"=>$row['id_customer'],
-        "user_name"=>$row['user_name'],
-        "user_email"=>$row['user_email'],
-        "user_phone"=>$row['user_phone']*/
+

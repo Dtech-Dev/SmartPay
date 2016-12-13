@@ -82,6 +82,7 @@ public class WelcomeActivity extends AppCompatActivity  implements
 
         /*initialize google sign in*/
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("1003648665919-1dcuht955rmlsg1cnccpfboi2kes37ot.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
 
@@ -224,12 +225,12 @@ public class WelcomeActivity extends AppCompatActivity  implements
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
-        Log.d(TAG, "firebaseAuthWithGoogleToken:" + acct.getIdToken());
+        //Log.d(TAG, "firebaseAuthWithGoogleToken:" + acct.getIdToken());
         // [START_EXCLUDE silent]
         //showProgressDialog();
         // [END_EXCLUDE]
 
-        /*AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -248,7 +249,7 @@ public class WelcomeActivity extends AppCompatActivity  implements
                         //hideProgressDialog();
                         // [END_EXCLUDE]
                     }
-                });*/
+                });
     }
 
     private void checkCustomer() {
