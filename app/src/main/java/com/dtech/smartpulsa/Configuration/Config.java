@@ -45,6 +45,9 @@ public class Config {
     public static final String FBASE_UID = "fbaseUid";
     public static final String NO_TAGIHAN = "nomorTag";
 
+    public static final String URL_GET_TAGIHAN = "http://samimi.web.id/dev/jml-tagihan.php?nomortag=";
+    public static final String JML_TAGIHAN = "tagihan";
+
     //
     public static final String KEY_TKODE_NAME = "name";
     public static final String KEY_TKODE_KODE = "kode";

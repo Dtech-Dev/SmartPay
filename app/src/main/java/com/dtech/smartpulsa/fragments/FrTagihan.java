@@ -33,6 +33,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 /**
@@ -165,6 +169,8 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
                 RequestHandler reqHandler = new RequestHandler();
                 String res = reqHandler.sendPostRequest(Config.URL_INSERT_TAGIHAN, paramsCekTagihan);
 
+
+
                 return res;
             }
 
@@ -195,7 +201,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
                     Log.e("DatabaseCek", "User data is null");
                     return;
                 }
-                Log.e("Database Cek", "User data is changed: "+databaseCek.tagihan);
+                Log.e("Database Cek", "User data is changed: " + databaseCek.tagihan);
                 txtTagihan.setText(databaseCek.tagihan);
                 if (txtTagihan.getText() == "") {
                     prgBar.setVisibility(View.VISIBLE);
@@ -211,5 +217,50 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
                 Log.e("Database Cek", "Failed Update User Data");
             }
         });
+
+        class TampilTagihan extends AsyncTask<Void, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+
+                showTagihan(s);
+
+                if (txtTagihan.getText() == "") {
+                    showTagihan(s);
+                } else {
+                    prgBar.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequestParam(Config.URL_GET_TAGIHAN, trx);
+                return s;
+            }
+        }
+        TampilTagihan tampilTagihan = new TampilTagihan();
+        tampilTagihan.execute();
+    }
+
+    public void showTagihan(String json) {
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_ARRAY);
+            JSONObject c = result.getJSONObject(0);
+            String tagihan = c.getString(Config.JML_TAGIHAN);
+
+
+            txtTagihan.setText(tagihan);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

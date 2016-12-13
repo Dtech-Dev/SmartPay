@@ -271,6 +271,7 @@ public class WelcomeActivity extends AppCompatActivity  implements
                 Toast.makeText(WelcomeActivity.this, "Welcome", Toast.LENGTH_LONG).show();
             }
 
+
             @Override
             protected String doInBackground(Void... v) {
                 HashMap<String, String> params = new HashMap<>();
