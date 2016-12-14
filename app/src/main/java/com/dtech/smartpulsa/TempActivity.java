@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.feature.PulsaActivity;
+import com.dtech.smartpulsa.feature.TagihanActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -256,9 +257,14 @@ public class TempActivity extends AppCompatActivity
                 isiPulsa();
                 break;
             case R.id.btnCekTagihan:
-                frCekTagihan();
+                openTagihan();
                 break;
         }
+    }
+
+    private void openTagihan() {
+        Intent tagihanOpen = new Intent(this, TagihanActivity.class);
+        startActivity(tagihanOpen);
     }
 
     private void frCekTagihan() {

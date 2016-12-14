@@ -57,6 +57,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
     String email;
     String name;
     String trx;
+    String tagihanTampil;
 
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
@@ -218,7 +219,12 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
             }
         });
 
+        tagihanData();
+    }
+
+    public void tagihanData() {
         class TampilTagihan extends AsyncTask<Void, Void, String> {
+            String tagihanFix;
 
             @Override
             protected void onPreExecute() {
@@ -229,19 +235,23 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
 
-                showTagihan(s);
+                txtTagihan.setText(tagihanFix);
 
-                if (txtTagihan.getText() == "") {
-                    showTagihan(s);
-                } else {
-                    prgBar.setVisibility(View.INVISIBLE);
-                }
             }
 
             @Override
             protected String doInBackground(Void... params) {
                 RequestHandler rh = new RequestHandler();
                 String s = rh.sendGetRequestParam(Config.URL_GET_TAGIHAN, trx);
+                showTagihan(s);
+
+                /*if (tagihanTampil == "" || tagihanTampil == null) {
+
+                    showTagihan(s);
+                } else {
+                    tagihanFix = tagihanTampil;
+                }*/
+
                 return s;
             }
         }
@@ -254,14 +264,16 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
             JSONObject jsonObject = new JSONObject(json);
             JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_ARRAY);
             JSONObject c = result.getJSONObject(0);
-            String tagihan = c.getString(Config.JML_TAGIHAN);
+            tagihanTampil = c.getString(Config.JML_TAGIHAN);
 
 
-            txtTagihan.setText(tagihan);
+            //txtTagihan.setText(tagihan);
 
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
+
 }

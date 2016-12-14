@@ -10,4 +10,5 @@
     <string name="title_activity_add_saldo">AddSaldoActivity</string>
     <string name="title_activity_trf_confirm">Transfer Confirm</string>
     <string name="title_activity_pulsa">PulsaActivity</string>
+    <string name="title_activity_tagihan">TagihanActivity</string>
 </resources>
