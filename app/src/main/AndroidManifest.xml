@@ -93,6 +93,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dtech.smartpulsa.TempActivity" />
+            <intent-filter>
+                <action android:name="ACTIVITY_BYR" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".feature.CekTagihan"

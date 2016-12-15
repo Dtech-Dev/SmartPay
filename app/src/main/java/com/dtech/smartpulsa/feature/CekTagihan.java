@@ -1,6 +1,7 @@
 package com.dtech.smartpulsa.feature;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
+import com.dtech.smartpulsa.preference.PrefManager;
 
 import java.util.HashMap;
 
@@ -26,7 +28,9 @@ public class CekTagihan extends AppCompatActivity implements View.OnClickListene
     Button buttonCek;
     Bundle extras;
 
-    String jenisTagihan, trx;
+    String jenisTagihan, trx, fbaseuid;
+
+    PrefManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,9 @@ public class CekTagihan extends AppCompatActivity implements View.OnClickListene
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        prefManager = new PrefManager(CekTagihan.this);
+        SharedPreferences sharedPreferences = this.getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
+        fbaseuid = (sharedPreferences.getString(Config.DISPLAY_FIREBASE_ID, ""));
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +88,8 @@ public class CekTagihan extends AppCompatActivity implements View.OnClickListene
                 HashMap<String, String> paramsCekTagihan = new HashMap<>();
                 //paramsCekTagihan.put(Config.FBASE_UID, userId);
                 paramsCekTagihan.put(Config.NO_TAGIHAN, trx);
+                paramsCekTagihan.put(Config.FBASE_UID, fbaseuid);
+                paramsCekTagihan.put(Config.JENIS, jenisTagihan);
 
                 RequestHandler reqHandler = new RequestHandler();
                 String res = reqHandler.sendPostRequest(Config.URL_INSERT_TAGIHAN, paramsCekTagihan);

@@ -67,8 +67,16 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
      * @param messageBody FCM message body received.
      */
     private void sendNotification(RemoteMessage messageBody) {
-        Intent intent = new Intent(this, TempActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Intent intent;
+        String click = messageBody.getNotification().getClickAction();
+        if (click.equals("") || click == null) {
+            intent = new Intent(this, TempActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        } else {
+            intent = new Intent(click);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
