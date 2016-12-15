@@ -11,4 +11,6 @@
     <string name="title_activity_trf_confirm">Transfer Confirm</string>
     <string name="title_activity_pulsa">PulsaActivity</string>
     <string name="title_activity_tagihan">TagihanActivity</string>
+    <string name="title_activity_bayar_tagihan">BayarTagihan</string>
+    <string name="title_activity_cek_tagihan">CekTagihan</string>
 </resources>

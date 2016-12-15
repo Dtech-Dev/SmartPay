@@ -85,6 +85,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dtech.smartpulsa.TempActivity" />
         </activity>
+        <activity
+            android:name=".feature.BayarTagihan"
+            android:label="@string/title_activity_bayar_tagihan"
+            android:parentActivityName=".TempActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dtech.smartpulsa.TempActivity" />
+        </activity>
+        <activity
+            android:name=".feature.CekTagihan"
+            android:label="@string/title_activity_cek_tagihan"
+            android:parentActivityName=".TempActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dtech.smartpulsa.TempActivity" />
+        </activity>
     </application>
 
 </manifest>

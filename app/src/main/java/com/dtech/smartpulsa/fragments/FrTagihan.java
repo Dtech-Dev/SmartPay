@@ -150,48 +150,13 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
         DatabaseCek databaseCek = new DatabaseCek(name, email, trx, tagihan);
         mFirebaseDatabase.child(userF.getUid()).setValue(databaseCek);
 
-        postCekTagihan();
+        //postCekTagihan();
 
         addDbaseChangeListener();
 
     }
 
-    private void postCekTagihan() {
 
-        class InsCekTagihan extends AsyncTask<Void, Void, String> {
-
-            ProgressDialog loading;
-            @Override
-            protected String doInBackground(Void... params) {
-                HashMap<String, String> paramsCekTagihan = new HashMap<>();
-                paramsCekTagihan.put(Config.FBASE_UID, userId);
-                paramsCekTagihan.put(Config.NO_TAGIHAN, trx);
-
-                RequestHandler reqHandler = new RequestHandler();
-                String res = reqHandler.sendPostRequest(Config.URL_INSERT_TAGIHAN, paramsCekTagihan);
-
-
-
-                return res;
-            }
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                //loading = ProgressDialog.show(getActivity(), "Processing...", "Wait....", false, false);
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                //loading.dismiss();
-                Toast.makeText(getActivity(), "We'll Processing Your Request", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        InsCekTagihan cekTagihan = new InsCekTagihan();
-        cekTagihan.execute();
-    }
 
     private void addDbaseChangeListener() {
         mFirebaseDatabase.child(userF.getUid()).addValueEventListener(new ValueEventListener() {
@@ -219,7 +184,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
             }
         });
 
-        tagihanData();
+        //tagihanData();
     }
 
     public void tagihanData() {
