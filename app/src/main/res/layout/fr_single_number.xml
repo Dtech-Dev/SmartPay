@@ -49,7 +49,7 @@
                 android:id="@+id/editOtherNumber"
                 android:layout_below="@+id/txtOtherNumber"
                 android:layout_centerHorizontal="true"
-                android:phoneNumber="true" />
+                android:inputType="number" />
 
 
             <RelativeLayout

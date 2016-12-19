@@ -123,6 +123,7 @@ public class FrSingleNumber extends Fragment implements View.OnClickListener, Te
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (s.length() >= 6) {
+
             /*String prepredict = s.toString();
             if (prepredict.contains("-")) {
                 prepredict.replaceAll("-", "");
@@ -205,9 +206,13 @@ public class FrSingleNumber extends Fragment implements View.OnClickListener, Te
                     dialog.show();
                 }
                 //ListAdapter adapter = new SimpleAdapter(PulsaActivity.this, list, android.R.layout.simple_spinner_item, null, null);
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, list);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerKode.setAdapter(adapter);
+                try {
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, list);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerKode.setAdapter(adapter);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 

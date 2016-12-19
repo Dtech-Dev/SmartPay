@@ -93,6 +93,7 @@ public class TagihanActivity extends AppCompatActivity {
                         Intent intentCek = new Intent(TagihanActivity.this, CekTagihan.class);
                         intentCek.putExtra("jenis", data);
                         startActivity(intentCek);
+                        dialogTagihan.dismiss();
                     }
                 });
 
@@ -103,6 +104,7 @@ public class TagihanActivity extends AppCompatActivity {
                         Intent intentBayar = new Intent(TagihanActivity.this, BayarTagihan.class);
                         intentBayar.putExtra("jenis", data);
                         startActivity(intentBayar);
+                        dialogTagihan.dismiss();
                     }
                 });
                 dialogTagihan.setView(promptView);
@@ -115,6 +117,11 @@ public class TagihanActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        dialogTagihan.dismiss();
+        //dialogTagihan.dismiss();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
