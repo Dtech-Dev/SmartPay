@@ -2,6 +2,7 @@ package com.dtech.smartpulsa;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ public class PredictNumber {
     public String typeNumber;
     public String kodeTransaksi;
     public String typeSimpati;
+    public String nomorTujuan;
     List<String> jatim = Arrays.asList("081130", "081131", "081132", "081133",
             "081134", "081137", "081135", "081136", "081216", "081217", "081230", "081231",
             "081232", "081233", "081234", "081235", "081249", "081252", "081259", "081330",
@@ -38,7 +40,34 @@ public class PredictNumber {
     }
 
     public void readNumber(String typeNumber) {
-        String subed = typeNumber.substring(0, 4);
+        String prepredict = typeNumber.replaceAll("[-\\s]", "");
+        Log.d("Prepredict", prepredict);
+
+        if (prepredict.contains("+62")) {
+            String finalString = prepredict.replace("+62", "0");
+            readProvider(finalString);
+            setNomorTujuan(finalString);
+        } else {
+            readProvider(prepredict);
+            setNomorTujuan(prepredict);
+        }
+
+        /*Toast.makeText(context, typeNumber,Le)*/
+
+        /**/
+        /*switch (subed) {
+            case "0895": case "0896":
+                setTypeNumber("xl");
+                setKodeTransaksi("xr");
+                break;
+            case "0811":
+                readSimpati(typeNumber);
+                break;
+        }*/
+    }
+
+    public void readProvider(String finalString) {
+        String subed = finalString.substring(0, 4);
         if (subed.equals("0855") || subed.equals("0856") || subed.equals("0857") || subed.equals("0858") ||
                 subed.equals("0814") || subed.equals("0815") || subed.equals("0816")) {
             setTypeNumber("Indosat");
@@ -46,7 +75,7 @@ public class PredictNumber {
         } else if (subed.equals("0811") || subed.equals("0812") || subed.equals("0813") || subed.equals("0821")
                 || subed.equals("0822") || subed.equals("0823") || subed.equals("0852") || subed.equals("0853")
                 || subed.equals("0851")) {
-            readSimpati(typeNumber);
+            readSimpati(finalString);
         } else if (subed.equals("0817") || subed.equals("0818") || subed.equals("0819")
                 || subed.equals("0859") || subed.equals("0877") || subed.equals("0878")
                 ) {
@@ -79,16 +108,6 @@ public class PredictNumber {
             */
             //Toast.makeText(context, "")
         }
-        /**/
-        /*switch (subed) {
-            case "0895": case "0896":
-                setTypeNumber("xl");
-                setKodeTransaksi("xr");
-                break;
-            case "0811":
-                readSimpati(typeNumber);
-                break;
-        }*/
     }
 
 
@@ -124,5 +143,13 @@ public class PredictNumber {
 
     public void setKodeTransaksi(String kodeTransaksi) {
         this.kodeTransaksi = kodeTransaksi;
+    }
+
+    public String getNomorTujuan() {
+        return nomorTujuan;
+    }
+
+    public void setNomorTujuan(String nomorTujuan) {
+        this.nomorTujuan = nomorTujuan;
     }
 }

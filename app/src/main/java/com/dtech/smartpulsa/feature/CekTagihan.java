@@ -28,7 +28,7 @@ public class CekTagihan extends AppCompatActivity implements View.OnClickListene
     Button buttonCek;
     Bundle extras;
 
-    String jenisTagihan, trx, fbaseuid;
+    String jenisTagihan, trx, fbaseuid, email;
 
     PrefManager prefManager;
 
@@ -42,6 +42,7 @@ public class CekTagihan extends AppCompatActivity implements View.OnClickListene
         prefManager = new PrefManager(CekTagihan.this);
         SharedPreferences sharedPreferences = this.getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
         fbaseuid = (sharedPreferences.getString(Config.DISPLAY_FIREBASE_ID, ""));
+        email = (sharedPreferences.getString(Config.DISPLAY_EMAIL, ""));
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +91,7 @@ public class CekTagihan extends AppCompatActivity implements View.OnClickListene
                 paramsCekTagihan.put(Config.NO_TAGIHAN, trx);
                 paramsCekTagihan.put(Config.FBASE_UID, fbaseuid);
                 paramsCekTagihan.put(Config.JENIS, jenisTagihan);
+                paramsCekTagihan.put(Config.TAG_EMAIL_USER, email);
 
                 RequestHandler reqHandler = new RequestHandler();
                 String res = reqHandler.sendPostRequest(Config.URL_INSERT_TAGIHAN, paramsCekTagihan);

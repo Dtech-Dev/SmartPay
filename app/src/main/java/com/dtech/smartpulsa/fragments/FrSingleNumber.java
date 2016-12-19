@@ -101,16 +101,18 @@ public class FrSingleNumber extends Fragment implements View.OnClickListener, Te
 
     private void prosesTransaksi() {
         String nomorTuj = edOtherNumber.getText().toString();
+        //PredictNumber ambilNomorTujuan = new PredictNumber(getActivity());
+        //String nomorTuj = predictNumber.getNomorTujuan();
         String transaksi = trProvider + trNominal;
         formatTrx = transaksi+"."+nomorTuj+".3003";
         Toast.makeText(getActivity(), formatTrx,Toast.LENGTH_SHORT).show();
-        transaksiPulsa = new Transaksi(this.getActivity());
+        /*transaksiPulsa = new Transaksi(this.getActivity());
         transaksiPulsa.setUser(email);
         transaksiPulsa.setNomorTuj(nomorTuj);
         transaksiPulsa.setJenisTransaksi(transaksi);
         transaksiPulsa.setFirebaseId(firebaseId);
         transaksiPulsa.setKode(formatTrx);
-        transaksiPulsa.execute();
+        transaksiPulsa.execute();*/
     }
 
     @Override
@@ -120,8 +122,16 @@ public class FrSingleNumber extends Fragment implements View.OnClickListener, Te
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (s.length() == 6) {
-            predictNumber.readNumber(s.toString());
+        if (s.length() >= 6) {
+            /*String prepredict = s.toString();
+            if (prepredict.contains("-")) {
+                prepredict.replaceAll("-", "");
+                edOtherNumber.setText(prepredict);
+            }*/
+            //String numberToRead = s.toString().substring(0, 6);
+            //String numberToPredict = numberToRead
+            predictNumber.readProvider(s.toString());
+            //predictNumber.readNumber(numberToRead);
             provider = predictNumber.getTypeNumber();
             kodeProvider = predictNumber.getKodeTransaksi();
             setTrProvider(predictNumber.getKodeTransaksi());
