@@ -55,4 +55,14 @@
         android:layout_alignStart="@+id/btnIsiPulsa"
         android:layout_marginTop="20dp"
         android:id="@+id/btnCekTagihan" />
+
+    <Button
+        android:text="Token Listrik"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnCekTagihan"
+        android:layout_alignLeft="@+id/btnIsiPulsa"
+        android:layout_alignStart="@+id/btnIsiPulsa"
+        android:layout_marginTop="20dp"
+        android:id="@+id/btnToken" />
 </RelativeLayout>

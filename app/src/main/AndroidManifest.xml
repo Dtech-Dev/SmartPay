@@ -93,14 +93,25 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dtech.smartpulsa.TempActivity" />
+
             <intent-filter>
                 <action android:name="ACTIVITY_BYR" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".feature.CekTagihan"
             android:label="@string/title_activity_cek_tagihan"
+            android:parentActivityName=".TempActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dtech.smartpulsa.TempActivity" />
+        </activity>
+        <activity
+            android:name=".TokenActivity"
+            android:label="@string/title_activity_token"
             android:parentActivityName=".TempActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

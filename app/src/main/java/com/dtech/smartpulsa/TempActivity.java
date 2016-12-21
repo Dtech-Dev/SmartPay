@@ -45,9 +45,11 @@ public class TempActivity extends AppCompatActivity
     LayoutInflater layoutInflater ;
     View headerNav;
     TextView navemail, navusername, tbalance, tTempor;
-    Button btnIsiPulsa, btnCekTagihan;
+    Button btnIsiPulsa, btnCekTagihan, btnToken;
     Dialog dialogPulsa;
     PrefManager prefManager;
+    NavigationView navigationView;
+    SharedPreferences sharedPreferences;
     public String textUser, txtEmail, txtFirebaseId;
     //private static final String PREF_NAME = "app-welcome";
     private static final String DISPLAY_NAME = "displayName";
@@ -82,19 +84,32 @@ public class TempActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         /*Embeks*/
 
+
+
+        initUi();
+        getJson();
+
+        splitString();
+
+
+    }
+
+    private void initUi() {
         btnIsiPulsa = (Button) findViewById(R.id.btnIsiPulsa);
         btnCekTagihan = (Button) findViewById(R.id.btnCekTagihan);
+        btnToken = (Button) findViewById(R.id.btnToken);
+        btnToken.setOnClickListener(this);
         btnCekTagihan.setOnClickListener(this);
         btnIsiPulsa.setOnClickListener(this);
         layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         /*headerNav = layoutInflater.inflate(R.dialog_pulsa.nav_header_temp,null, true);*/
         headerNav = navigationView.getHeaderView(0);
-        SharedPreferences sharedPreferences = getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
         navusername = (TextView) headerNav.findViewById(R.id.navusername);
         navemail = (TextView) headerNav.findViewById(R.id.navemail);
         tbalance = (TextView) findViewById(R.id.tbalance);
@@ -105,12 +120,6 @@ public class TempActivity extends AppCompatActivity
         tTempor = (TextView) findViewById(R.id.textViewTempor);
 
         navemail.setText(txtEmail+"\n"+txtFirebaseId);
-
-        getJson();
-
-        splitString();
-
-
     }
 
     private void splitString() {
@@ -259,7 +268,14 @@ public class TempActivity extends AppCompatActivity
             case R.id.btnCekTagihan:
                 openTagihan();
                 break;
+            case R.id.btnToken:
+                isiToken();
         }
+    }
+
+    private void isiToken() {
+        Intent tokenOpen = new Intent(this, TokenActivity.class);
+        startActivity(tokenOpen);
     }
 
     private void openTagihan() {
