@@ -118,6 +118,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dtech.smartpulsa.TempActivity" />
         </activity>
+        <activity
+            android:name=".feature.QuickPayActivity"
+            android:label="@string/title_activity_quick_pay"
+            android:parentActivityName=".TempActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dtech.smartpulsa.TempActivity" />
+        </activity>
     </application>
 
 </manifest>

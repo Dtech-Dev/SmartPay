@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.feature.PulsaActivity;
+import com.dtech.smartpulsa.feature.QuickPayActivity;
 import com.dtech.smartpulsa.feature.TagihanActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -52,8 +53,8 @@ public class TempActivity extends AppCompatActivity
     SharedPreferences sharedPreferences;
     public String textUser, txtEmail, txtFirebaseId;
     //private static final String PREF_NAME = "app-welcome";
-    private static final String DISPLAY_NAME = "displayName";
-    private static final String DISPLAY_EMAIL = "displayEmail";
+    //private static final String DISPLAY_NAME = "displayName";
+    //private static final String DISPLAY_EMAIL = "displayEmail";
 
     private String JSON_STRING, status, balance, point;
 
@@ -73,8 +74,11 @@ public class TempActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+                Intent quickPay = new Intent(TempActivity.this, QuickPayActivity.class);
+                startActivity(quickPay);
+
             }
         });
 
@@ -266,7 +270,7 @@ public class TempActivity extends AppCompatActivity
                 isiPulsa();
                 break;
             case R.id.btnCekTagihan:
-                openTagihan();
+                frCekTagihan();
                 break;
             case R.id.btnToken:
                 isiToken();

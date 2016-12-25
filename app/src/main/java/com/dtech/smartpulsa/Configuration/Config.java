@@ -62,6 +62,18 @@ public class Config {
     public static final String POST_BAYAR = "bayar";
 
 
+    //variable and json tag for select harga token
+    /*
+			"id"=>$row['id_harga'],
+			"keterangan"=>$row['keterangan'],
+			"harga"=>$harga*/
+
+    public static final String URL_HARGA_TOKEN = "http://samimi.web.id/dev/select-token.php";
+    public static final String TAG_ID_HARGA = "id";
+    public static final String TAG_KETERANGAN_TOKEN = "keterangan";
+    public static final String TAG_HARGA_TOKEN = "harga";
+    public static final String TAG_KODE_TOKEN = "kode";
+
     //
     public static final String KEY_TKODE_NAME = "name";
     public static final String KEY_TKODE_KODE = "kode";
