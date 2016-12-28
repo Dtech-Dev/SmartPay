@@ -74,6 +74,17 @@ public class Config {
     public static final String TAG_HARGA_TOKEN = "harga";
     public static final String TAG_KODE_TOKEN = "kode";
 
+    //variable and json tag select voucher game
+    /*"id"=>$row['id_harga'],
+            "keterangan"=>$row['keterangan'],
+			"kode"=>$row['kode'],
+			"nominal"=>$row['nominal'],
+			"harga"=>$harga*/
+    public static final String URL_VOUCHER_GAME = "http://samimi.web.id/dev/select-vgame.php";
+    public static final String TAG_POST_KETERANGAN = "keteranganv";
+    public static final String TAG_KODE_VGAME = "kode";
+    public static final String TAG_HARGA_VGAME = "harga";
+
     //
     public static final String KEY_TKODE_NAME = "name";
     public static final String KEY_TKODE_KODE = "kode";

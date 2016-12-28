@@ -127,6 +127,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dtech.smartpulsa.TempActivity" />
         </activity>
+        <activity
+            android:name=".feature.VoucherActivity"
+            android:label="@string/title_activity_voucher"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dtech.smartpulsa.TempActivity" />
+        </activity>
     </application>
 
 </manifest>

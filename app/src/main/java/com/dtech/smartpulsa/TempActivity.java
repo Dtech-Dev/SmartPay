@@ -28,6 +28,7 @@ import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.feature.PulsaActivity;
 import com.dtech.smartpulsa.feature.QuickPayActivity;
 import com.dtech.smartpulsa.feature.TagihanActivity;
+import com.dtech.smartpulsa.feature.VoucherActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -46,7 +47,7 @@ public class TempActivity extends AppCompatActivity
     LayoutInflater layoutInflater ;
     View headerNav;
     TextView navemail, navusername, tbalance, tTempor;
-    Button btnIsiPulsa, btnCekTagihan, btnToken;
+    Button btnIsiPulsa, btnCekTagihan, btnToken, btnVoucher;
     Dialog dialogPulsa;
     PrefManager prefManager;
     NavigationView navigationView;
@@ -107,6 +108,8 @@ public class TempActivity extends AppCompatActivity
         btnIsiPulsa = (Button) findViewById(R.id.btnIsiPulsa);
         btnCekTagihan = (Button) findViewById(R.id.btnCekTagihan);
         btnToken = (Button) findViewById(R.id.btnToken);
+        btnVoucher = (Button) findViewById(R.id.btnVoucher);
+        btnVoucher.setOnClickListener(this);
         btnToken.setOnClickListener(this);
         btnCekTagihan.setOnClickListener(this);
         btnIsiPulsa.setOnClickListener(this);
@@ -274,7 +277,16 @@ public class TempActivity extends AppCompatActivity
                 break;
             case R.id.btnToken:
                 isiToken();
+                break;
+            case R.id.btnVoucher:
+                voucherGame();
+                break;
         }
+    }
+
+    private void voucherGame() {
+        Intent voucherGameOpen = new Intent(this, VoucherActivity.class);
+        startActivity(voucherGameOpen);
     }
 
     private void isiToken() {
