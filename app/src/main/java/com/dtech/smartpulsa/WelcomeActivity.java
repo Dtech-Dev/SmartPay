@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,8 +49,9 @@ public class WelcomeActivity extends AppCompatActivity  implements
     String userName, userEmail;
     String userNumber;
     TelephonyManager telephonyManager;
-    RelativeLayout rel;
+    RelativeLayout rel, relui1, relui2;
     TextView txtakun, txt2, txtNo;
+    EditText eduserNumber;
     Button next1, next2;
     GoogleApiClient mGoogleApiClient;
     SignInButton signInButton;
@@ -73,8 +75,8 @@ public class WelcomeActivity extends AppCompatActivity  implements
         }
         setContentView(R.layout.activity_welcome);
 
-        telephonyManager=(TelephonyManager)this.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
-        userNumber = telephonyManager.getLine1Number();
+        //telephonyManager=(TelephonyManager)this.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+        //userNumber = telephonyManager.getLine1Number();
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         findViewById(R.id.btn_next).setOnClickListener(this);
@@ -93,12 +95,15 @@ public class WelcomeActivity extends AppCompatActivity  implements
                 .build();
         /**/
         /*1st ui*/
+        relui1 = (RelativeLayout) findViewById(R.id.ui1);
+        relui2 = (RelativeLayout) findViewById(R.id.ui2);
+        eduserNumber = (EditText) findViewById(R.id.usrnumber);
         rel = (RelativeLayout) findViewById(R.id.activity_welcome);
         txtakun = (TextView) findViewById(R.id.textView);
         signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         next1 = (Button) findViewById(R.id.btn_next);
         /*2nd ui*/
-        txt2 = (TextView) findViewById(R.id.textView2);
+        //txt2 = (TextView) findViewById(R.id.textView2);
         txtNo = (TextView) findViewById(R.id.textViewNo);
         next2 = (Button) findViewById(R.id.btn_next2);
         cbx = (CheckBox) findViewById(R.id.cbx);
@@ -145,6 +150,8 @@ public class WelcomeActivity extends AppCompatActivity  implements
                 updateUI();
                 break;
             case R.id.btn_next2:
+                userNumber = eduserNumber.getText().toString();
+                prefManager.setUserNumber(userNumber);
                 launchHome();
                 break;
         }
@@ -153,16 +160,18 @@ public class WelcomeActivity extends AppCompatActivity  implements
     private void updateUI() {
         /*String userNumber = "";*/
         /*GONE-ing 1st ui*/
-        findViewById(R.id.textView).setVisibility(View.INVISIBLE);
+        relui1.setVisibility(View.GONE);
+        /*findViewById(R.id.textView).setVisibility(View.INVISIBLE);
         findViewById(R.id.sign_in_button).setVisibility(View.INVISIBLE);
-        findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);
+        findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);*/
         findViewById(R.id.activity_welcome).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
         /*VISIBLE-ing 2nd ui*/
-        findViewById(R.id.textView2).setVisibility(View.VISIBLE);
+        relui2.setVisibility(View.VISIBLE);
+        /*findViewById(R.id.textView2).setVisibility(View.VISIBLE);
         findViewById(R.id.textViewNo).setVisibility(View.VISIBLE);
         findViewById(R.id.btn_next2).setVisibility(View.VISIBLE);
-        findViewById(R.id.cbx).setVisibility(View.VISIBLE);
+        findViewById(R.id.cbx).setVisibility(View.VISIBLE);*/
 
         cbx.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -177,8 +186,8 @@ public class WelcomeActivity extends AppCompatActivity  implements
 
             }
         });
-        prefManager.setUserNumber(userNumber);
-        txtNo.setText(userNumber);
+
+        //txtNo.setText(userNumber);
     }
 
     private void signIn() {

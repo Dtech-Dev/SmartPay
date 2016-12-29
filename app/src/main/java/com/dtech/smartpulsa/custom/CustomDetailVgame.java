@@ -46,7 +46,7 @@ public class CustomDetailVgame extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
-            //grid = new View(context);
+            grid = new View(context);
             grid = inflater.inflate(R.layout.custom_item_detail_vgame, null);
             TextView txtkodevgame = (TextView) grid.findViewById(R.id.itemdetailVgame);
             TextView txthargavgame = (TextView) grid.findViewById(R.id.itemhargaVgame);

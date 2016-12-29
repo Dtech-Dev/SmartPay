@@ -11,74 +11,111 @@
     tools:context="com.dtech.smartpulsa.WelcomeActivity"
     android:background="@android:color/holo_purple">
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ui1"
+        >
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/sign_in_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="67dp"
-        android:id="@+id/textView" />
+        <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/sign_in_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="67dp"
+            android:id="@+id/textView" />
 
-    <Button
-        android:id="@+id/btn_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:background="@null"
-        android:text="@string/next"
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:text="@string/next"
 
-        android:enabled="false" />
+            android:enabled="false" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ui2"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btn_next2"
+
+            android:enabled="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:text="@string/next"
+            android:textColor="@android:color/darker_gray" />
+
+        <!--<TextView
+            android:text="Default Nomor Handphone Anda "
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:id="@+id/textView2"
+            android:layout_below="@+id/cbx"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="98dp" />-->
+
+
+        <CheckBox
+            android:text="Dengan ini saya menyetujui Syarat dan Ketentuan dari Smart Pulsa"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginBottom="16dp"
+            android:id="@+id/cbx"
+            android:layout_above="@+id/btn_next2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="Default nomor HaPe"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:id="@+id/textViewNo"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="97dp" />
+
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:background="#fff"
+            android:ems="10"
+            android:layout_below="@+id/textViewNo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:id="@+id/usrnumber" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/usrnumber"
+            android:layout_marginTop="30dp"
+            android:text="Nomor anda akan kami gunakan untuk mengirim pemberitahuan tentang:\n- Transaksi pulsa yang gagal,\n- Provider yang mengalami gangguan, dll "/>
+    </RelativeLayout>
 
     <!--2nd ui-->
-    <TextView
-        android:text="Default Nomor Handphone Anda "
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/sign_in_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="67dp"
-        android:id="@+id/textView2" />
-    <Button
-        android:id="@+id/btn_next2"
-        android:visibility="gone"
-        android:enabled="false"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:background="@null"
-        android:text="@string/next"
-        android:textColor="@android:color/darker_gray" />
 
-    <TextView
-        android:text="Default nomor HaPe"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/sign_in_button"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView"
-        android:layout_marginBottom="12dp"
-        android:id="@+id/textViewNo" />
-
-    <CheckBox
-        android:text="Dengan ini saya menyetujui Syarat dan Ketentuan dari Smart Pulsa"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btn_next"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="32dp"
-        android:id="@+id/cbx" />
 
 </RelativeLayout>
