@@ -20,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,7 @@ public class TempActivity extends AppCompatActivity
     PrefManager prefManager;
     NavigationView navigationView;
     SharedPreferences sharedPreferences;
+    Toolbar toolbar;
     public String textUser, txtEmail, txtFirebaseId;
     //private static final String PREF_NAME = "app-welcome";
     //private static final String DISPLAY_NAME = "displayName";
@@ -63,8 +65,9 @@ public class TempActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temp);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         prefManager = new PrefManager(this);
 
@@ -97,9 +100,9 @@ public class TempActivity extends AppCompatActivity
 
 
         initUi();
-        getJson();
+        //getJson();
 
-        splitString();
+        //splitString();
 
 
     }
@@ -127,6 +130,15 @@ public class TempActivity extends AppCompatActivity
         tTempor = (TextView) findViewById(R.id.textViewTempor);
 
         navemail.setText(txtEmail+"\n"+txtFirebaseId);
+
+        ImageButton imageWallet = (ImageButton) toolbar.findViewById(R.id.icWallet);
+        imageWallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(TempActivity.this, "Wallet Clicked", Toast.LENGTH_SHORT).show();
+                getJson();
+            }
+        });
     }
 
     private void splitString() {
@@ -199,7 +211,7 @@ public class TempActivity extends AppCompatActivity
             }
 
             //String saldo=NumberFormat.getNumberInstance(Locale.US).format(balance);
-            navusername.setText(textUser+"("+status+" user)");
+            //navusername.setText(textUser+"("+status+" user)");
             tbalance.setText(balance+"\n"+point);
 
             Toast.makeText(TempActivity.this, status, Toast.LENGTH_LONG).show();

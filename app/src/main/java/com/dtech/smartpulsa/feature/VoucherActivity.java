@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -27,12 +28,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class VoucherActivity extends AppCompatActivity {
+public class VoucherActivity extends AppCompatActivity implements View.OnClickListener {
 
     GridView gridVoucher, gridVoucherDetail;
     RelativeLayout layoutVoucher, layoutDetailVoucher;
     ImageView imgJenisVoucher;
     TextView txtjnsvoucher;
+    Button mainMenuVoucher;
 
     public static String[] gridStringsVoucher = {
             "Garena",
@@ -172,6 +174,7 @@ public class VoucherActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+
             }
         });
     }
@@ -183,8 +186,22 @@ public class VoucherActivity extends AppCompatActivity {
         imgJenisVoucher = (ImageView) findViewById(R.id.imageJnsVoucher);
         layoutVoucher = (RelativeLayout) findViewById(R.id.layVoucher);
         layoutDetailVoucher = (RelativeLayout) findViewById(R.id.layVoucherDetail);
+        mainMenuVoucher = (Button) findViewById(R.id.btnMainVoucher);
+        mainMenuVoucher.setOnClickListener(this);
         /*layoutVoucher.setVisibility(View.VISIBLE);
         layoutDetailVoucher.setVisibility(View.GONE);*/
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnMainVoucher:
+                showMainMenuVoucher();
+        }
+    }
+
+    private void showMainMenuVoucher() {
+        layoutDetailVoucher.setVisibility(View.GONE);
+        layoutVoucher.setVisibility(View.VISIBLE);
+    }
 }

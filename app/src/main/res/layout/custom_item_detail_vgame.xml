@@ -22,6 +22,12 @@
         android:layout_below="@+id/itemdetailVgame"
         android:layout_alignLeft="@+id/itemdetailVgame"
         android:layout_alignStart="@+id/itemdetailVgame"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="5dp"
         android:id="@+id/itemhargaVgame" />
+
+    <view
+        android:layout_width="50pt"
+        android:layout_height="2dp"
+        android:background="@color/colorAccent"
+        android:layout_below="@+id/itemhargaVgame" />
 </RelativeLayout>

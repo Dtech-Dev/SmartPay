@@ -34,7 +34,8 @@
 
             <GridView
                 android:id="@+id/gridToken"
-
+                android:horizontalSpacing="10dp"
+                android:verticalSpacing="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:columnWidth="100dp"
