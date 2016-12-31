@@ -82,8 +82,9 @@ public class Config {
 			"harga"=>$harga*/
     public static final String URL_VOUCHER_GAME = "http://samimi.web.id/dev/select-vgame.php";
     public static final String TAG_POST_KETERANGAN = "keteranganv";
-    public static final String TAG_KODE_VGAME = "kode";
-    public static final String TAG_HARGA_VGAME = "harga";
+    public static final String TAG_KODE_ITEM = "kode";
+    public static final String TAG_HARGA_ITEM = "harga";
+    public static final String TAG_KETERANGAN_ITEM = "keterangan";
 
     //
     public static final String KEY_TKODE_NAME = "name";

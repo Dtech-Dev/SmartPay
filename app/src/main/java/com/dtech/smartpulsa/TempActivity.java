@@ -264,6 +264,8 @@ public class TempActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
+            Intent transaksi = new Intent(TempActivity.this, TransactActivity.class);
+            startActivity(transaksi);
 
         } else if (id == R.id.nav_slideshow) {
 

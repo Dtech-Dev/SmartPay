@@ -163,8 +163,8 @@ public class VoucherActivity extends AppCompatActivity implements View.OnClickLi
 
             for(int i = 0; i<result.length(); i++){
                 JSONObject jo = result.getJSONObject(i);
-                String kode = jo.getString(Config.TAG_KODE_VGAME);
-                String harga = jo.getString(Config.TAG_HARGA_VGAME);
+                String kode = jo.getString(Config.TAG_KODE_ITEM);
+                String harga = jo.getString(Config.TAG_HARGA_ITEM);
 
 
 

@@ -17,4 +17,15 @@
     <string name="title_activity_quick_pay">QuickPayActivity</string>
     <string name="title_activity_voucher">VoucherActivity</string>
     <string name="title_activity_paket_data">PaketDataActivity</string>
+    <string name="title_activity_transact">TransactActivity</string>
+    <string name="drawer_item_compact_header">Mini Drawer Header</string>
+    <string name="drawer_item_action_bar_drawer">Pulsa</string>
+    <string name="drawer_item_multi_drawer">Tagihan</string>
+    <string name="drawer_item_non_translucent_status_drawer">Token</string>
+    <string name="drawer_item_voucher">Voucher Game</string>
+    <string name="drawer_item_paket">Paket Data</string>
+    <string name="drawer_item_advanced_drawer">Advance</string>
+    <string name="drawer_item_section_header">Section Drawer</string>
+    <string name="drawer_item_open_source">Open Source</string>
+    <string name="drawer_item_contact">Contact</string>
 </resources>

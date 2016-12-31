@@ -139,6 +139,10 @@
         <activity
             android:name=".feature.PaketDataActivity"
             android:label="@string/title_activity_paket_data"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TransactActivity"
+            android:label="@string/title_activity_transact"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

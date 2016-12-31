@@ -5,7 +5,9 @@
     android:id="@+id/content_paket_data"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="10dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.dtech.smartpulsa.feature.PaketDataActivity"
     tools:showIn="@layout/activity_paket_data">
@@ -13,7 +15,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/layMainPaket">
+        android:id="@+id/layMainPaket"
+        >
 
         <GridView
             android:layout_width="match_parent"
@@ -58,7 +61,7 @@
             android:layout_marginStart="47dp"
             android:id="@+id/txtJnsPaket" />
 
-        <android.support.v4.widget.NestedScrollView
+        <!--<android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:id="@+id/nestedscrollpaket"
             android:layout_height="match_parent"
@@ -81,9 +84,15 @@
                     android:numColumns="auto_fit"
                     android:stretchMode="columnWidth"
 
-                    android:layout_marginTop="20dp"/>
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+                    android:layout_marginTop="20dp"/>-->
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/imageJnsPaket"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/recyclerpaket"/>
+        <!--    </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>-->
 
     </RelativeLayout>
 
