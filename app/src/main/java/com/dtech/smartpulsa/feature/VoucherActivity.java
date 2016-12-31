@@ -53,6 +53,14 @@ public class VoucherActivity extends AppCompatActivity implements View.OnClickLi
             "ic_launcher"
     };
 
+    public static String[] grididVoucher = {
+            "11",
+            "12",
+            "13",
+            "14",
+            "15"
+    };
+
     public static int[] gridImageVouchers = {
             R.mipmap.ic_launcher,
             R.mipmap.ic_launcher,
@@ -83,7 +91,7 @@ public class VoucherActivity extends AppCompatActivity implements View.OnClickLi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initUi();
-        gridVoucher.setAdapter(new CustomGridVoucher(this, gridStringsVoucher, gridImageVouchers, gridImageTag));
+        gridVoucher.setAdapter(new CustomGridVoucher(this, gridStringsVoucher, gridImageVouchers, gridImageTag, grididVoucher));
 
         gridVoucher.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -92,19 +100,21 @@ public class VoucherActivity extends AppCompatActivity implements View.OnClickLi
                 String tag = (String) imageView.getTag();
                 TextView textView = (TextView) view.findViewById(R.id.gridvoucher_text);
                 String jenisVoucher = textView.getText().toString();
+                TextView textView1 = (TextView) view.findViewById(R.id.txtid);
+                String idItem = textView1.getText().toString();
 
-                updateUi(jenisVoucher, tag);
+                updateUi(idItem, tag, jenisVoucher);
             }
         });
     }
 
-    private void updateUi(final String jenisVoucher, String tag) {
+    private void updateUi(final String jenisVoucher, String tag, String keterangan) {
         layoutVoucher.setVisibility(View.GONE);
         layoutDetailVoucher.setVisibility(View.VISIBLE);
 
         int resource = getResources().getIdentifier(tag, "mipmap", getPackageName());
         imgJenisVoucher.setImageDrawable(getResources().getDrawable(resource));
-        txtjnsvoucher.setText(jenisVoucher);
+        txtjnsvoucher.setText(keterangan);
 
         class DetailVoucher extends AsyncTask<Void, Void, String> {
 

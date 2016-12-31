@@ -95,6 +95,16 @@
             android:layout_alignStart="@+id/btnIsiPulsa"
             android:layout_marginTop="20dp"
             android:text="Voucher Game"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnpaketdata"
+            android:layout_below="@+id/btnVoucher"
+            android:layout_alignLeft="@+id/btnIsiPulsa"
+            android:layout_alignStart="@+id/btnIsiPulsa"
+            android:layout_marginTop="20dp"
+            android:text="Paket Data"/>
     </RelativeLayout>
 
 </RelativeLayout>

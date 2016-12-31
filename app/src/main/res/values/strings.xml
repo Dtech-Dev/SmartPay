@@ -16,4 +16,5 @@
     <string name="title_activity_token">TokenActivity</string>
     <string name="title_activity_quick_pay">QuickPayActivity</string>
     <string name="title_activity_voucher">VoucherActivity</string>
+    <string name="title_activity_paket_data">PaketDataActivity</string>
 </resources>

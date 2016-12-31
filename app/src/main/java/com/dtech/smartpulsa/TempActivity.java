@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
+import com.dtech.smartpulsa.feature.PaketDataActivity;
 import com.dtech.smartpulsa.feature.PulsaActivity;
 import com.dtech.smartpulsa.feature.QuickPayActivity;
 import com.dtech.smartpulsa.feature.TagihanActivity;
@@ -48,7 +49,7 @@ public class TempActivity extends AppCompatActivity
     LayoutInflater layoutInflater ;
     View headerNav;
     TextView navemail, navusername, tbalance, tTempor;
-    Button btnIsiPulsa, btnCekTagihan, btnToken, btnVoucher;
+    Button btnIsiPulsa, btnCekTagihan, btnToken, btnVoucher, btnPaketData;
     Dialog dialogPulsa;
     PrefManager prefManager;
     NavigationView navigationView;
@@ -112,6 +113,8 @@ public class TempActivity extends AppCompatActivity
         btnCekTagihan = (Button) findViewById(R.id.btnCekTagihan);
         btnToken = (Button) findViewById(R.id.btnToken);
         btnVoucher = (Button) findViewById(R.id.btnVoucher);
+        btnPaketData = (Button) findViewById(R.id.btnpaketdata);
+        btnPaketData.setOnClickListener(this);
         btnVoucher.setOnClickListener(this);
         btnToken.setOnClickListener(this);
         btnCekTagihan.setOnClickListener(this);
@@ -293,7 +296,14 @@ public class TempActivity extends AppCompatActivity
             case R.id.btnVoucher:
                 voucherGame();
                 break;
+            case R.id.btnpaketdata:
+                paketData();
         }
+    }
+
+    private void paketData() {
+        Intent paketDataOpen = new Intent(this, PaketDataActivity.class);
+        startActivity(paketDataOpen);
     }
 
     private void voucherGame() {

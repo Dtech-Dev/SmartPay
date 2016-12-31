@@ -14,20 +14,18 @@ import com.dtech.smartpulsa.R;
  * Created by aris on 14/12/16.
  */
 
-public class CustomGridVoucher extends BaseAdapter {
+public class CustomGridPaket extends BaseAdapter {
 
     private Context context;
     private final String[] textTagihan;
     private final String[] tagImage;
-    private final String[] textid;
     private final int[] imageId;
 
-    public CustomGridVoucher(Context context, String[] textTagihan, int[] imageId, String[] tagImage, String[] textid) {
+    public CustomGridPaket(Context context, String[] textTagihan, int[] imageId, String[] tagImage) {
         this.context = context;
         this.textTagihan = textTagihan;
         this.imageId = imageId;
         this.tagImage = tagImage;
-        this.textid = textid;
     }
 
     @Override
@@ -58,8 +56,6 @@ public class CustomGridVoucher extends BaseAdapter {
             textView.setText(textTagihan[position]);
             imageView.setImageResource(imageId[position]);
             imageView.setTag(tagImage[position]);
-            TextView txtidItem = (TextView) grid.findViewById(R.id.txtid);
-            txtidItem.setText(textid[position]);
 
         } else {
             grid = (View) convertView;
