@@ -1,15 +1,14 @@
-package com.dtech.smartpulsa;
+package com.dtech.smartpulsa.fragments;
 
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -17,6 +16,7 @@ import android.widget.Toast;
 
 import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
+import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.custom.CustomGridToken;
 import com.dtech.smartpulsa.feature.Transaksi;
 import com.dtech.smartpulsa.preference.PrefManager;
@@ -26,11 +26,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class TokenActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+import static android.content.Context.MODE_PRIVATE;
 
-    //    String[] harga = new String[];
+/**
+ * Created by aris on 01/01/17.
+ */
+
+public class FrToken extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
+
+    View view;
     Transaksi transaksi;
     PrefManager prefManager;
     String json_string, firebaseId, email;
@@ -38,40 +43,22 @@ public class TokenActivity extends AppCompatActivity implements AdapterView.OnIt
     GridView gridToken;
     EditText edIdPelanggan;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_token);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        prefManager = new PrefManager(this);
-        SharedPreferences sharedPreferences = this.getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.content_token, container, false);
+        prefManager = new PrefManager(getActivity());
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
         firebaseId = (sharedPreferences.getString(Config.DISPLAY_FIREBASE_ID, ""));
         email = (sharedPreferences).getString(Config.DISPLAY_EMAIL, "");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        initUi();
-
+        initUI();
         getHargaToken();
-    }
-
-    private void initUi() {
-        gridToken = (GridView) findViewById(R.id.gridToken);
-        edIdPelanggan = (EditText) findViewById(R.id.idPelangganToken);
+        return view;
     }
 
     private void getHargaToken() {
-        class THargaToken extends AsyncTask<Void, Void, String> {
+        class HargaToken extends AsyncTask<Void, Void, String> {
 
             @Override
             protected String doInBackground(Void... voids) {
@@ -93,8 +80,8 @@ public class TokenActivity extends AppCompatActivity implements AdapterView.OnIt
             }
         }
 
-        THargaToken thargaToken= new THargaToken();
-        thargaToken.execute();
+        HargaToken hargaToken= new HargaToken();
+        hargaToken.execute();
     }
 
     private void showHarga() {
@@ -124,22 +111,30 @@ public class TokenActivity extends AppCompatActivity implements AdapterView.OnIt
         String[] kodetoken = listkode.toArray(new String[listkode.size()]);
         String[] hargaToken = list.toArray(new String[list.size()]);
 
-        gridToken.setAdapter(new CustomGridToken(hargaToken, kodetoken, this));
+        gridToken.setAdapter(new CustomGridToken(hargaToken, kodetoken, getActivity()));
         gridToken.setOnItemClickListener(this);
+    }
 
+    private void initUI() {
+        gridToken = (GridView) view.findViewById(R.id.gridToken);
+        edIdPelanggan = (EditText) view.findViewById(R.id.idPelangganToken);
     }
 
     @Override
+    public void onClick(View view) {
+
+    }
+
+
+    @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-
         TextView tvkode = (TextView) view.findViewById(R.id.txtkodeToken);
         /*Button btnProses = (Button)view.findViewById()*/
         String kodetoken = tvkode.getText().toString();
         String idpel = edIdPelanggan.getText().toString();
         String formatTrx = "pln " + idpel + " " + kodetoken + " 3003";
 
-        Toast.makeText(this, formatTrx, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), formatTrx, Toast.LENGTH_SHORT).show();
 
         /*transaksi = new Transaksi(this.getActivity());
         transaksi.setUser(email);

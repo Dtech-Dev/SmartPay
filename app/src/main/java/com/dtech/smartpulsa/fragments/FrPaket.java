@@ -1,22 +1,21 @@
-package com.dtech.smartpulsa.feature;
+package com.dtech.smartpulsa.fragments;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
@@ -24,6 +23,7 @@ import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.custom.CustomGridVoucher;
 import com.dtech.smartpulsa.data.AdapterPaket;
 import com.dtech.smartpulsa.data.DataPaket;
+import com.dtech.smartpulsa.feature.PaketDataActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +33,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class PaketDataActivity extends AppCompatActivity implements View.OnClickListener {
+/**
+ * Created by aris on 01/01/17.
+ */
+
+public class FrPaket extends Fragment implements View.OnClickListener {
+
+    View view;
 
     GridView gridPaket, gridPaketDetail;
     RelativeLayout layMain, layDetail;
@@ -82,25 +88,14 @@ public class PaketDataActivity extends AppCompatActivity implements View.OnClick
     };
     private String json_string;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_paket_data);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.content_paket_data, container, false);
 
         initUi();
 
-        gridPaket.setAdapter(new CustomGridVoucher(this, gridStringPaket, gridImagePaket, gridImageTagPaket, grididpaket));
+        gridPaket.setAdapter(new CustomGridVoucher(getActivity(), gridStringPaket, gridImagePaket, gridImageTagPaket, grididpaket));
         gridPaket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -114,7 +109,7 @@ public class PaketDataActivity extends AppCompatActivity implements View.OnClick
                 updateUi(idItem, tag, jenisPaket);
             }
         });
-
+        return view;
     }
 
     private void updateUi(final String idItem, String tag, String jenisPaket) {
@@ -122,17 +117,17 @@ public class PaketDataActivity extends AppCompatActivity implements View.OnClick
         layDetail.setVisibility(View.VISIBLE);
 
         //Toast.makeText(this, idItem + " " + jenisVoucher, Toast.LENGTH_SHORT).show();
-        int resource = getResources().getIdentifier(tag, "mipmap", getPackageName());
+        int resource = getResources().getIdentifier(tag, "mipmap", getActivity().getPackageName());
         imgjnspaket.setImageDrawable(getResources().getDrawable(resource));
         txtjnspaket.setText(jenisPaket);
 
-        class DetailPaket extends AsyncTask<Void, Void, String> {
+        class FDetailPaket extends AsyncTask<Void, Void, String> {
 
             ProgressDialog loading;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(PaketDataActivity.this, "Loading...", "Please wait", false, false);
+                loading = ProgressDialog.show(getActivity(), "Loading...", "Please wait", false, false);
             }
 
             @Override
@@ -158,7 +153,7 @@ public class PaketDataActivity extends AppCompatActivity implements View.OnClick
             }
         }
 
-        DetailPaket detailPaket = new DetailPaket();
+        FDetailPaket detailPaket = new FDetailPaket();
         detailPaket.execute();
     }
 
@@ -183,22 +178,23 @@ public class PaketDataActivity extends AppCompatActivity implements View.OnClick
             e.printStackTrace();
         }
 
-        madapter = new AdapterPaket(PaketDataActivity.this, data);
+        madapter = new AdapterPaket(getActivity(), data);
         recyclerPaket.setAdapter(madapter);
-        recyclerPaket.setLayoutManager(new LinearLayoutManager(PaketDataActivity.this));
+        recyclerPaket.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     private void initUi() {
-        gridPaket = (GridView) findViewById(R.id.gridpaket);
+        gridPaket = (GridView) view.findViewById(R.id.gridpaket);
         //gridPaketDetail = (GridView) findViewById(R.id.gridpaketdetail);
-        recyclerPaket = (RecyclerView) findViewById(R.id.recyclerpaket);
-        layMain = (RelativeLayout) findViewById(R.id.layMainPaket);
-        layDetail = (RelativeLayout) findViewById(R.id.layDetailPaket);
-        txtjnspaket = (TextView) findViewById(R.id.txtJnsPaket);
-        imgjnspaket = (ImageView) findViewById(R.id.imageJnsPaket);
-        btnmainpaket = (Button) findViewById(R.id.btnMainPaket);
+        recyclerPaket = (RecyclerView) view.findViewById(R.id.recyclerpaket);
+        layMain = (RelativeLayout) view.findViewById(R.id.layMainPaket);
+        layDetail = (RelativeLayout) view.findViewById(R.id.layDetailPaket);
+        txtjnspaket = (TextView) view.findViewById(R.id.txtJnsPaket);
+        imgjnspaket = (ImageView) view.findViewById(R.id.imageJnsPaket);
+        btnmainpaket = (Button) view.findViewById(R.id.btnMainPaket);
         btnmainpaket.setOnClickListener(this);
     }
+
 
     @Override
     public void onClick(View view) {

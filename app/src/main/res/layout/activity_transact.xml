@@ -28,14 +28,14 @@
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar">
 
-        <TextView
+        <!--<TextView
             android:id="@+id/crossfade_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
             android:text="Embedded Drawer"
-            android:textSize="16sp" />
+            android:textSize="16sp" />-->
     </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
