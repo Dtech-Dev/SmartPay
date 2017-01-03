@@ -11,19 +11,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
+import com.dtech.smartpulsa.custom.CustomGridTagihan;
+import com.dtech.smartpulsa.custom.CustomGridVoucher;
 import com.dtech.smartpulsa.firedatabase.DatabaseCek;
 import com.dtech.smartpulsa.preference.PrefManager;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.content.Context.USER_SERVICE;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,9 +52,11 @@ import java.util.HashMap;
 public class FrTagihan extends Fragment implements View.OnClickListener {
 
     EditText edNmrTagihan;
-    TextView txtTagihan;
-    Button btnCek, btnPay;
+    TextView txtTagihan, txtjnsTagihan;
+    Button btnCek, btnPay, btnMain;
     ProgressBar prgBar;
+    RelativeLayout laymainTagihan, laydetailTagihan;
+    GridView gridView;
 
     View view;
     PrefManager prefManager;
@@ -58,11 +66,52 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
     String name;
     String trx;
     String tagihanTampil;
+    String jnsTagihan;
 
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
     FirebaseAuth firebaseAuth;
     FirebaseUser userF;
+
+    ProgressDialog loading;
+
+    public static String[] gridViewStrings = {
+            "PLN",
+            "PDAM",
+            "Telkom",
+            "Orange TV",
+            "Indovision",
+            "Aora TV",
+            "FIF",
+            "Astra Credit\nCompany",
+            "WOM Finane"
+
+    };
+
+    public static String[] gridid = {
+            "PLN",
+            "PDAM",
+            "Telkom",
+            "Orange TV",
+            "Indovision",
+            "Aora TV",
+            "FIF",
+            "Astra Credit\nCompany",
+            "WOM Finane"
+
+    };
+
+    public static int[] gridViewImages = {
+            R.mipmap.ic_launcher,
+            R.mipmap.ic_launcher,
+            R.mipmap.ic_launcher,
+            R.mipmap.ic_launcher,
+            R.mipmap.ic_launcher,
+            R.mipmap.ic_launcher,
+            R.mipmap.ic_launcher,
+            R.mipmap.ic_launcher,
+            R.mipmap.ic_launcher
+    };
 
     @Nullable
     @Override
@@ -72,16 +121,20 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
         name = (sharedPreferences.getString(Config.DISPLAY_NAME, ""));
         email = (sharedPreferences).getString(Config.DISPLAY_EMAIL, "");
+        userId = (sharedPreferences).getString(Config.DISPLAY_FIREBASE_ID, "");
 
         initUI();
+        gridView.setAdapter(new CustomGridVoucher(getActivity(), gridViewStrings, gridViewImages, gridViewStrings, gridid));
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         userF = firebaseAuth.getCurrentUser();
-        userId = userF.getUid();
+        //userId = userF.getUid();
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference("users");
         mFirebaseInstance.getReference("app_title").setValue("Cek Tagihan");
 
+        //addDbaseChangeListener();
         /*mFirebaseInstance.getReference("trx").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -94,19 +147,48 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
 
             }
         });*/
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                TextView textView = (TextView) view.findViewById(R.id.gridvoucher_text);
+                jnsTagihan = textView.getText().toString();
+
+                updateUi(jnsTagihan);
+            }
+        });
+
         return view;
     }
 
+    private void updateUi(String jnsTagihan) {
+        laymainTagihan.setVisibility(View.GONE);
+        laydetailTagihan.setVisibility(View.VISIBLE);
+
+        txtjnsTagihan.setText("Masukkan Id pelanggan "+jnsTagihan+" anda");
+    }
+
     private void initUI() {
+        laymainTagihan = (RelativeLayout) view.findViewById(R.id.layMainTagihan);
+        laydetailTagihan = (RelativeLayout) view.findViewById(R.id.layDetailTagihan);
+        gridView = (GridView) view.findViewById(R.id.gridtagihan);
         edNmrTagihan = (EditText) view.findViewById(R.id.edNmrTagihan);
         txtTagihan = (TextView) view.findViewById(R.id.txtTagihan);
+        txtjnsTagihan = (TextView) view.findViewById(R.id.txtjenisTagihan);
         btnCek = (Button) view.findViewById(R.id.btnCek);
         btnPay = (Button) view.findViewById(R.id.btnPay);
+        btnMain = (Button) view.findViewById(R.id.btnMainTagihan);
         prgBar = (ProgressBar) view.findViewById(R.id.prgBar);
         prgBar.setVisibility(View.INVISIBLE);
+        /*if (txtTagihan.getText() == "") {
+                    prgBar.setVisibility(View.VISIBLE);
+                } else {
+                    prgBar.setVisibility(View.INVISIBLE);
+                }*/
 
         btnPay.setOnClickListener(this);
         btnCek.setOnClickListener(this);
+        btnMain.setOnClickListener(this);
 
     }
 
@@ -114,6 +196,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnCek:
+                //prgBar.setVisibility(View.VISIBLE);
                 trx = edNmrTagihan.getText().toString();
                 //if (TextUtils.isEmpty(userId)) {
                     cekTagihan();
@@ -124,7 +207,15 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
             case R.id.btnPay:
                 bayarTagihan();
                 break;
+            case R.id.btnMainTagihan:
+                backMenuTagihan();
+                break;
         }
+    }
+
+    private void backMenuTagihan() {
+        laydetailTagihan.setVisibility(View.GONE);
+        laymainTagihan.setVisibility(View.VISIBLE);
     }
 
     private void updateUser() {
@@ -140,41 +231,53 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
     private void cekTagihan() {
 
 
-        prgBar.setVisibility(View.VISIBLE);
-        String tagihan = "";
+        //prgBar.setVisibility(View.VISIBLE);
+
+        //loading = ProgressDialog.show(getActivity(), "waiit","a sec");
+        //String tagihan = "";
        /* if (TextUtils.isEmpty(userId)) {
             userId = mFirebaseDatabase.push().getKey();
         }*/
 
 
-        DatabaseCek databaseCek = new DatabaseCek(name, email, trx, tagihan);
-        mFirebaseDatabase.child(userF.getUid()).setValue(databaseCek);
+        //DatabaseCek databaseCek = new DatabaseCek(name, email, trx, tagihan);
+        //mFirebaseDatabase.child(userF.getUid()).setValue(databaseCek);
 
-        //postCekTagihan();
+        postCekTagihan();
+        txtTagihan.setText("Transaksi sedang di proses\nAnda akan mendapat pemberitahuan jumlah tagihan tersebut");
 
-        addDbaseChangeListener();
-
+        //addDbaseChangeListener();
+        /*if (txtTagihan.getText() == "") {
+            prgBar.setVisibility(View.VISIBLE);
+        } else {
+            prgBar.setVisibility(View.INVISIBLE);
+        }
+*/
     }
 
 
 
     private void addDbaseChangeListener() {
+        //prgBar.setVisibility(View.VISIBLE);
         mFirebaseDatabase.child(userF.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                DatabaseCek databaseCek = dataSnapshot.getValue(DatabaseCek.class);
-                if (databaseCek == null) {
-                    Log.e("DatabaseCek", "User data is null");
-                    return;
-                }
-                Log.e("Database Cek", "User data is changed: " + databaseCek.tagihan);
-                txtTagihan.setText(databaseCek.tagihan);
-                if (txtTagihan.getText() == "") {
-                    prgBar.setVisibility(View.VISIBLE);
-                } else {
-                    prgBar.setVisibility(View.INVISIBLE);
-                }
+                DatabaseCek data = dataSnapshot.getValue(DatabaseCek.class);
 
+                if (data == null) {
+                    Log.e("DatabaseCek", "User data is null");
+                    //return;
+                } else {
+                    if (data.tagihan == "") {
+                        prgBar.setVisibility(View.VISIBLE);
+                        txtTagihan.setText("Transaksi sedang diproses");
+                    } else {
+                        Log.e("Database Cek", "User data is changed: " + data.tagihan);
+                        txtTagihan.setText(data.tagihan);
+                        prgBar.setVisibility(View.INVISIBLE);
+                    }
+
+                }
 
             }
 
@@ -184,7 +287,48 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
             }
         });
 
-        //tagihanData();
+    }
+
+    private void postCekTagihan() {
+
+        final String formatTrx = jnsTagihan+" "+trx+" cek 3003";
+        class InsCekTagihan extends AsyncTask<Void, Void, String> {
+
+            ProgressDialog loading;
+            @Override
+            protected String doInBackground(Void... params) {
+                HashMap<String, String> paramsCekTagihan = new HashMap<>();
+                //paramsCekTagihan.put(Config.FBASE_UID, userId);
+                paramsCekTagihan.put(Config.NO_TAGIHAN, trx);
+                paramsCekTagihan.put(Config.FBASE_UID, userId);
+                paramsCekTagihan.put(Config.JENIS, jnsTagihan);
+                paramsCekTagihan.put(Config.TAG_EMAIL_USER, email);
+                paramsCekTagihan.put(Config.FORMAT, formatTrx);
+
+                RequestHandler reqHandler = new RequestHandler();
+                String res = reqHandler.sendPostRequest(Config.URL_INSERT_TAGIHAN, paramsCekTagihan);
+
+
+
+                return res;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                //loading = ProgressDialog.show(getActivity(), "Processing...", "Wait....", false, false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                //loading.dismiss();
+                Toast.makeText(getActivity(), "We'll Processing Your Request", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        InsCekTagihan cekTagihan = new InsCekTagihan();
+        cekTagihan.execute();
     }
 
     public void tagihanData() {

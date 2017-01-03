@@ -87,7 +87,7 @@
                 android:value="com.dtech.smartpulsa.TempActivity" />
         </activity>
         <activity
-            android:name=".feature.BayarTagihan"
+            android:name=".feature.InboxActivity"
             android:label="@string/title_activity_bayar_tagihan"
             android:parentActivityName=".TempActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -96,7 +96,7 @@
                 android:value="com.dtech.smartpulsa.TempActivity" />
 
             <intent-filter>
-                <action android:name="ACTIVITY_BYR" />
+                <action android:name="ACTIVITY_INBOX" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

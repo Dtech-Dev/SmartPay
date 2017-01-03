@@ -45,6 +45,7 @@ public class Config {
     public static final String FBASE_UID = "fbaseUid";
     public static final String NO_TAGIHAN = "nomorTag";
     public static final String JENIS = "jenis";
+    public static final String FORMAT = "formatTrx";
 
     public static final String URL_GET_TAGIHAN = "http://samimi.web.id/dev/jml-tagihan.php?nomortag=";
     public static final String JML_TAGIHAN = "tagihan";
@@ -52,11 +53,19 @@ public class Config {
     //variable and json tag for show tagihan
     /* "jenis"=>$row['jenis'],
         "nomortagihan"=>$row['nomor_tagihan'],
-        "tagihan"=>$row['tagihan']*/
+        "tagihan"=>$row['tagihan']
+
+        array_push($result,array(
+ "id"=>$rowunpay['id_inbox'],
+ "jenis"=>$rowunpay['jenis'],
+ "keterangan"=>$rowunpay['keterangan'],
+ "kettagihan"=>$rowunpay['ket_tagihan'],
+ "message"=>$rowunpay['message']*/
     public static final String URL_SHOW_TAGIHAN = "http://samimi.web.id/dev/admin/select-tagihan.php";
     public static final String TAG_JENIS_TAGIHAN = "jenis";
-    public static final String TAG_NOMOR_TAGIHAN = "nomortagihan";
-    public static final String TAG_TAGIHAN = "tagihan";
+    public static final String TAG_KET_TAGIHAN = "kettagihan";
+    public static final String TAG_KET_INBOX = "keterangan";
+    public static final String TAG_MES_INBOX = "message";
     public static final String TAG_ID_TAGIHAN = "id";
     public static final String POST_DELETE = "deltagihan";
     public static final String POST_BAYAR = "bayar";

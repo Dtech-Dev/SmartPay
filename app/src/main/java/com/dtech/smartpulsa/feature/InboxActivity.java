@@ -11,13 +11,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
 import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
-import com.dtech.smartpulsa.MainActivity;
 import com.dtech.smartpulsa.R;
-import com.dtech.smartpulsa.data.DataTagihan;
+import com.dtech.smartpulsa.data.DataInbox;
 import com.dtech.smartpulsa.data.TagihanAdapter;
 import com.dtech.smartpulsa.preference.PrefManager;
 
@@ -29,7 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class BayarTagihan extends AppCompatActivity {
+public class InboxActivity extends AppCompatActivity {
 
     RecyclerView recyclerTagihan;
 
@@ -42,7 +40,7 @@ public class BayarTagihan extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bayar_tagihan);
+        setContentView(R.layout.activity_inbox);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -100,20 +98,23 @@ public class BayarTagihan extends AppCompatActivity {
     private void showTagihan() {
 
         JSONObject jsonObject = null;
-        List<DataTagihan> data = new ArrayList<>();
+        List<DataInbox> data = new ArrayList<>();
         try {
             jsonObject = new JSONObject(json);
             JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_ARRAY);
             //JSONObject c = result.getJSONObject(0);
             for (int i=0; i<result.length();i++) {
                 JSONObject jo = result.getJSONObject(i);
-                DataTagihan dataTagihan = new DataTagihan();
-                String  jenis= jo.getString(Config.TAG_JENIS_TAGIHAN);
+                DataInbox dataTagihan = new DataInbox();
+                /*String  jenis= jo.getString(Config.TAG_JENIS_TAGIHAN);
                 String nomorTagihan = jo.getString(Config.TAG_NOMOR_TAGIHAN);
-                String detail = jo.getString(Config.TAG_TAGIHAN);
-                dataTagihan.idTagihan = jo.getString(Config.TAG_ID_TAGIHAN);
-                dataTagihan.detailTagihan = "Tagihan "+jenis+ " dengan ID Pelanggan "
-                +nomorTagihan+", jumlah yang harus dibayar adalah "+detail;
+                String detail = jo.getString(Config.TAG_TAGIHAN);*/
+                dataTagihan.ket = jo.getString(Config.TAG_KET_INBOX);
+                dataTagihan.jenis = jo.getString(Config.TAG_JENIS_TAGIHAN);
+                dataTagihan.ketag = jo.getString(Config.TAG_KET_TAGIHAN);
+                dataTagihan.mes = jo.getString(Config.TAG_MES_INBOX);
+                /*dataTagihan.detailTagihan = "Tagihan "+jenis+ " dengan ID Pelanggan "
+                +nomorTagihan+", jumlah yang harus dibayar adalah "+detail;*/
                 detailToast = dataTagihan.detailTagihan;
                 //Toast.makeText(this, dataTagihan.detailTagihan, Toast.LENGTH_LONG).show();
 
@@ -127,9 +128,9 @@ public class BayarTagihan extends AppCompatActivity {
             e.printStackTrace();
             //Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_LONG).show();
         }
-        mAdapter = new TagihanAdapter(BayarTagihan.this, data);
+        mAdapter = new TagihanAdapter(InboxActivity.this, data);
         recyclerTagihan.setAdapter(mAdapter);
-        recyclerTagihan.setLayoutManager(new LinearLayoutManager(BayarTagihan.this));
+        recyclerTagihan.setLayoutManager(new LinearLayoutManager(InboxActivity.this));
 
     }
 

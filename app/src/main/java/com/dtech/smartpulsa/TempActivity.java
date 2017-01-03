@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
+import com.dtech.smartpulsa.feature.InboxActivity;
 import com.dtech.smartpulsa.feature.PaketDataActivity;
 import com.dtech.smartpulsa.feature.PulsaActivity;
 import com.dtech.smartpulsa.feature.QuickPayActivity;
@@ -268,6 +269,8 @@ public class TempActivity extends AppCompatActivity
             startActivity(transaksi);
 
         } else if (id == R.id.nav_slideshow) {
+            Intent inbox = new Intent(this, InboxActivity.class);
+            startActivity(inbox);
 
         } else if (id == R.id.nav_add_saldo) {
             Intent saldo = new Intent(TempActivity.this, AddSaldoActivity.class);
@@ -291,6 +294,7 @@ public class TempActivity extends AppCompatActivity
                 break;
             case R.id.btnCekTagihan:
                 frCekTagihan();
+                //openTagihan();
                 break;
             case R.id.btnToken:
                 isiToken();

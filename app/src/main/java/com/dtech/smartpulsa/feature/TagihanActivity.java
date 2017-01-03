@@ -1,6 +1,5 @@
 package com.dtech.smartpulsa.feature;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -101,9 +100,9 @@ public class TagihanActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        Intent intentBayar = new Intent(TagihanActivity.this, BayarTagihan.class);
-                        intentBayar.putExtra("jenis", data);
-                        startActivity(intentBayar);
+                        //Intent intentBayar = new Intent(TagihanActivity.this, InboxActivity.class);
+                        //intentBayar.putExtra("jenis", data);
+                        //startActivity(intentBayar);
                         dialogTagihan.dismiss();
                     }
                 });

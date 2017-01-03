@@ -3,54 +3,105 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:ems="10"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="138dp"
-        android:id="@+id/edNmrTagihan" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/layMainTagihan"
+        >
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edNmrTagihan"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="44dp"
-        android:id="@+id/txtTagihan" />
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:numColumns="2"
 
-    <Button
-        android:text="Cek Tagihan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtTagihan"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="73dp"
-        android:id="@+id/btnCek" />
+            android:horizontalSpacing="2dp"
+            android:verticalSpacing="2dp"
+            android:id="@+id/gridtagihan"/>
+    </RelativeLayout>
 
-    <Button
-        android:text="Bayar Tagihan"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtTagihan"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="73dp"
-        android:id="@+id/btnPay" />
+        android:id="@+id/layDetailTagihan"
+        android:visibility="gone">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnMainTagihan"
+            android:text="Main Menu Tagihan"/>
+        <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnMainTagihan"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="70dp"
+            android:textIsSelectable="true"
+            android:id="@+id/txtjenisTagihan" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:layout_below="@+id/txtjenisTagihan"
+            android:text="Name"
+            android:ems="10"
 
-    <ProgressBar
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:id="@+id/edNmrTagihan" />
+
+        <TextView
+            android:text=" "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edNmrTagihan"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="44dp"
+            android:textIsSelectable="true"
+            android:id="@+id/txtTagihan" />
+
+        <Button
+            android:text="Cek Tagihan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTagihan"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="73dp"
+            android:id="@+id/btnCek" />
+
+        <Button
+            android:text="Bayar Tagihan"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTagihan"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="73dp"
+            android:id="@+id/btnPay" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/prgBar"
+            android:progress="@android:integer/config_mediumAnimTime"
+            android:layout_alignTop="@+id/txtTagihan"
+            android:layout_toLeftOf="@+id/btnCek"
+            android:layout_toStartOf="@+id/btnCek"
+            android:layout_marginRight="31dp"
+            android:layout_marginEnd="31dp" />
+    </RelativeLayout>
+    <!--<ProgressBar
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/prgBar"
         android:progress="@android:integer/config_mediumAnimTime"
-        android:layout_alignTop="@+id/txtTagihan"
-        android:layout_toLeftOf="@+id/btnCek"
-        android:layout_toStartOf="@+id/btnCek"
+
         android:layout_marginRight="31dp"
-        android:layout_marginEnd="31dp" />
+        android:layout_marginEnd="31dp" />-->
+
 </RelativeLayout>

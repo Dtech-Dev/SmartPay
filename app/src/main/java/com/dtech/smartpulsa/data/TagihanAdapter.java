@@ -26,11 +26,11 @@ public class TagihanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private Context context;
     private LayoutInflater inflater;
-    List<DataTagihan> data = Collections.emptyList();
-    DataTagihan current;
+    List<DataInbox> data = Collections.emptyList();
+    DataInbox current;
     int currentPos = 0;
 
-    public TagihanAdapter(Context context, List<DataTagihan> data) {
+    public TagihanAdapter(Context context, List<DataInbox> data) {
         this.context = context;
         this.data = data;
         inflater = LayoutInflater.from(context);
@@ -48,9 +48,11 @@ public class TagihanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         MyHolder myHolder = (MyHolder) holder;
-        DataTagihan current = data.get(position);
-        myHolder.detail.setText(current.detailTagihan);
-        myHolder.idtagihan.setText(current.idTagihan);
+        DataInbox current = data.get(position);
+        myHolder.detail.setText(current.mes);
+        myHolder.idtagihan.setText(current.ket);
+        myHolder.ketag.setText(current.ketag);
+        myHolder.jenis.setText(current.jenis);
 
     }
 
@@ -61,7 +63,7 @@ public class TagihanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView detail, idtagihan;
+        TextView detail, idtagihan, jenis, ketag;
         Button hapus, bayar;
         String id_tagihan;
 
@@ -70,6 +72,9 @@ public class TagihanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             detail = (TextView) itemView.findViewById(R.id.txtItemTagihan);
             idtagihan = (TextView) itemView.findViewById(R.id.txtItemId);
+            jenis = (TextView) itemView.findViewById(R.id.tagJenis);
+            ketag = (TextView) itemView.findViewById(R.id.ketTag);
+
 
             hapus = (Button) itemView.findViewById(R.id.btnItemHapus);
             hapus.setOnClickListener(this);
