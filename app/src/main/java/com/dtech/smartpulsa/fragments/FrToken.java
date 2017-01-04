@@ -130,18 +130,19 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         TextView tvkode = (TextView) view.findViewById(R.id.txtkodeToken);
         /*Button btnProses = (Button)view.findViewById()*/
-        String kodetoken = tvkode.getText().toString();
+        String tkodetoken = tvkode.getText().toString();
+        String kodetoken = tkodetoken.substring(3);
         String idpel = edIdPelanggan.getText().toString();
         String formatTrx = "pln " + idpel + " " + kodetoken + " 3003";
 
         Toast.makeText(getActivity(), formatTrx, Toast.LENGTH_SHORT).show();
 
-        /*transaksi = new Transaksi(this.getActivity());
+        transaksi = new Transaksi(this.getActivity());
         transaksi.setUser(email);
         transaksi.setNomorTuj(idpel);
-        transaksi.setJenisTransaksi("Token Pln");
+        transaksi.setJenisTransaksi(tkodetoken);
         transaksi.setFirebaseId(firebaseId);
         transaksi.setKode(formatTrx);
-        transaksi.execute();*/
+        transaksi.execute();
     }
 }
