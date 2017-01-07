@@ -22,6 +22,7 @@ public class Config {
     public static final String URL_QUERY_KODE="http://samimi.web.id/dev/post-request.php";
     public static final String TAG_PROVIDER = "provider";
     public static final String TAG_NOMINAL = "nominal";
+    public static final String TAG_HARGA_PROV = "harga";
 
     /*post variables for transaksi pulsa
     * $email = $_POST['email'];

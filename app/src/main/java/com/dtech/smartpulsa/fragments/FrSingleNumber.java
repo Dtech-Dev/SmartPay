@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.PredictNumber;
 import com.dtech.smartpulsa.R;
+import com.dtech.smartpulsa.custom.CustomGridToken;
 import com.dtech.smartpulsa.feature.PulsaActivity;
 import com.dtech.smartpulsa.feature.Transaksi;
 import com.dtech.smartpulsa.preference.PrefManager;
@@ -43,7 +45,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by aris on 30/11/16.
  */
 
-public class FrSingleNumber extends Fragment implements View.OnClickListener, TextWatcher {
+public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView.OnItemClickListener {
 
     PredictNumber predictNumber = new PredictNumber(getActivity());
     PrefManager prefManager;
@@ -62,8 +64,10 @@ public class FrSingleNumber extends Fragment implements View.OnClickListener, Te
     View view;
     TextView totherNumber;
     EditText edOtherNumber;
-    Spinner spinnerKode;
-    Button bTransac;
+
+    String harga;
+    GridView gridView;
+     String json_string;
 
     @Nullable
     @Override
@@ -80,39 +84,65 @@ public class FrSingleNumber extends Fragment implements View.OnClickListener, Te
     }
 
     private void initUI() {
+        gridView = (GridView) view.findViewById(R.id.gridPulsa);
         totherNumber = (TextView) view.findViewById(R.id.txtOtherNumber);
         edOtherNumber = (EditText) view.findViewById(R.id.editOtherNumber);
-        bTransac = (Button) view.findViewById(R.id.bTransac);
-        bTransac.setOnClickListener(this);
-        spinnerKode = (Spinner) view.findViewById(R.id.spinnerKode);
-        spinnerKode.setPrompt("Nominal");
+
         edOtherNumber.addTextChangedListener(this);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bTransac:
-                prosesTransaksi();
-                break;
-
-        }
-    }
 
     private void prosesTransaksi() {
-        String nomorTuj = edOtherNumber.getText().toString();
-        //PredictNumber ambilNomorTujuan = new PredictNumber(getActivity());
-        //String nomorTuj = predictNumber.getNomorTujuan();
-        String transaksi = trProvider + trNominal;
-        formatTrx = transaksi+"."+nomorTuj+".3003";
-        Toast.makeText(getActivity(), formatTrx,Toast.LENGTH_SHORT).show();
-        /*transaksiPulsa = new Transaksi(this.getActivity());
-        transaksiPulsa.setUser(email);
-        transaksiPulsa.setNomorTuj(nomorTuj);
-        transaksiPulsa.setJenisTransaksi(transaksi);
-        transaksiPulsa.setFirebaseId(firebaseId);
-        transaksiPulsa.setKode(formatTrx);
-        transaksiPulsa.execute();*/
+
+        JSONObject jsonObject;
+        ArrayList<String> listharga = new ArrayList<String>();
+        ArrayList<String> listkode = new ArrayList<String>();
+        //ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+        List<String> list = new ArrayList<>();
+        try {
+            jsonObject = new JSONObject(json_string);
+            JSONArray result = jsonObject.getJSONArray("result");
+            for (int i=0; i<result.length(); i++) {
+                JSONObject jo = result.getJSONObject(i);
+                nominal = jo.getString(Config.TAG_NOMINAL);
+                harga = jo.getString(Config.TAG_HARGA_PROV);
+                listkode.add(nominal+".000");
+                listharga.add("Harga: "+harga);
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            //Toast.makeText(PulsaActivity.this, "Nomor tidak dikenali", Toast.LENGTH_SHORT).show();
+
+            final Dialog dialog = new Dialog(getActivity());
+            dialog.setContentView(R.layout.dialog_provider);
+            dialog.setCancelable(false);
+            dialog.setTitle("Oopss");
+            TextView txtError = (TextView) dialog.findViewById(R.id.textProviderNull);
+            txtError.setText("Nomor Tidak Dikenali");
+
+            Button btnError = (Button) dialog.findViewById(R.id.btnProviderNull);
+            btnError.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    edOtherNumber.setText("");
+                }
+            });
+
+            dialog.show();
+        }
+        //ListAdapter adapter = new SimpleAdapter(PulsaActivity.this, list, android.R.layout.simple_spinner_item, null, null);
+        try {
+            String[] kodetoken = listkode.toArray(new String[listkode.size()]);
+            String[] hargaToken = listharga.toArray(new String[list.size()]);
+
+            gridView.setAdapter(new CustomGridToken(hargaToken, kodetoken, getActivity()));
+            gridView.setOnItemClickListener(this);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -171,55 +201,16 @@ public class FrSingleNumber extends Fragment implements View.OnClickListener, Te
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                JSONObject jsonObject;
-                //ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
-                List<String> list = new ArrayList<>();
-                try {
-                    jsonObject = new JSONObject(s);
-                    JSONArray result = jsonObject.getJSONArray("result");
-                    for (int i=0; i<result.length(); i++) {
-                        JSONObject jo = result.getJSONObject(i);
-                        nominal = jo.getString(Config.TAG_NOMINAL);
-                        list.add(nominal+".000");
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    //Toast.makeText(PulsaActivity.this, "Nomor tidak dikenali", Toast.LENGTH_SHORT).show();
-
-                    final Dialog dialog = new Dialog(getActivity());
-                    dialog.setContentView(R.layout.dialog_provider);
-                    dialog.setCancelable(false);
-                    dialog.setTitle("Oopss");
-                    TextView txtError = (TextView) dialog.findViewById(R.id.textProviderNull);
-                    txtError.setText("Nomor Tidak Dikenali");
-
-                    Button btnError = (Button) dialog.findViewById(R.id.btnProviderNull);
-                    btnError.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                            edOtherNumber.setText("");
-                        }
-                    });
-
-                    dialog.show();
-                }
-                //ListAdapter adapter = new SimpleAdapter(PulsaActivity.this, list, android.R.layout.simple_spinner_item, null, null);
-                try {
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, list);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerKode.setAdapter(adapter);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                json_string = s;
+                prosesTransaksi();
             }
+
         }
 
         QueryKodeAsync queryKode = new QueryKodeAsync();
         queryKode.execute();
 
-        spinnerKode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        /*spinnerKode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -233,7 +224,7 @@ public class FrSingleNumber extends Fragment implements View.OnClickListener, Te
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
     }
 
     public String getTrProvider() {
@@ -250,5 +241,28 @@ public class FrSingleNumber extends Fragment implements View.OnClickListener, Te
 
     public void setTrNominal(String trNominal) {
         this.trNominal = trNominal;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        TextView tvkode = (TextView) view.findViewById(R.id.txtkodeToken);
+
+        String nominalTemp = tvkode.getText().toString();
+        String kodeTnsk = nominalTemp.replace(".000", "");
+        setTrNominal(kodeTnsk);
+
+        String nomorTuj = edOtherNumber.getText().toString();
+        //PredictNumber ambilNomorTujuan = new PredictNumber(getActivity());
+        //String nomorTuj = predictNumber.getNomorTujuan();
+        String transaksi = trProvider + trNominal;
+        formatTrx = transaksi+"."+nomorTuj+".3003";
+        Toast.makeText(getActivity(), formatTrx,Toast.LENGTH_SHORT).show();
+        /*transaksiPulsa = new Transaksi(this.getActivity());
+        transaksiPulsa.setUser(email);
+        transaksiPulsa.setNomorTuj(nomorTuj);
+        transaksiPulsa.setJenisTransaksi(transaksi);
+        transaksiPulsa.setFirebaseId(firebaseId);
+        transaksiPulsa.setKode(formatTrx);
+        transaksiPulsa.execute();*/
     }
 }

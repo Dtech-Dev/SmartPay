@@ -36,54 +36,40 @@
             android:layout_height="wrap_content"
             android:id="@+id/otherLayout"
             >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/txtOtherNumber"
-                android:text="Provider : "
-                android:layout_centerHorizontal="true"/>
+
 
             <EditText
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/editOtherNumber"
-                android:layout_below="@+id/txtOtherNumber"
+                android:hint="Input Your Number"
                 android:layout_centerHorizontal="true"
                 android:inputType="number" />
 
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:layout_below="@+id/editOtherNumber">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nominal"
-                    android:id="@+id/tspin"/>
-                <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/spinnerKode"
-                    android:layout_centerHorizontal="true"
-                    android:prompt="@string/spinner_title"
-                    android:layout_toRightOf="@+id/tspin"
-                    android:layout_alignBottom="@+id/tspin"
-                    style="@style/Widget.AppCompat.Spinner" />
-            </RelativeLayout>
+
 
         </RelativeLayout>
     </RelativeLayout>
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/bTransac"
-        android:text="Proses"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="127dp" />
+        android:id="@+id/txtOtherNumber"
+        android:layout_below="@+id/selfOrOther"
+        android:text="Provider : "
+        android:layout_centerHorizontal="true"/>
+
+    <GridView
+        android:id="@+id/gridPulsa"
+        android:layout_below="@+id/txtOtherNumber"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:columnWidth="100dp"
+        android:gravity="center"
+        android:listSelector="#00000000"
+        android:numColumns="2"
+        android:stretchMode="columnWidth" />
 </RelativeLayout>
