@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dtech.smartpulsa.Configuration.Config;
+import com.dtech.smartpulsa.Configuration.ItemClickListener;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.custom.CustomGridTagihan;
@@ -54,7 +55,7 @@ import java.util.HashMap;
  * Created by aris on 10/12/16.
  */
 
-public class FrTagihan extends Fragment implements View.OnClickListener, FrTagihanInterface {
+public class FrTagihan extends Fragment implements View.OnClickListener, ItemClickListener {
 
     EditText edNmrTagihan;
     public TextView txtTagihan, txtjnsTagihan;
@@ -150,20 +151,6 @@ public class FrTagihan extends Fragment implements View.OnClickListener, FrTagih
         mFirebaseDatabase = mFirebaseInstance.getReference("users");
         mFirebaseInstance.getReference("app_title").setValue("Cek Tagihan");
 
-        //addDbaseChangeListener();
-        /*mFirebaseInstance.getReference("trx").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String transaksi = dataSnapshot.getValue(String.class);
-                txtTagihan.setText("anda akan melakukan cek tagihan dengan nomor tagihan: \n"+transaksi);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
-
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -189,19 +176,30 @@ public class FrTagihan extends Fragment implements View.OnClickListener, FrTagih
         public void recyclerViewListClicked(View v, int position);
     }*/
 
-    @Override
+    /*@Override
     public void recyclerViewListClicked(View v, int position){
         String kodeKota = KotaAdapter.kodeKota[position];
+    }*/
+
+    @Override
+    public void onClick(View view, String data) {
+        //String kodeKota = KotaAdapter.kodeKota[position];
+        setJnsTagihan(data);
+        updateUi(data);
+        kotaDialog.dismiss();
+        Toast.makeText(getActivity(), data, Toast.LENGTH_SHORT).show();
     }
+
 
     private void pilihKota() {
         kotaDialog = new Dialog(getActivity());
         kotaDialog.setContentView(R.layout.dialog_kota);
         RecyclerView recyclerView = (RecyclerView) kotaDialog.findViewById(R.id.recKota);
         mAdapter = new AdapterKota(getActivity(), KotaAdapter.kodeKota, KotaAdapter.kota);
+        mAdapter.setClickListener(this);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        //recyclerView.setOnClickListener(this);
         //recyclerView.setAdapter();
         kotaDialog.show();
 

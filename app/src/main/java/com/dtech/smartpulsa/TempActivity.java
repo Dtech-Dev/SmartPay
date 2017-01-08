@@ -73,9 +73,10 @@ public class TempActivity extends AppCompatActivity
 
         prefManager = new PrefManager(this);
 
-        String token = FirebaseInstanceId.getInstance().getToken();
-        prefManager.setFirebaseId(token);
-        Log.d("Firebase id", "Refreshed token: " + token);
+
+        /*String token = FirebaseInstanceId.getInstance().getToken();
+        prefManager.setFirebaseId(token);*/
+        //Log.d("Firebase id", "Refreshed token: " + token);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

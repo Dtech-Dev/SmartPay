@@ -37,6 +37,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.HashMap;
 
@@ -166,6 +167,8 @@ public class WelcomeActivity extends AppCompatActivity  implements
         findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);*/
         findViewById(R.id.activity_welcome).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
+        String token = FirebaseInstanceId.getInstance().getToken();
+        prefManager.setFirebaseId(token);
         /*VISIBLE-ing 2nd ui*/
         relui2.setVisibility(View.VISIBLE);
         /*findViewById(R.id.textView2).setVisibility(View.VISIBLE);

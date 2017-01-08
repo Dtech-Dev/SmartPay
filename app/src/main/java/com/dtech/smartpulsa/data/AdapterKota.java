@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dtech.smartpulsa.Configuration.Config;
+import com.dtech.smartpulsa.Configuration.ItemClickListener;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.fragments.FrTagihan;
@@ -33,7 +34,7 @@ public class AdapterKota extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //List<DataInbox> data = Collections.emptyList();
     String[] dataKode;
     String[] dataKota;
-    private static FrTagihanInterface itemlistener;
+    private static ItemClickListener clickListener;
     DataInbox current;
     int currentPos = 0;
 
@@ -55,6 +56,7 @@ public class AdapterKota extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
+
         MyHolder myHolder = (MyHolder) holder;
         myHolder.kode.setText(dataKode[position]);
         myHolder.kota.setText(dataKota[position]);
@@ -71,30 +73,31 @@ public class AdapterKota extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return dataKode.length;
     }
 
-    class MyHolder extends RecyclerView.ViewHolder {
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
+
+    class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView kode, kota;
         //CardView
 
 
-        public MyHolder(View itemView) {
+        public MyHolder(final View itemView) {
             super(itemView);
 
             kode = (TextView) itemView.findViewById(R.id.kode);
             kota = (TextView) itemView.findViewById(R.id.kota);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String sKode = "pdam "+kode.getText().toString();
-                    //itemlistener.recyclerViewListClicked(view, RecyclerView.ViewHolder.class.get);
-                    //FrTagihan frTagihan = new FrTagihan();
-                    //frTagihan.recyclerData(sKode);
-                }
-            });
+            itemView.setOnClickListener(this);
 
         }
 
 
+        @Override
+        public void onClick(View view) {
+            String sKode = "pdam "+kode.getText().toString();
+            if (clickListener != null) clickListener.onClick(view, sKode);
+        }
     }
 }
