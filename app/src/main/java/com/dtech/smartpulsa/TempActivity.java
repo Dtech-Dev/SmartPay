@@ -121,7 +121,7 @@ public class TempActivity extends AppCompatActivity
         btnCekTagihan.setOnClickListener(this);
         btnIsiPulsa.setOnClickListener(this);
         layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-        /*headerNav = layoutInflater.inflate(R.dialog_pulsa.nav_header_temp,null, true);*/
+        /*headerNav = layoutInflater.inflate(R.dialog_kota.nav_header_temp,null, true);*/
         headerNav = navigationView.getHeaderView(0);
         sharedPreferences = getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
         navusername = (TextView) headerNav.findViewById(R.id.navusername);
@@ -340,7 +340,7 @@ public class TempActivity extends AppCompatActivity
         /*final Intent intentPulsa = new Intent(getApplicationContext(), PulsaActivity.class);
 
         dialogPulsa = new Dialog(this);
-        dialogPulsa.setContentView(R.layout.dialog_pulsa);
+        dialogPulsa.setContentView(R.layout.dialog_kota);
         dialogPulsa.setTitle("Choose One");
 
         Button selfNumber = (Button) dialogPulsa.findViewById(R.id.selfNumber);

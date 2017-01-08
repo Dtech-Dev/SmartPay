@@ -27,7 +27,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!--<include dialog_pulsa="@dialog_pulsa/content_temp" />-->
+    <!--<include dialog_kota="@dialog_kota/content_temp" />-->
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

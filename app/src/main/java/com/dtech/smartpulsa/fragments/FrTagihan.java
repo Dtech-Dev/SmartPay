@@ -1,11 +1,14 @@
 package com.dtech.smartpulsa.fragments;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +28,8 @@ import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.custom.CustomGridTagihan;
 import com.dtech.smartpulsa.custom.CustomGridVoucher;
+import com.dtech.smartpulsa.data.AdapterKota;
+import com.dtech.smartpulsa.data.KotaAdapter;
 import com.dtech.smartpulsa.firedatabase.DatabaseCek;
 import com.dtech.smartpulsa.preference.PrefManager;
 
@@ -60,6 +65,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
 
     View view;
     PrefManager prefManager;
+    Dialog kotaDialog;
 
     String userId;
     String email;
@@ -68,6 +74,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
     String tagihanTampil;
     String jnsTagihan;
 
+    AdapterKota mAdapter;
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
     FirebaseAuth firebaseAuth;
@@ -169,8 +176,14 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
     }
 
     private void pilihKota() {
-
-
+        kotaDialog = new Dialog(getActivity());
+        kotaDialog.setContentView(R.layout.dialog_kota);
+        RecyclerView recyclerView = (RecyclerView) kotaDialog.findViewById(R.id.recKota);
+        mAdapter = new AdapterKota(getActivity(), KotaAdapter.kodeKota, KotaAdapter.kota);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //recyclerView.setAdapter();
+        kotaDialog.show();
     }
 
     private void updateUi(String jnsTagihan) {
