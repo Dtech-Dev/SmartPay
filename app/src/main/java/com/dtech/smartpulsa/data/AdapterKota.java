@@ -2,6 +2,8 @@ package com.dtech.smartpulsa.data;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,8 @@ import android.widget.Toast;
 import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
+import com.dtech.smartpulsa.fragments.FrTagihan;
+import com.dtech.smartpulsa.fragments.FrTagihanInterface;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,6 +33,7 @@ public class AdapterKota extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //List<DataInbox> data = Collections.emptyList();
     String[] dataKode;
     String[] dataKota;
+    private static FrTagihanInterface itemlistener;
     DataInbox current;
     int currentPos = 0;
 
@@ -66,11 +71,11 @@ public class AdapterKota extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return dataKode.length;
     }
 
-    class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class MyHolder extends RecyclerView.ViewHolder {
 
         TextView kode, kota;
-        Button hapus, bayar;
-        String id_tagihan;
+        //CardView
+
 
         public MyHolder(View itemView) {
             super(itemView);
@@ -78,12 +83,18 @@ public class AdapterKota extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             kode = (TextView) itemView.findViewById(R.id.kode);
             kota = (TextView) itemView.findViewById(R.id.kota);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String sKode = "pdam "+kode.getText().toString();
+                    //itemlistener.recyclerViewListClicked(view, RecyclerView.ViewHolder.class.get);
+                    //FrTagihan frTagihan = new FrTagihan();
+                    //frTagihan.recyclerData(sKode);
+                }
+            });
+
         }
 
-        @Override
-        public void onClick(View v) {
 
-
-        }
     }
 }

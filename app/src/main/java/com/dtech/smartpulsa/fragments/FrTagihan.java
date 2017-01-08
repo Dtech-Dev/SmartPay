@@ -54,13 +54,13 @@ import java.util.HashMap;
  * Created by aris on 10/12/16.
  */
 
-public class FrTagihan extends Fragment implements View.OnClickListener {
+public class FrTagihan extends Fragment implements View.OnClickListener, FrTagihanInterface {
 
     EditText edNmrTagihan;
-    TextView txtTagihan, txtjnsTagihan;
+    public TextView txtTagihan, txtjnsTagihan;
     Button btnCek, btnPay, btnMain;
     ProgressBar prgBar;
-    RelativeLayout laymainTagihan, laydetailTagihan;
+    public RelativeLayout laymainTagihan, laydetailTagihan;
     GridView gridView;
 
     View view;
@@ -72,6 +72,15 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
     String name;
     String trx;
     String tagihanTampil;
+
+    public String getJnsTagihan() {
+        return jnsTagihan;
+    }
+
+    public void setJnsTagihan(String jnsTagihan) {
+        this.jnsTagihan = jnsTagihan;
+    }
+
     String jnsTagihan;
 
     AdapterKota mAdapter;
@@ -165,14 +174,24 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
                     //jnsTagihan = pilihan + " kota";
                     pilihKota();
                 } else {
-                    jnsTagihan = pilihan;
+                    setJnsTagihan(pilihan);
+                    updateUi(pilihan);
                 }
 
-                updateUi(pilihan);
+
             }
         });
 
         return view;
+    }
+
+    /*public interface RecyclerViewClickListener{
+        public void recyclerViewListClicked(View v, int position);
+    }*/
+
+    @Override
+    public void recyclerViewListClicked(View v, int position){
+        String kodeKota = KotaAdapter.kodeKota[position];
     }
 
     private void pilihKota() {
@@ -182,11 +201,16 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
         mAdapter = new AdapterKota(getActivity(), KotaAdapter.kodeKota, KotaAdapter.kota);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         //recyclerView.setAdapter();
         kotaDialog.show();
+
+        //recyclerView.addOnItemTouchListener(this);
     }
 
-    private void updateUi(String jnsTagihan) {
+
+
+    public void updateUi(String jnsTagihan) {
         laymainTagihan.setVisibility(View.GONE);
         laydetailTagihan.setVisibility(View.VISIBLE);
 
