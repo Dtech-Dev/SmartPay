@@ -152,13 +152,25 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 TextView textView = (TextView) view.findViewById(R.id.gridvoucher_text);
-                jnsTagihan = textView.getText().toString();
+                String pilihan = textView.getText().toString();
 
-                updateUi(jnsTagihan);
+                if (pilihan.contains("PDAM")) {
+                    //jnsTagihan = pilihan + " kota";
+                    pilihKota();
+                } else {
+                    jnsTagihan = pilihan;
+                }
+
+                updateUi(pilihan);
             }
         });
 
         return view;
+    }
+
+    private void pilihKota() {
+
+
     }
 
     private void updateUi(String jnsTagihan) {
@@ -230,62 +242,9 @@ public class FrTagihan extends Fragment implements View.OnClickListener {
 
     private void cekTagihan() {
 
-
-        //prgBar.setVisibility(View.VISIBLE);
-
-        //loading = ProgressDialog.show(getActivity(), "waiit","a sec");
-        //String tagihan = "";
-       /* if (TextUtils.isEmpty(userId)) {
-            userId = mFirebaseDatabase.push().getKey();
-        }*/
-
-
-        //DatabaseCek databaseCek = new DatabaseCek(name, email, trx, tagihan);
-        //mFirebaseDatabase.child(userF.getUid()).setValue(databaseCek);
-
         postCekTagihan();
         txtTagihan.setText("Transaksi sedang di proses\nAnda akan mendapat pemberitahuan jumlah tagihan tersebut");
 
-        //addDbaseChangeListener();
-        /*if (txtTagihan.getText() == "") {
-            prgBar.setVisibility(View.VISIBLE);
-        } else {
-            prgBar.setVisibility(View.INVISIBLE);
-        }
-*/
-    }
-
-
-
-    private void addDbaseChangeListener() {
-        //prgBar.setVisibility(View.VISIBLE);
-        mFirebaseDatabase.child(userF.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                DatabaseCek data = dataSnapshot.getValue(DatabaseCek.class);
-
-                if (data == null) {
-                    Log.e("DatabaseCek", "User data is null");
-                    //return;
-                } else {
-                    if (data.tagihan == "") {
-                        prgBar.setVisibility(View.VISIBLE);
-                        txtTagihan.setText("Transaksi sedang diproses");
-                    } else {
-                        Log.e("Database Cek", "User data is changed: " + data.tagihan);
-                        txtTagihan.setText(data.tagihan);
-                        prgBar.setVisibility(View.INVISIBLE);
-                    }
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e("Database Cek", "Failed Update User Data");
-            }
-        });
 
     }
 
