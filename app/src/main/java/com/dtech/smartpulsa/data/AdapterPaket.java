@@ -1,16 +1,27 @@
 package com.dtech.smartpulsa.data;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.R;
+import com.dtech.smartpulsa.feature.Transaksi;
+import com.dtech.smartpulsa.preference.PrefManager;
 
+import java.io.StringWriter;
 import java.util.Collections;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by aris on 31/12/16.
@@ -52,9 +63,13 @@ public class AdapterPaket extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return data.size();
     }
 
-    class MyHolder extends RecyclerView.ViewHolder {
+    class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView keterangan, kode, harga;
+        Button btnBuy;
+        Dialog dialogBuy;
+        String keteranganPaket, kodePaket, detailPaket, hargaPaket;
+        Transaksi transaksiPulsa;
 
         public MyHolder(View itemView) {
             super(itemView);
@@ -62,7 +77,51 @@ public class AdapterPaket extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             keterangan = (TextView) itemView.findViewById(R.id.detailketeranganPaket);
             kode = (TextView) itemView.findViewById(R.id.detailkodePaket);
             harga = (TextView) itemView.findViewById(R.id.detailhargaPaket);
+            btnBuy = (Button) itemView.findViewById(R.id.btnBuyPaket);
+            btnBuy.setOnClickListener(this);
 
+        }
+
+        @Override
+        public void onClick(View view) {
+            keteranganPaket = keterangan.getText().toString();
+            kodePaket = kode.getText().toString();
+            hargaPaket = harga.getText().toString();
+            detailPaket = "Anda akan membeli paket :\n" + keteranganPaket + "(" + kodePaket + ")\nHarga: " + hargaPaket;
+            buyPaket();
+        }
+
+        private void buyPaket() {
+            PrefManager prefManager;
+            prefManager = new PrefManager(context);
+            SharedPreferences sharedPreferences = context.getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
+            String firebaseId = (sharedPreferences.getString(Config.DISPLAY_FIREBASE_ID, ""));
+            String email = (sharedPreferences).getString(Config.DISPLAY_EMAIL, "");
+
+            dialogBuy = new Dialog(context);
+            dialogBuy.setContentView(R.layout.custom_dialog_paket);
+            TextView ketPaket = (TextView) dialogBuy.findViewById(R.id.ketPaket);
+            ketPaket.setText(detailPaket);
+            Button bbuyPaket = (Button) dialogBuy.findViewById(R.id.btnProsesPaket);
+            final EditText edNomorPaket = (EditText) dialogBuy.findViewById(R.id.edNomorPaket);
+
+
+            bbuyPaket.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String nomorPaket;
+                    nomorPaket = edNomorPaket.getText().toString();
+                    Toast.makeText(context, kodePaket+"."+nomorPaket+".3003", Toast.LENGTH_SHORT).show();
+                    /*transaksiPulsa = new Transaksi(this.getActivity());
+                    transaksiPulsa.setUser(email);
+                    transaksiPulsa.setNomorTuj(nomorTuj);
+                    transaksiPulsa.setJenisTransaksi(transaksi);
+                    transaksiPulsa.setFirebaseId(firebaseId);
+                    transaksiPulsa.setKode(formatTrx);
+                    transaksiPulsa.execute();*/
+                }
+            });
+            dialogBuy.show();
         }
     }
 }
