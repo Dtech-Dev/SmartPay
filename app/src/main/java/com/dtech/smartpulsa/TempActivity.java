@@ -111,7 +111,7 @@ public class TempActivity extends AppCompatActivity
     }
 
     private void initUi() {
-        btnIsiPulsa = (Button) findViewById(R.id.btnIsiPulsa);
+        /*btnIsiPulsa = (Button) findViewById(R.id.btnIsiPulsa);
         btnCekTagihan = (Button) findViewById(R.id.btnCekTagihan);
         btnToken = (Button) findViewById(R.id.btnToken);
         btnVoucher = (Button) findViewById(R.id.btnVoucher);
@@ -120,7 +120,7 @@ public class TempActivity extends AppCompatActivity
         btnVoucher.setOnClickListener(this);
         btnToken.setOnClickListener(this);
         btnCekTagihan.setOnClickListener(this);
-        btnIsiPulsa.setOnClickListener(this);
+        btnIsiPulsa.setOnClickListener(this);*/
         layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         /*headerNav = layoutInflater.inflate(R.dialog_kota.nav_header_temp,null, true);*/
         headerNav = navigationView.getHeaderView(0);
@@ -132,7 +132,7 @@ public class TempActivity extends AppCompatActivity
         txtEmail = (sharedPreferences.getString(Config.DISPLAY_EMAIL, ""));
         txtFirebaseId = (sharedPreferences.getString(Config.DISPLAY_FIREBASE_ID, ""));
 
-        tTempor = (TextView) findViewById(R.id.textViewTempor);
+        //tTempor = (TextView) findViewById(R.id.textViewTempor);
 
         navemail.setText(txtEmail+"\n"+txtFirebaseId);
 
@@ -289,7 +289,7 @@ public class TempActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        /*switch (v.getId()) {
             case R.id.btnIsiPulsa:
                 isiPulsa();
                 break;
@@ -305,10 +305,10 @@ public class TempActivity extends AppCompatActivity
                 break;
             case R.id.btnpaketdata:
                 paketData();
-        }
+        }*/
     }
 
-    private void paketData() {
+    /*private void paketData() {
         Intent paketDataOpen = new Intent(this, PaketDataActivity.class);
         startActivity(paketDataOpen);
     }
@@ -337,7 +337,7 @@ public class TempActivity extends AppCompatActivity
     private void isiPulsa() {
         Intent intentTransaksi = new Intent(this, PulsaActivity.class);
         intentTransaksi.putExtra("transaksi", "isi pulsa");
-        startActivity(intentTransaksi);
+        startActivity(intentTransaksi);*/
         /*final Intent intentPulsa = new Intent(getApplicationContext(), PulsaActivity.class);
 
         dialogPulsa = new Dialog(this);
@@ -365,5 +365,5 @@ public class TempActivity extends AppCompatActivity
             }
         });
         dialogPulsa.show();*/
-    }
+    //}
 }
