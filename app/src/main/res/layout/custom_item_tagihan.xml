@@ -27,6 +27,7 @@
                 android:layout_below="@+id/txtItemId"
                 android:layout_gravity="center_horizontal"
                 android:text="Detail Tagihan"
+                android:textIsSelectable="true"
                 android:layout_marginTop="20dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
@@ -69,14 +70,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/buttonstag"
-                    android:visibility="invisible">
+                    >
 
                     <Button
                         android:text="Hapus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/btnItemHapus"
-
+                        android:visibility="invisible"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true" />
@@ -85,7 +86,7 @@
                         android:text="Bayar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
+                        android:visibility="invisible"
                         android:id="@+id/btnItemBayar"
                         android:layout_alignParentTop="true"
                         android:layout_toRightOf="@+id/btnItemHapus"
@@ -117,6 +118,14 @@
                         android:layout_toLeftOf="@+id/imageView3"
                         android:layout_toStartOf="@+id/imageView3"
                         />
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/imageView3"
+                        android:layout_toStartOf="@+id/imageView3"
+                        android:layout_below="@+id/tagJenis"
+                        android:id="@+id/idTagih" />
                 </RelativeLayout>
 
 
@@ -131,6 +140,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 />
+
 
 
 

@@ -20,4 +20,5 @@ public class DataInbox {
     public String ket;
     public String ketag;
     public String mes;
+
 }

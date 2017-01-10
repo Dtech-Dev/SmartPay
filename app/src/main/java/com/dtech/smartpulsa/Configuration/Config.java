@@ -68,6 +68,7 @@ public class Config {
     public static final String TAG_KET_INBOX = "keterangan";
     public static final String TAG_MES_INBOX = "message";
     public static final String TAG_ID_TAGIHAN = "id";
+    public static final String TAG_ID_TAGIH = "idtagih";
     public static final String POST_DELETE = "deltagihan";
     public static final String POST_BAYAR = "bayar";
 

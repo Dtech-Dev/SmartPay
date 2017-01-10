@@ -47,12 +47,26 @@ public class TagihanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
+        String tagihan;
         MyHolder myHolder = (MyHolder) holder;
         DataInbox current = data.get(position);
         myHolder.detail.setText(current.mes);
         myHolder.idtagihan.setText(current.ket);
         myHolder.ketag.setText(current.ketag);
         myHolder.jenis.setText(current.jenis);
+        myHolder.idtagih.setText(current.idTagihan);
+
+        //tagihan =
+        if (current.jenis.contains("Tagihan")) {
+            myHolder.bayar.setVisibility(View.VISIBLE);
+        }
+
+        if (current.ket.contains("Paid")) {
+            myHolder.bayar.setEnabled(false);
+            myHolder.bayar.setText("Paid");
+        } /*else{
+            myHolder.bayar.setVisibility(View.VISIBLE);
+        }*/
 
     }
 
@@ -63,7 +77,7 @@ public class TagihanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView detail, idtagihan, jenis, ketag;
+        TextView detail, idtagihan, jenis, ketag, idtagih;
         Button hapus, bayar;
         String id_tagihan;
 
@@ -74,7 +88,7 @@ public class TagihanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             idtagihan = (TextView) itemView.findViewById(R.id.txtItemId);
             jenis = (TextView) itemView.findViewById(R.id.tagJenis);
             ketag = (TextView) itemView.findViewById(R.id.ketTag);
-
+            idtagih = (TextView) itemView.findViewById(R.id.idTagih);
 
             hapus = (Button) itemView.findViewById(R.id.btnItemHapus);
             hapus.setOnClickListener(this);
@@ -93,7 +107,7 @@ public class TagihanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     asyncHapus(id_tagihan);
                     break;
                 case R.id.btnItemBayar:
-                    id_tagihan = idtagihan.getText().toString();
+                    id_tagihan = idtagih.getText().toString();
                     Toast.makeText(v.getContext(), "btn bayar clicked with id tagihan = "+id_tagihan, Toast.LENGTH_SHORT).show();
                     asyncBayar(id_tagihan);
                     break;
@@ -125,9 +139,10 @@ public class TagihanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
-                    detail.setText("On Proccess Deleting");
+                    //detail.setText("On Proccess Deleting");
                     bayar.setEnabled(false);
-                    hapus.setEnabled(false);
+                    Toast.makeText(context, "Transaksi anda sedang di proses", Toast.LENGTH_SHORT).show();
+                    //hapus.setEnabled(false);
                 }
             }
             HapusAsync hapusAsync = new HapusAsync();

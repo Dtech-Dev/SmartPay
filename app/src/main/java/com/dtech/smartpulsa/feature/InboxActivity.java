@@ -113,6 +113,7 @@ public class InboxActivity extends AppCompatActivity {
                 dataTagihan.jenis = jo.getString(Config.TAG_JENIS_TAGIHAN);
                 dataTagihan.ketag = jo.getString(Config.TAG_KET_TAGIHAN);
                 dataTagihan.mes = jo.getString(Config.TAG_MES_INBOX);
+                dataTagihan.idTagihan = jo.getString(Config.TAG_ID_TAGIH);
                 /*dataTagihan.detailTagihan = "Tagihan "+jenis+ " dengan ID Pelanggan "
                 +nomorTagihan+", jumlah yang harus dibayar adalah "+detail;*/
                 detailToast = dataTagihan.detailTagihan;
