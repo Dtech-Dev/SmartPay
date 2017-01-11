@@ -73,8 +73,8 @@ public class TempActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temp);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
 
         prefManager = new PrefManager(this);
@@ -83,19 +83,7 @@ public class TempActivity extends AppCompatActivity
         /*String token = FirebaseInstanceId.getInstance().getToken();
         prefManager.setFirebaseId(token);*/
         //Log.d("Firebase id", "Refreshed token: " + token);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-                Intent quickPay = new Intent(TempActivity.this, QuickPayActivity.class);
-                startActivity(quickPay);
-
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -103,6 +91,23 @@ public class TempActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+                /*Intent quickPay = new Intent(TempActivity.this, QuickPayActivity.class);
+                startActivity(quickPay);*/
+
+                drawer.openDrawer(GravityCompat.START);
+
+            }
+        });
+
+
+
 
         /*Embeks*/
 
@@ -142,19 +147,19 @@ public class TempActivity extends AppCompatActivity
 
         navemail.setText(txtEmail+"\n"+txtFirebaseId);
 
-        ImageButton imageWallet = (ImageButton) toolbar.findViewById(R.id.icWallet);
-        imageWallet.setOnClickListener(new View.OnClickListener() {
+        //ImageButton imageWallet = (ImageButton) toolbar.findViewById(R.id.icWallet);
+        /*imageWallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Toast.makeText(TempActivity.this, "Wallet Clicked", Toast.LENGTH_SHORT).show();
                 getJson();
             }
-        });
+        });*/
 
         /*circle menu*/
         circleMenu = (CircleMenu) findViewById(R.id.circle_menu);
 
-        circleMenu.setMainMenu(Color.parseColor("#CDCDCD"), R.mipmap.ic_launcher, R.mipmap.ic_launcher);
+        circleMenu.setMainMenu(Color.parseColor("#CDCDCD"), R.drawable.ic_wallet, R.mipmap.ic_launcher);
         circleMenu.addSubMenu(Color.parseColor("#258CFF"), R.mipmap.ic_loyalty_black_24dp)
                 .addSubMenu(Color.parseColor("#30A400"), R.mipmap.ic_loyalty_black_24dp)
                 .addSubMenu(Color.parseColor("#FF4B32"), R.mipmap.ic_loyalty_black_24dp)

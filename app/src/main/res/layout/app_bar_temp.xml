@@ -8,13 +8,13 @@
     android:background="@drawable/bg"
     tools:context="com.dtech.smartpulsa.TempActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <!--<android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="40dp"
+
         android:theme="@style/AppTheme.NoActionBar.PopupOverlay">
 
-        <!--android:background="?attr/colorPrimary"-->
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -44,9 +44,15 @@
         </android.support.v7.widget.Toolbar>
 
 
-    </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.AppBarLayout>-->
 
     <include layout="@layout/content_temp" />
+
+    <com.hitomi.cmlibrary.CircleMenu
+        android:id="@+id/circle_menu"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        android:layout_gravity="center" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

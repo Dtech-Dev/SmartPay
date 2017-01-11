@@ -1,34 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_temp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
 
+
+
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.dtech.smartpulsa.TempActivity"
     tools:showIn="@layout/app_bar_temp">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:background="#00ffffff"/>
 
     <TextView
-        android:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="20dp"
+        android:text="textview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:background="@color/colorPrimary"
         android:id="@+id/tbalance" />
 
 
-    <GridView
+
+
+
+    <!--<GridView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/gridTemp"
@@ -40,9 +43,9 @@
         android:visibility="gone"
         android:layout_marginTop="20dp">
 
-    </GridView>
+    </GridView>-->
 
-    <Button
+    <!--<Button
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:background="@drawable/circle"
@@ -54,14 +57,13 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="27dp"
-        android:layout_marginStart="27dp" />
+        android:layout_marginStart="27dp" />-->
 
-    <com.hitomi.cmlibrary.CircleMenu
+    <!--<com.hitomi.cmlibrary.CircleMenu
         android:id="@+id/circle_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        android:layout_centerInParent="true" />-->
 
     <!--<RelativeLayout
         android:layout_width="wrap_content"
@@ -130,4 +132,4 @@
             android:text="Paket Data"/>
     </RelativeLayout>-->
 
-</RelativeLayout>
+</LinearLayout>
