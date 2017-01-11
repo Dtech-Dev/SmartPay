@@ -56,6 +56,13 @@
         android:layout_marginLeft="27dp"
         android:layout_marginStart="27dp" />
 
+    <com.hitomi.cmlibrary.CircleMenu
+        android:id="@+id/circle_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
     <!--<RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

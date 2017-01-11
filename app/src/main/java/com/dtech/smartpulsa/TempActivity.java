@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -34,6 +35,9 @@ import com.dtech.smartpulsa.feature.TagihanActivity;
 import com.dtech.smartpulsa.feature.VoucherActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.hitomi.cmlibrary.CircleMenu;
+import com.hitomi.cmlibrary.OnMenuSelectedListener;
+import com.hitomi.cmlibrary.OnMenuStatusChangeListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,6 +61,8 @@ public class TempActivity extends AppCompatActivity
     SharedPreferences sharedPreferences;
     Toolbar toolbar;
     public String textUser, txtEmail, txtFirebaseId;
+
+    CircleMenu circleMenu;
     //private static final String PREF_NAME = "app-welcome";
     //private static final String DISPLAY_NAME = "displayName";
     //private static final String DISPLAY_EMAIL = "displayEmail";
@@ -144,6 +150,56 @@ public class TempActivity extends AppCompatActivity
                 getJson();
             }
         });
+
+        /*circle menu*/
+        circleMenu = (CircleMenu) findViewById(R.id.circle_menu);
+
+        circleMenu.setMainMenu(Color.parseColor("#CDCDCD"), R.mipmap.ic_launcher, R.mipmap.ic_launcher);
+        circleMenu.addSubMenu(Color.parseColor("#258CFF"), R.mipmap.ic_loyalty_black_24dp)
+                .addSubMenu(Color.parseColor("#30A400"), R.mipmap.ic_loyalty_black_24dp)
+                .addSubMenu(Color.parseColor("#FF4B32"), R.mipmap.ic_loyalty_black_24dp)
+                .addSubMenu(Color.parseColor("#8A39FF"), R.mipmap.ic_loyalty_black_24dp)
+                .addSubMenu(Color.parseColor("#FF6A00"), R.mipmap.ic_loyalty_black_24dp);
+
+        circleMenu.setOnMenuSelectedListener(new OnMenuSelectedListener() {
+
+                                                 @Override
+                                                 public void onMenuSelected(int index) {
+                                                     switch (index) {
+                                                         case 0:
+                                                             Toast.makeText(TempActivity.this, "Home Button Clicked", Toast.LENGTH_SHORT).show();
+                                                             break;
+                                                         case 1:
+                                                             Toast.makeText(TempActivity.this, "Search button Clicked", Toast.LENGTH_SHORT).show();
+                                                             break;
+                                                         case 2:
+                                                             Toast.makeText(TempActivity.this, "Notify button Clciked", Toast.LENGTH_SHORT).show();
+                                                             break;
+                                                         case 3:
+                                                             Toast.makeText(TempActivity.this, "Settings button Clcked", Toast.LENGTH_SHORT).show();
+                                                             break;
+                                                         case 4:
+                                                             Toast.makeText(TempActivity.this, "GPS button Clicked", Toast.LENGTH_SHORT).show();
+                                                             break;
+                                                     }
+                                                 }
+                                             }
+
+        );
+
+        /*circleMenu.setOnMenuStatusChangeListener(new OnMenuStatusChangeListener() {
+
+                                                     @Override
+                                                     public void onMenuOpened() {
+                                                         Toast.makeText(TempActivity.this, "Menu Opend", Toast.LENGTH_SHORT).show();
+                                                     }
+
+                                                     @Override
+                                                     public void onMenuClosed() {
+                                                         Toast.makeText(TempActivity.this, "Menu Closed", Toast.LENGTH_SHORT).show();
+                                                     }
+                                                 }
+        );*/
     }
 
     private void splitString() {
