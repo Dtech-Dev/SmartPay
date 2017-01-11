@@ -27,6 +27,7 @@
         android:layout_marginTop="20dp"
         android:id="@+id/tbalance" />
 
+
     <GridView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,6 +41,20 @@
         android:layout_marginTop="20dp">
 
     </GridView>
+
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/circle"
+        android:drawableTop="@android:drawable/ic_dialog_email"
+        android:paddingTop="20dp"
+        android:text="Transaksi"
+        android:textColor="#fff"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="27dp"
+        android:layout_marginStart="27dp" />
 
     <!--<RelativeLayout
         android:layout_width="wrap_content"
