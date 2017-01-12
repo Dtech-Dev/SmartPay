@@ -82,6 +82,7 @@ public class TransactActivity extends AppCompatActivity {
         result = new DrawerBuilder()
                 .withActivity(this)
                 //.withToolbar(toolbar)
+                .withSliderBackgroundColorRes(R.color.blueA)
                 .withTranslucentStatusBar(false)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.drawer_item_compact_header).withIcon(GoogleMaterial.Icon.gmd_sun).withIdentifier(1),
@@ -120,6 +121,7 @@ public class TransactActivity extends AppCompatActivity {
 
         //the MiniDrawer is managed by the Drawer and we just get it to hook it into the Crossfader
         miniResult = result.getMiniDrawer();
+
 
         //get the widths in px for the first and second panel
         int firstWidth = (int) UIUtils.convertDpToPixel(300, this);
