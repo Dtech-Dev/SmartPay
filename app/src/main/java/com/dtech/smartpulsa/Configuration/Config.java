@@ -33,6 +33,8 @@ public class Config {
     $formatTrx = $_POST['formatTrx'];
     */
     public static final String TRX_URL = "http://samimi.web.id/dev/insert-log-transaksi.php";
+    public static final String TAG_KETERANGAN = "keterangan";
+    public static final String TAG_KETERANGAN_SALDO = "saldo";
     public static final String TRX_PULSA_EMAIL = "email";
     public static final String TRX_PULSA_FIREBASEID = "firebaseId";
     public static final String TRX_PULSA_KODE = "kodeTrans";

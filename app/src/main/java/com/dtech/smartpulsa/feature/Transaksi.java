@@ -1,13 +1,24 @@
 package com.dtech.smartpulsa.feature;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
+import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.TrfConfirmActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -93,6 +104,43 @@ public class Transaksi extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
+        //progress.dismiss();
+        JSONObject jsonObject = null;
+        //String keterangan="";
+        try {
+            jsonObject = new JSONObject(s);
+            JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_ARRAY);
+            String keterangan = "";
+            String saldo = "";
+            for(int i = 0; i<result.length(); i++){
+                JSONObject jo = result.getJSONObject(i);
+                keterangan = jo.getString(Config.TAG_KETERANGAN);
+                saldo = jo.getString(Config.TAG_KETERANGAN_SALDO);
+
+            }
+
+            if (keterangan.contains("saldo")) {
+                progress.dismiss();
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.custom_dialog_keterangan);
+                TextView tv = (TextView) dialog.findViewById(R.id.msgDialogKet);
+                tv.setText("Saldo anda tidak mencukupi -> "+saldo);
+                Button btnadd = (Button) dialog.findViewById(R.id.addBtn);
+                btnadd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            } else if (keterangan.contains("sukses")){
+                Toast.makeText(context, "Transaksi anda sedang diproses", Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         progress.dismiss();
+
     }
 }

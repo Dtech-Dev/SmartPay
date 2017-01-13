@@ -144,5 +144,7 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
         transaksi.setFirebaseId(firebaseId);
         transaksi.setKode(formatTrx);
         transaksi.execute();
+
+        edIdPelanggan.setText("");
     }
 }
