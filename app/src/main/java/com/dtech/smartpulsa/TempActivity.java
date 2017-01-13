@@ -56,12 +56,13 @@ public class TempActivity extends AppCompatActivity
     TextView navemail, navusername, tbalance, tTempor;
     Button btnIsiPulsa, btnCekTagihan, btnToken, btnVoucher, btnPaketData;
     Dialog dialogPulsa;
+    ImageButton imageButton;
     PrefManager prefManager;
     NavigationView navigationView;
     SharedPreferences sharedPreferences;
     Toolbar toolbar;
     public String textUser, txtEmail, txtFirebaseId;
-
+    DrawerLayout drawer;
     CircleMenu circleMenu;
     //private static final String PREF_NAME = "app-welcome";
     //private static final String DISPLAY_NAME = "displayName";
@@ -83,7 +84,7 @@ public class TempActivity extends AppCompatActivity
         /*String token = FirebaseInstanceId.getInstance().getToken();
         prefManager.setFirebaseId(token);*/
         //Log.d("Firebase id", "Refreshed token: " + token);
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -93,18 +94,18 @@ public class TempActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        /*fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-                /*Intent quickPay = new Intent(TempActivity.this, QuickPayActivity.class);
-                startActivity(quickPay);*/
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                Intent quickPay = new Intent(TempActivity.this, QuickPayActivity.class);
+                startActivity(quickPay);
 
                 drawer.openDrawer(GravityCompat.START);
 
             }
-        });
+        });*/
 
 
 
@@ -147,24 +148,24 @@ public class TempActivity extends AppCompatActivity
 
         navemail.setText(txtEmail+"\n"+txtFirebaseId);
 
-        //ImageButton imageWallet = (ImageButton) toolbar.findViewById(R.id.icWallet);
-        /*imageWallet.setOnClickListener(new View.OnClickListener() {
+        imageButton = (ImageButton) findViewById(R.id.openNav);
+        imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(TempActivity.this, "Wallet Clicked", Toast.LENGTH_SHORT).show();
-                getJson();
+                drawer.openDrawer(GravityCompat.START);
             }
-        });*/
+        });
+
 
         /*circle menu*/
         circleMenu = (CircleMenu) findViewById(R.id.circle_menu);
 
-        circleMenu.setMainMenu(Color.parseColor("#CDCDCD"), R.drawable.ic_wallet, R.mipmap.ic_launcher);
-        circleMenu.addSubMenu(Color.parseColor("#258CFF"), R.mipmap.ic_loyalty_black_24dp)
-                .addSubMenu(Color.parseColor("#30A400"), R.mipmap.ic_loyalty_black_24dp)
-                .addSubMenu(Color.parseColor("#FF4B32"), R.mipmap.ic_loyalty_black_24dp)
-                .addSubMenu(Color.parseColor("#8A39FF"), R.mipmap.ic_loyalty_black_24dp)
-                .addSubMenu(Color.parseColor("#FF6A00"), R.mipmap.ic_loyalty_black_24dp);
+        circleMenu.setMainMenu(Color.parseColor("#5481a2"), R.mipmap.ic_local_parking_white_24dp, R.mipmap.ic_close_white_24dp);
+        circleMenu.addSubMenu(Color.parseColor("#258CFF"), R.mipmap.ic_grain_white_24dp)
+                .addSubMenu(Color.parseColor("#30A400"), R.mipmap.ic_mail_outline_white_24dp)
+                .addSubMenu(Color.parseColor("#FF4B32"), R.mipmap.ic_assistant_white_24dp)
+                .addSubMenu(Color.parseColor("#8A39FF"), R.mipmap.ic_airport_shuttle_white_24dp)
+                .addSubMenu(Color.parseColor("#FF6A00"), R.mipmap.ic_monetization_on_white_24dp);
 
         circleMenu.setOnMenuSelectedListener(new OnMenuSelectedListener() {
 
@@ -172,19 +173,28 @@ public class TempActivity extends AppCompatActivity
                                                  public void onMenuSelected(int index) {
                                                      switch (index) {
                                                          case 0:
-                                                             Toast.makeText(TempActivity.this, "Home Button Clicked", Toast.LENGTH_SHORT).show();
+                                                             Toast.makeText(TempActivity.this, "Transaction Clicked", Toast.LENGTH_SHORT).show();
+                                                             Intent transaksi = new Intent(TempActivity.this, TransactActivity.class);
+                                                             //circleMenu.clearAnimation();
+                                                             startActivity(transaksi);
                                                              break;
                                                          case 1:
-                                                             Toast.makeText(TempActivity.this, "Search button Clicked", Toast.LENGTH_SHORT).show();
+                                                             Toast.makeText(TempActivity.this, "Inbox Clicked", Toast.LENGTH_SHORT).show();
+                                                             Intent inbox = new Intent(TempActivity.this, InboxActivity.class);
+                                                             startActivity(inbox);
                                                              break;
                                                          case 2:
-                                                             Toast.makeText(TempActivity.this, "Notify button Clciked", Toast.LENGTH_SHORT).show();
+                                                             Toast.makeText(TempActivity.this, "Tambah DanaClciked", Toast.LENGTH_SHORT).show();
+                                                             Intent saldo = new Intent(TempActivity.this, AddSaldoActivity.class);
+                                                             startActivity(saldo);
                                                              break;
                                                          case 3:
-                                                             Toast.makeText(TempActivity.this, "Settings button Clcked", Toast.LENGTH_SHORT).show();
+                                                             Toast.makeText(TempActivity.this, "Coming Soon :\nPemesanan Tiket", Toast.LENGTH_SHORT).show();
+
                                                              break;
                                                          case 4:
-                                                             Toast.makeText(TempActivity.this, "GPS button Clicked", Toast.LENGTH_SHORT).show();
+                                                             Toast.makeText(TempActivity.this, "Dompet Clicked", Toast.LENGTH_SHORT).show();
+                                                             getJson();
                                                              break;
                                                      }
                                                  }
@@ -324,21 +334,22 @@ public class TempActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.transaksinav) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
             Intent transaksi = new Intent(TempActivity.this, TransactActivity.class);
             startActivity(transaksi);
-
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.inboxnav) {
             Intent inbox = new Intent(this, InboxActivity.class);
             startActivity(inbox);
 
-        } else if (id == R.id.nav_add_saldo) {
+        } else if (id == R.id.tambahsaldonav) {
             Intent saldo = new Intent(TempActivity.this, AddSaldoActivity.class);
             startActivity(saldo);
-        } else if (id == R.id.nav_share) {
 
+        } else if (id == R.id.tiketnav) {
+            Toast.makeText(TempActivity.this, "Coming Soon :\nPemesanan Tiket", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.dompetnav) {
+            getJson();
         } else if (id == R.id.nav_send) {
 
         }
