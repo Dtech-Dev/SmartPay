@@ -134,8 +134,14 @@ public class WelcomeActivity extends AppCompatActivity  implements
 
     }
 
+    private void launchHomeA() {
+        Intent intent = new Intent(WelcomeActivity.this, TempActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     private void launchHome() {
-        prefManager.setFirstTimeLaunch(false);
+
         Intent intent = new Intent(WelcomeActivity.this, TempActivity.class);
         startActivity(intent);
         finish();
@@ -153,6 +159,7 @@ public class WelcomeActivity extends AppCompatActivity  implements
             case R.id.btn_next2:
                 userNumber = eduserNumber.getText().toString();
                 prefManager.setUserNumber(userNumber);
+                prefManager.setFirstTimeLaunch(false);
                 launchHome();
                 break;
         }

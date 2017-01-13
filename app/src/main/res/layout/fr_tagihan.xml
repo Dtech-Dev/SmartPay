@@ -1,13 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme"
+        android:layout_marginRight="5dp"
+        android:id="@+id/toolbarTagihan">
+
+        <android.support.v7.widget.Toolbar
+
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
+            android:theme="@style/AppTheme">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textSize="25sp"
+                android:text="Bayar Tagihan"/>
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/layMainTagihan"
-        >
+        android:layout_below="@+id/toolbarTagihan"
+        android:layout_marginTop="20dp">
 
         <GridView
             android:layout_width="match_parent"
@@ -26,6 +52,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/layDetailTagihan"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/toolbarTagihan"
         android:visibility="gone">
         <Button
             android:layout_width="wrap_content"

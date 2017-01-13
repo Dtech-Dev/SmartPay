@@ -5,19 +5,41 @@
     android:id="@+id/content_voucher"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.dtech.smartpulsa.feature.VoucherActivity"
     tools:showIn="@layout/activity_voucher">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme"
+        android:layout_marginRight="5dp"
+        android:id="@+id/toolbarVoucher">
+
+        <android.support.v7.widget.Toolbar
+
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
+            android:theme="@style/AppTheme">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textSize="25sp"
+                android:text="Voucher Game"/>
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/layVoucher"
-        >
+        android:layout_below="@+id/toolbarVoucher"
+        android:layout_marginTop="20dp">
 
 
         <android.support.v4.widget.NestedScrollView
@@ -39,6 +61,8 @@
                     android:layout_height="match_parent"
                     android:columnWidth="100dp"
                     android:gravity="center"
+                    android:horizontalSpacing="2dp"
+                    android:verticalSpacing="2dp"
                     android:listSelector="#00000000"
                     android:numColumns="auto_fit"
                     android:stretchMode="columnWidth" />
@@ -51,6 +75,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/layVoucherDetail"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/toolbarVoucher"
         android:visibility="gone">
 
         <Button
@@ -99,7 +125,8 @@
             android:listSelector="#00000000"
             android:numColumns="auto_fit"
             android:stretchMode="columnWidth"
-
+            android:horizontalSpacing="5dp"
+            android:verticalSpacing="5dp"
             android:layout_marginTop="20dp"/>
         </LinearLayout>
         </android.support.v4.widget.NestedScrollView>

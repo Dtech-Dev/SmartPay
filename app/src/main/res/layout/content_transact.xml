@@ -5,7 +5,7 @@
     android:id="@+id/content_transact"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@drawable/bg"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.dtech.smartpulsa.TransactActivity"
     tools:showIn="@layout/activity_transact">

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -64,6 +65,7 @@ public class TempActivity extends AppCompatActivity
     public String textUser, txtEmail, txtFirebaseId;
     DrawerLayout drawer;
     CircleMenu circleMenu;
+    private static int SPLASH_TIME_OUT = 1100;
     //private static final String PREF_NAME = "app-welcome";
     //private static final String DISPLAY_NAME = "displayName";
     //private static final String DISPLAY_EMAIL = "displayEmail";
@@ -79,16 +81,20 @@ public class TempActivity extends AppCompatActivity
 
 
         prefManager = new PrefManager(this);
-
+        /*if (!prefManager.isFirstTimeLaunch()) {
+            launchLogin();
+            //finish();
+        }
+*/
 
         /*String token = FirebaseInstanceId.getInstance().getToken();
         prefManager.setFirebaseId(token);*/
         //Log.d("Firebase id", "Refreshed token: " + token);
          drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        /*ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        toggle.syncState();*/
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -119,6 +125,10 @@ public class TempActivity extends AppCompatActivity
 
         //splitString();
 
+
+    }
+
+    private void launchLogin() {
 
     }
 
@@ -174,19 +184,49 @@ public class TempActivity extends AppCompatActivity
                                                      switch (index) {
                                                          case 0:
                                                              Toast.makeText(TempActivity.this, "Transaction Clicked", Toast.LENGTH_SHORT).show();
-                                                             Intent transaksi = new Intent(TempActivity.this, TransactActivity.class);
-                                                             //circleMenu.clearAnimation();
-                                                             startActivity(transaksi);
+                                                             new Handler().postDelayed(new Runnable() {
+
+                                                                 @Override
+                                                                 public void run() {
+                                                                     // This method will be executed once the timer is over
+                                                                     // Start your app main activity
+                                                                     Intent transaksi = new Intent(TempActivity.this, TransactActivity.class);
+                                                                     startActivity(transaksi);
+
+                                                                 }
+                                                             }, SPLASH_TIME_OUT);
+
+
                                                              break;
                                                          case 1:
                                                              Toast.makeText(TempActivity.this, "Inbox Clicked", Toast.LENGTH_SHORT).show();
-                                                             Intent inbox = new Intent(TempActivity.this, InboxActivity.class);
-                                                             startActivity(inbox);
+                                                             new Handler().postDelayed(new Runnable() {
+
+                                                                 @Override
+                                                                 public void run() {
+                                                                     // This method will be executed once the timer is over
+                                                                     // Start your app main activity
+                                                                     Intent inbox = new Intent(TempActivity.this, InboxActivity.class);
+                                                                     startActivity(inbox);
+
+                                                                 }
+                                                             }, SPLASH_TIME_OUT);
+
                                                              break;
                                                          case 2:
                                                              Toast.makeText(TempActivity.this, "Tambah DanaClciked", Toast.LENGTH_SHORT).show();
-                                                             Intent saldo = new Intent(TempActivity.this, AddSaldoActivity.class);
-                                                             startActivity(saldo);
+                                                             new Handler().postDelayed(new Runnable() {
+
+                                                                 @Override
+                                                                 public void run() {
+                                                                     // This method will be executed once the timer is over
+                                                                     // Start your app main activity
+                                                                     Intent saldo = new Intent(TempActivity.this, AddSaldoActivity.class);
+                                                                     startActivity(saldo);
+
+                                                                 }
+                                                             }, SPLASH_TIME_OUT);
+
                                                              break;
                                                          case 3:
                                                              Toast.makeText(TempActivity.this, "Coming Soon :\nPemesanan Tiket", Toast.LENGTH_SHORT).show();
