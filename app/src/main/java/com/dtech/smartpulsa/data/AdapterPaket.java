@@ -70,6 +70,7 @@ public class AdapterPaket extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         Dialog dialogBuy;
         String keteranganPaket, kodePaket, detailPaket, hargaPaket;
         Transaksi transaksiPulsa;
+        PrefManager prefManager;
 
         public MyHolder(View itemView) {
             super(itemView);
@@ -92,14 +93,16 @@ public class AdapterPaket extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
 
         private void buyPaket() {
-            PrefManager prefManager;
+
             prefManager = new PrefManager(context);
             SharedPreferences sharedPreferences = context.getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
-            String firebaseId = (sharedPreferences.getString(Config.DISPLAY_FIREBASE_ID, ""));
-            String email = (sharedPreferences).getString(Config.DISPLAY_EMAIL, "");
+            final String firebaseId = (sharedPreferences.getString(Config.DISPLAY_FIREBASE_ID, ""));
+            final String email = (sharedPreferences).getString(Config.DISPLAY_EMAIL, "");
 
             dialogBuy = new Dialog(context);
             dialogBuy.setContentView(R.layout.custom_dialog_paket);
+            dialogBuy.setTitle("Konfirmasi");
+
             TextView ketPaket = (TextView) dialogBuy.findViewById(R.id.ketPaket);
             ketPaket.setText(detailPaket);
             Button bbuyPaket = (Button) dialogBuy.findViewById(R.id.btnProsesPaket);
@@ -109,16 +112,25 @@ public class AdapterPaket extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             bbuyPaket.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String nomorPaket;
-                    nomorPaket = edNomorPaket.getText().toString();
-                    Toast.makeText(context, kodePaket+"."+nomorPaket+".3003", Toast.LENGTH_SHORT).show();
-                    /*transaksiPulsa = new Transaksi(this.getActivity());
-                    transaksiPulsa.setUser(email);
-                    transaksiPulsa.setNomorTuj(nomorTuj);
-                    transaksiPulsa.setJenisTransaksi(transaksi);
-                    transaksiPulsa.setFirebaseId(firebaseId);
-                    transaksiPulsa.setKode(formatTrx);
-                    transaksiPulsa.execute();*/
+                       String nomorPaket = edNomorPaket.getText().toString();
+                    String formatTrx = kodePaket + "." + nomorPaket + ".3003";
+                    if (nomorPaket.matches("")) {
+                        Toast.makeText(context, "Silahkan isi nomor anda", Toast.LENGTH_SHORT).show();
+                        edNomorPaket.requestFocus();
+                    } else {
+                        Toast.makeText(context, kodePaket+"."+nomorPaket+".3003", Toast.LENGTH_SHORT).show();
+                        transaksiPulsa = new Transaksi(context);
+                        transaksiPulsa.setUser(email);
+                        transaksiPulsa.setNomorTuj(nomorPaket);
+                        transaksiPulsa.setJenisTransaksi(kodePaket);
+                        transaksiPulsa.setFirebaseId(firebaseId);
+                        transaksiPulsa.setKode(formatTrx);
+                        transaksiPulsa.execute();
+                        dialogBuy.dismiss();
+                    }
+
+
+
                 }
             });
             dialogBuy.show();

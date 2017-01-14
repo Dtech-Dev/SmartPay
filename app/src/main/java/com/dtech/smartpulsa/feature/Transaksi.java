@@ -123,6 +123,7 @@ public class Transaksi extends AsyncTask<Void, Void, String> {
                 progress.dismiss();
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.custom_dialog_keterangan);
+                dialog.setTitle("Saldo");
                 TextView tv = (TextView) dialog.findViewById(R.id.msgDialogKet);
                 tv.setText("Saldo anda tidak mencukupi -> "+saldo);
                 Button btnadd = (Button) dialog.findViewById(R.id.addBtn);
@@ -133,7 +134,7 @@ public class Transaksi extends AsyncTask<Void, Void, String> {
                     }
                 });
                 dialog.show();
-            } else if (keterangan.contains("sukses")){
+            } else if (keterangan.matches("sukses")){
                 Toast.makeText(context, "Transaksi anda sedang diproses", Toast.LENGTH_SHORT).show();
             }
 

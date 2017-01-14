@@ -180,7 +180,6 @@ public class FrVgame extends Fragment implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-
             }
         });
     }

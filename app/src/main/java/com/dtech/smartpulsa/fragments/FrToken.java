@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +35,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by aris on 01/01/17.
  */
 
-public class FrToken extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class FrToken extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener, TextWatcher {
 
     View view;
     Transaksi transaksi;
@@ -117,7 +119,9 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
 
     private void initUI() {
         gridToken = (GridView) view.findViewById(R.id.gridToken);
+        //gridToken.setEnabled(false);
         edIdPelanggan = (EditText) view.findViewById(R.id.idPelangganToken);
+        //edIdPelanggan.addTextChangedListener(this);
     }
 
     @Override
@@ -131,20 +135,45 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
         TextView tvkode = (TextView) view.findViewById(R.id.txtkodeToken);
         /*Button btnProses = (Button)view.findViewById()*/
         String tkodetoken = tvkode.getText().toString();
+        String formatTrx="";
         String kodetoken = tkodetoken.substring(3);
-        String idpel = edIdPelanggan.getText().toString();
-        String formatTrx = "pln " + idpel + " " + kodetoken + " 3003";
+        String idpel = edIdPelanggan.getText().toString().trim();
+        /*if (!gridToken.isEnabled()) {
 
-        Toast.makeText(getActivity(), formatTrx, Toast.LENGTH_SHORT).show();
+        }*/
+        if (idpel.matches("")) {
+            Toast.makeText(getActivity(), "Silahkan isi nomor pelangga anda", Toast.LENGTH_SHORT).show();
+            edIdPelanggan.requestFocus();
+        } else {
+            formatTrx = "pln " + idpel + " " + kodetoken + " 3003";
 
-        transaksi = new Transaksi(this.getActivity());
-        transaksi.setUser(email);
-        transaksi.setNomorTuj(idpel);
-        transaksi.setJenisTransaksi(tkodetoken);
-        transaksi.setFirebaseId(firebaseId);
-        transaksi.setKode(formatTrx);
-        transaksi.execute();
+            Toast.makeText(getActivity(), formatTrx, Toast.LENGTH_SHORT).show();
+        //}
+            transaksi = new Transaksi(this.getActivity());
+            transaksi.setUser(email);
+            transaksi.setNomorTuj(idpel);
+            transaksi.setJenisTransaksi(tkodetoken);
+            transaksi.setFirebaseId(firebaseId);
+            transaksi.setKode(formatTrx);
+            transaksi.execute();
 
-        edIdPelanggan.setText("");
+            edIdPelanggan.setText("");
+        }
+
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        gridToken.setEnabled(false);
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        gridToken.setEnabled(true);
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
     }
 }
