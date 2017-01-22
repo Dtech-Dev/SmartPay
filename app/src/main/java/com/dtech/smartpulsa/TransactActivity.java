@@ -82,7 +82,8 @@ public class TransactActivity extends AppCompatActivity {
         result = new DrawerBuilder()
                 .withActivity(this)
                 //.withToolbar(toolbar)
-                .withSliderBackgroundColorRes(R.color.blueA)
+                //.withSliderBackgroundDrawable(getDrawable(R.drawable.bgd))
+                //.withSliderBackgroundColorRes(R.color.blueA)
                 .withTranslucentStatusBar(false)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.drawer_item_compact_header).withIcon(GoogleMaterial.Icon.gmd_sun).withIdentifier(1),
@@ -92,13 +93,13 @@ public class TransactActivity extends AppCompatActivity {
                         new PrimaryDrawerItem().withName(R.string.drawer_item_voucher).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(5),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_paket).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(6),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_action_bar_drawer).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(7),
-                        new PrimaryDrawerItem().withDescription("A more complex sample").withName(R.string.drawer_item_advanced_drawer).withIcon(GoogleMaterial.Icon.gmd_adb).withIdentifier(5),
-                        new SectionDrawerItem().withName(R.string.drawer_item_section_header),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_github),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(GoogleMaterial.Icon.gmd_format_color_fill).withTag("Bullhorn"),
-                        new DividerDrawerItem(),
-                        new SwitchDrawerItem().withName("Switch").withIcon(Octicons.Icon.oct_tools).withChecked(true).withOnCheckedChangeListener(onCheckedChangeListener),
-                        new ToggleDrawerItem().withName("Toggle").withIcon(Octicons.Icon.oct_tools).withChecked(true).withOnCheckedChangeListener(onCheckedChangeListener)
+                        //new PrimaryDrawerItem().withDescription("A more complex sample").withName(R.string.drawer_item_advanced_drawer).withIcon(GoogleMaterial.Icon.gmd_adb).withIdentifier(5),
+                        //new SectionDrawerItem().withName(R.string.drawer_item_section_header),
+                        //new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_github),
+                        //new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(GoogleMaterial.Icon.gmd_format_color_fill).withTag("Bullhorn"),
+                        new DividerDrawerItem()
+                        //new SwitchDrawerItem().withName("Switch").withIcon(Octicons.Icon.oct_tools).withChecked(true).withOnCheckedChangeListener(onCheckedChangeListener),
+                        //new ToggleDrawerItem().withName("Toggle").withIcon(Octicons.Icon.oct_tools).withChecked(true).withOnCheckedChangeListener(onCheckedChangeListener)
                 ) // add the items we want to use with our Drawer
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override

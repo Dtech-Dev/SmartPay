@@ -85,6 +85,7 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
 
     private void initUI() {
         gridView = (GridView) view.findViewById(R.id.gridPulsa);
+        gridView.setVisibility(View.INVISIBLE);
         totherNumber = (TextView) view.findViewById(R.id.txtOtherNumber);
         edOtherNumber = (EditText) view.findViewById(R.id.editOtherNumber);
 
@@ -168,6 +169,9 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
             setTrProvider(predictNumber.getKodeTransaksi());
             totherNumber.setText("Provider : "+provider+" ("+trProvider+")");
             queryKodeProvider(kodeProvider);
+        } else {
+            gridView.setVisibility(View.INVISIBLE);
+            totherNumber.setText("Provider : ");
         }
     }
 
@@ -179,6 +183,7 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
     }
 
     private void queryKodeProvider(final String providerCode) {
+        gridView.setVisibility(View.VISIBLE);
         class QueryKodeAsync extends AsyncTask<Void, Void, String> {
             @Override
             protected String doInBackground(Void... params) {
@@ -207,24 +212,10 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
 
         }
 
+
         QueryKodeAsync queryKode = new QueryKodeAsync();
         queryKode.execute();
 
-        /*spinnerKode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                String nominalTemp = spinnerKode.getSelectedItem().toString();
-                String kodeTnsk = nominalTemp.replace(".000", "");
-                setTrNominal(kodeTnsk);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
     }
 
     public String getTrProvider() {
@@ -252,17 +243,21 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
         setTrNominal(kodeTnsk);
 
         String nomorTuj = edOtherNumber.getText().toString();
+        if (nomorTuj.length() < 6 || nomorTuj.matches("")) {
+            Toast.makeText(getActivity(), "Cek nomor tujuan anda", Toast.LENGTH_SHORT).show();
+            edOtherNumber.requestFocus();
+        }
         //PredictNumber ambilNomorTujuan = new PredictNumber(getActivity());
         //String nomorTuj = predictNumber.getNomorTujuan();
         String transaksi = trProvider + trNominal;
         formatTrx = transaksi+"."+nomorTuj+".3003";
         Toast.makeText(getActivity(), formatTrx,Toast.LENGTH_SHORT).show();
-        /*transaksiPulsa = new Transaksi(this.getActivity());
+        transaksiPulsa = new Transaksi(this.getActivity());
         transaksiPulsa.setUser(email);
         transaksiPulsa.setNomorTuj(nomorTuj);
         transaksiPulsa.setJenisTransaksi(transaksi);
         transaksiPulsa.setFirebaseId(firebaseId);
         transaksiPulsa.setKode(formatTrx);
-        transaksiPulsa.execute();*/
+        transaksiPulsa.execute();
     }
 }
