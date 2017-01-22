@@ -28,4 +28,5 @@
     <string name="drawer_item_section_header">Section Drawer</string>
     <string name="drawer_item_open_source">Open Source</string>
     <string name="drawer_item_contact">Contact</string>
+    <string name="title_activity_dompet">DompetActivity</string>
 </resources>

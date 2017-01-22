@@ -143,7 +143,16 @@
         <activity
             android:name=".TransactActivity"
             android:label="@string/title_activity_transact"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".feature.DompetActivity"
+            android:label="@string/title_activity_dompet"
+            android:parentActivityName=".TempActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dtech.smartpulsa.TempActivity" />
+        </activity>
     </application>
 
 </manifest>
