@@ -119,15 +119,15 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
     };
 
     public static int[] gridViewImages = {
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher
+            R.drawable.pln,
+            R.drawable.pdam,
+            R.drawable.telkom,
+            R.drawable.orangetv,
+            R.drawable.indovision,
+            R.drawable.aora,
+            R.drawable.fif,
+            R.drawable.acc,
+            R.drawable.wom
     };
 
     @Nullable

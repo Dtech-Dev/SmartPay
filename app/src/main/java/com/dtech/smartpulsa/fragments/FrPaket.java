@@ -78,12 +78,12 @@ public class FrPaket extends Fragment implements View.OnClickListener {
     };
 
     public static int[] gridImagePaket = {
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher
+            R.drawable.xl,
+            R.drawable.indosat,
+            R.drawable.axis,
+            R.drawable.smartfren,
+            R.drawable.telkomsel,
+            R.drawable.tri
 
     };
     private String json_string;

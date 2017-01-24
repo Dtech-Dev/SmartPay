@@ -69,10 +69,10 @@ public class FrVgame extends Fragment implements View.OnClickListener {
     };
 
     public static int[] gridImageVouchers = {
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
+            R.drawable.garena,
+            R.drawable.gemscool,
+            R.drawable.lyto,
+            R.drawable.megasus,
             R.mipmap.ic_launcher
 
     };
