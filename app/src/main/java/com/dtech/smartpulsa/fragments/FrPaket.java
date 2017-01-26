@@ -60,12 +60,12 @@ public class FrPaket extends Fragment implements View.OnClickListener {
     };
 
     public static String[] gridImageTagPaket = {
-            "ic_launcher",
-            "ic_launcher",
-            "ic_launcher",
-            "ic_launcher",
-            "ic_launcher",
-            "ic_launcher"
+            "xl",
+            "indosat",
+            "axis",
+            "smartfren",
+            "telkomsel",
+            "tri"
     };
 
     public static String[] grididpaket = {
@@ -117,7 +117,7 @@ public class FrPaket extends Fragment implements View.OnClickListener {
         layDetail.setVisibility(View.VISIBLE);
 
         //Toast.makeText(this, idItem + " " + jenisVoucher, Toast.LENGTH_SHORT).show();
-        int resource = getResources().getIdentifier(tag, "mipmap", getActivity().getPackageName());
+        int resource = getResources().getIdentifier(tag, "drawable", getActivity().getPackageName());
         imgjnspaket.setImageDrawable(getResources().getDrawable(resource));
         txtjnspaket.setText(jenisPaket);
 

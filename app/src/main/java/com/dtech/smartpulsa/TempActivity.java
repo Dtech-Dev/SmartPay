@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
+import com.dtech.smartpulsa.feature.DompetActivity;
 import com.dtech.smartpulsa.feature.InboxActivity;
 import com.dtech.smartpulsa.feature.PaketDataActivity;
 import com.dtech.smartpulsa.feature.PulsaActivity;
@@ -183,7 +184,7 @@ public class TempActivity extends AppCompatActivity
                                                  public void onMenuSelected(int index) {
                                                      switch (index) {
                                                          case 0:
-                                                             Toast.makeText(TempActivity.this, "Transaction Clicked", Toast.LENGTH_SHORT).show();
+                                                             Toast.makeText(TempActivity.this, "Go to Transaction", Toast.LENGTH_SHORT).show();
                                                              new Handler().postDelayed(new Runnable() {
 
                                                                  @Override
@@ -199,7 +200,7 @@ public class TempActivity extends AppCompatActivity
 
                                                              break;
                                                          case 1:
-                                                             Toast.makeText(TempActivity.this, "Inbox Clicked", Toast.LENGTH_SHORT).show();
+                                                             Toast.makeText(TempActivity.this, "Inbox", Toast.LENGTH_SHORT).show();
                                                              new Handler().postDelayed(new Runnable() {
 
                                                                  @Override
@@ -214,7 +215,7 @@ public class TempActivity extends AppCompatActivity
 
                                                              break;
                                                          case 2:
-                                                             Toast.makeText(TempActivity.this, "Tambah DanaClciked", Toast.LENGTH_SHORT).show();
+                                                             Toast.makeText(TempActivity.this, "Tambah Saldo", Toast.LENGTH_SHORT).show();
                                                              new Handler().postDelayed(new Runnable() {
 
                                                                  @Override
@@ -234,7 +235,18 @@ public class TempActivity extends AppCompatActivity
                                                              break;
                                                          case 4:
                                                              Toast.makeText(TempActivity.this, "Dompet Clicked", Toast.LENGTH_SHORT).show();
-                                                             getJson();
+                                                             new Handler().postDelayed(new Runnable() {
+
+                                                                 @Override
+                                                                 public void run() {
+                                                                     // This method will be executed once the timer is over
+                                                                     // Start your app main activity
+                                                                     Intent dompet = new Intent(TempActivity.this, DompetActivity.class);
+                                                                     startActivity(dompet);
+
+                                                                 }
+                                                             }, SPLASH_TIME_OUT);
+                                                             //getJson();
                                                              break;
                                                      }
                                                  }
@@ -283,7 +295,7 @@ public class TempActivity extends AppCompatActivity
     }
 
     public void getJson() {
-        class GetJSON extends AsyncTask<Void,Void,String> {
+        /*class GetJSON extends AsyncTask<Void,Void,String> {
 
             ProgressDialog loading;
             @Override
@@ -308,7 +320,7 @@ public class TempActivity extends AppCompatActivity
             }
         }
         GetJSON gj = new GetJSON();
-        gj.execute();
+        gj.execute();*/
     }
 
     public void showCustomer(String json) {

@@ -69,8 +69,8 @@
             android:text="Ke Menu Utama Paket Data"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:id="@+id/imageJnsPaket"
             android:layout_below="@+id/btnMainPaket"/>
 
@@ -80,10 +80,9 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/imageJnsPaket"
             android:layout_below="@+id/btnMainPaket"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="47dp"
-            android:layout_marginStart="47dp"
+            android:layout_alignTop="@+id/imageJnsPaket"
+            android:layout_marginLeft="10dp"
+            android:visibility="invisible"
             android:id="@+id/txtJnsPaket" />
 
         <!--<android.support.v4.widget.NestedScrollView

@@ -7,7 +7,7 @@
     <string name="spinner_title">Nominal</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="title_activity_add_saldo">AddSaldoActivity</string>
+    <string name="title_activity_add_saldo">Tambah Saldo</string>
     <string name="title_activity_trf_confirm">Transfer Confirm</string>
     <string name="title_activity_pulsa">PulsaActivity</string>
     <string name="title_activity_tagihan">TagihanActivity</string>
@@ -28,5 +28,5 @@
     <string name="drawer_item_section_header">Section Drawer</string>
     <string name="drawer_item_open_source">Open Source</string>
     <string name="drawer_item_contact">Contact</string>
-    <string name="title_activity_dompet">DompetActivity</string>
+    <string name="title_activity_dompet">Dompetku</string>
 </resources>

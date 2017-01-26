@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/textView5" />
+        android:id="@+id/tsaldo" />
 
     <TextView
         android:text="Poin"
@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textView8"
-        android:layout_alignLeft="@+id/textView5"
-        android:layout_alignStart="@+id/textView5"
-        android:id="@+id/textView9" />
+        android:layout_alignLeft="@+id/tsaldo"
+        android:layout_alignStart="@+id/tsaldo"
+        android:id="@+id/tpoin" />
 </RelativeLayout>

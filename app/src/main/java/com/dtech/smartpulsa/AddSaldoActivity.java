@@ -11,7 +11,7 @@ import android.widget.Button;
 
 public class AddSaldoActivity extends AppCompatActivity {
 
-    Button bca;
+    Button bca, mandiri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +34,17 @@ public class AddSaldoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent confirm = new Intent(AddSaldoActivity.this, TrfConfirmActivity.class);
-                confirm.putExtra("bca", "BCA");
+                confirm.putExtra("bank", "BCA");
+                startActivity(confirm);
+            }
+        });
+
+        mandiri = (Button) findViewById(R.id.btnmandiri);
+        mandiri.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent confirm = new Intent(AddSaldoActivity.this, TrfConfirmActivity.class);
+                confirm.putExtra("bank", "Mandiri");
                 startActivity(confirm);
             }
         });

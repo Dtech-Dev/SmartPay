@@ -53,11 +53,11 @@ public class FrVgame extends Fragment implements View.OnClickListener {
     };
 
     public static String[] gridImageTag = {
-            "ic_launcher",
-            "ic_launcher",
-            "ic_launcher",
-            "ic_launcher",
-            "ic_launcher"
+            "garena",
+            "gemscool",
+            "lyto",
+            "megasus",
+            "steam"
     };
 
     public static String[] grididVoucher = {
@@ -73,7 +73,7 @@ public class FrVgame extends Fragment implements View.OnClickListener {
             R.drawable.gemscool,
             R.drawable.lyto,
             R.drawable.megasus,
-            R.mipmap.ic_launcher
+            R.drawable.steam
 
     };
 
@@ -108,7 +108,7 @@ public class FrVgame extends Fragment implements View.OnClickListener {
         layoutVoucher.setVisibility(View.GONE);
         layoutDetailVoucher.setVisibility(View.VISIBLE);
 
-        int resource = getResources().getIdentifier(tag, "mipmap", getActivity().getPackageName());
+        int resource = getResources().getIdentifier(tag, "drawable", getActivity().getPackageName());
         imgJenisVoucher.setImageDrawable(getResources().getDrawable(resource));
         txtjnsvoucher.setText(keterangan);
 
