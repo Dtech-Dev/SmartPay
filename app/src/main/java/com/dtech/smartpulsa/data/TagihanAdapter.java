@@ -53,7 +53,7 @@ public class TagihanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         myHolder.detail.setText(current.mes);
         myHolder.idtagihan.setText(current.ket);
         myHolder.ketag.setText(current.ketag);
-        myHolder.jenis.setText(current.jenis);
+        myHolder.jenis.setText(current.jenis+" "+current.ketag);
         myHolder.idtagih.setText(current.idTagihan);
 
         //tagihan =
