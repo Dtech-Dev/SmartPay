@@ -41,7 +41,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="12dp"
-
+                android:visibility="invisible"
                 android:id="@+id/txtItemId" />
             <TextView
                 android:text="TextView"
@@ -54,7 +54,7 @@
                 android:layout_marginEnd="15dp"
                 android:layout_marginTop="12dp"
                 android:id="@+id/ketTag"
-                />
+                android:visibility="invisible"/>
 
 
             <LinearLayout
@@ -125,7 +125,8 @@
                         android:layout_toLeftOf="@+id/imageView3"
                         android:layout_toStartOf="@+id/imageView3"
                         android:layout_below="@+id/tagJenis"
-                        android:id="@+id/idTagih" />
+                        android:id="@+id/idTagih"
+                        android:visibility="invisible"/>
                 </RelativeLayout>
 
 
