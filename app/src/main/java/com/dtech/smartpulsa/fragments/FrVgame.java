@@ -1,6 +1,7 @@
 package com.dtech.smartpulsa.fragments;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,7 +21,9 @@ import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.custom.CustomDetailVgame;
 import com.dtech.smartpulsa.custom.CustomGridVoucher;
+import com.dtech.smartpulsa.feature.Transaksi;
 import com.dtech.smartpulsa.feature.VoucherActivity;
+import com.dtech.smartpulsa.preference.PrefManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +31,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by aris on 01/01/17.
@@ -78,11 +83,17 @@ public class FrVgame extends Fragment implements View.OnClickListener {
     };
 
     String json_string;
+    PrefManager prefManager;
+    Transaksi transaksi;
+    String firebaseId, email;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.content_voucher, container, false);
-
+        prefManager = new PrefManager(getActivity());
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
+        firebaseId = (sharedPreferences.getString(Config.DISPLAY_FIREBASE_ID, ""));
+        email = (sharedPreferences).getString(Config.DISPLAY_EMAIL, "");
 
         initUi();
 
@@ -179,7 +190,17 @@ public class FrVgame extends Fragment implements View.OnClickListener {
         gridVoucherDetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                TextView tkode = (TextView) view.findViewById(R.id.itemdetailVgame);
+                String kode = tkode.getText().toString();
+                String formatTrx = kode+".3003";
 
+                transaksi = new Transaksi(getActivity());
+                transaksi.setUser(email);
+                transaksi.setNomorTuj(kode);
+                transaksi.setJenisTransaksi(kode);
+                transaksi.setFirebaseId(firebaseId);
+                transaksi.setKode(formatTrx);
+                transaksi.execute();
             }
         });
     }

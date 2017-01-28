@@ -135,7 +135,7 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
         TextView tvkode = (TextView) view.findViewById(R.id.txtkodeToken);
         /*Button btnProses = (Button)view.findViewById()*/
         String tkodetoken = tvkode.getText().toString();
-        String formatTrx="";
+        String formatTrx;
         String kodetoken = tkodetoken.substring(3);
         String idpel = edIdPelanggan.getText().toString().trim();
         /*if (!gridToken.isEnabled()) {

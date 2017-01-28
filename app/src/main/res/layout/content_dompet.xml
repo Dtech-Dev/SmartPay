@@ -13,41 +13,67 @@
     tools:context="com.dtech.smartpulsa.feature.DompetActivity"
     tools:showIn="@layout/activity_dompet">
 
-    <TextView
-        android:text="Saldo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="19dp"
-        android:layout_marginStart="19dp"
-        android:id="@+id/textView2" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/tsaldo" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="30dp"
+                android:layout_weight="0.5">
+                <TextView
+                    android:text="Saldo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/textView2" />
 
-    <TextView
-        android:text="Poin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignStart="@+id/textView2"
-        android:layout_marginTop="67dp"
-        android:id="@+id/textView8" />
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/tsaldo" />
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView8"
-        android:layout_alignLeft="@+id/tsaldo"
-        android:layout_alignStart="@+id/tsaldo"
-        android:id="@+id/tpoin" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:id="@+id/view"
+                    android:background="@color/blueA"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+            </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5">
+            <TextView
+                android:text="Poin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:id="@+id/textView8" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/textView8"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/tpoin" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
 </RelativeLayout>
