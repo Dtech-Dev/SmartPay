@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:pv="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.dtech.smartpulsa.SplashActivity">
+
+    <!--<TextView
+        android:text="Splash"
+        android:textSize="40sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView3" />-->
+    <me.wangyuwei.particleview.ParticleView
+        android:id="@+id/particle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0867AB"
+        pv:pv_host_text="Pay"
+        pv:pv_background_color="#0867AB"
+        pv:pv_particle_text="Point"
+        pv:pv_particle_text_size="14sp"
+        pv:pv_text_color="#FFF"
+        pv:pv_text_anim_time="3000"
+        pv:pv_spread_anim_time="2000"
+        pv:pv_host_text_anim_time="3000"/>
+</RelativeLayout>

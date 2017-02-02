@@ -70,10 +70,10 @@ public class WelcomeActivity extends AppCompatActivity  implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefManager = new PrefManager(this);
-        if (!prefManager.isFirstTimeLaunch()) {
+        /*if (!prefManager.isFirstTimeLaunch()) {
             launchHome();
             finish();
-        }
+        }*/
         setContentView(R.layout.activity_welcome);
 
         //telephonyManager=(TelephonyManager)this.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);

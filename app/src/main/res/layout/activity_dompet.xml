@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:id="@+id/appbar"
-        android:background="@drawable/bg"
+        android:background="@drawable/bgc"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.NoActionBar.AppBarOverlay">
         <android.support.design.widget.CollapsingToolbarLayout
@@ -24,29 +24,7 @@
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleTextAppearance="@android:color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
-                <TextView
-                    android:text="Saldo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:id="@+id/textView2" />
 
-                <TextView
-                    android:text="TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:id="@+id/tsaldo" />
-
-            </RelativeLayout>
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
@@ -54,6 +32,56 @@
 
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/circle_accent">
+                    <TextView
+                        android:text="Saldo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:textStyle="bold"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/textView2" />
+
+                    <TextView
+                        android:text=""
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/accent"
+                        android:layout_below="@+id/textView2"
+                        android:id="@+id/tsaldo" />
+
+                    <com.dtech.smartpulsa.preference.SiriWaveView
+                        android:id="@+id/siriWaveView"
+                        android:layout_below="@+id/tsaldo"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="18dp"
+                        android:layout_centerHorizontal="true"
+                        app:waveAmount="3"
+                        app:waveColor="@android:color/white"
+                        app:waveFrequency="2.0"
+                        app:waveHeight="20dp"
+                        app:waveInitialPhaseOffset="0"
+                        app:wavePhaseShift="-0.05"
+                        app:waveVerticalPosition="2" />
+
+
+                </RelativeLayout>
+            </RelativeLayout>
+
         </android.support.design.widget.CollapsingToolbarLayout>
 
 

@@ -21,6 +21,7 @@ import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.TempActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
+import com.dtech.smartpulsa.preference.SiriWaveView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +38,7 @@ public class DompetActivity extends AppCompatActivity {
 
     PrefManager prefManager;
     SharedPreferences sharedPreferences;
+    SiriWaveView waveView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,6 +156,9 @@ public class DompetActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
         txtEmail = (sharedPreferences.getString(Config.DISPLAY_EMAIL, ""));
+
+        waveView = (SiriWaveView) findViewById(R.id.siriWaveView);
+        waveView.startAnimation();
     }
 
 }
