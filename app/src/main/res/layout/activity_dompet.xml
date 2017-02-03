@@ -98,11 +98,25 @@
         android:layout_gravity="end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@mipmap/ic_assistant_white_24dp" />
-    <Button
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:text="Tukar Poin"/>
+        android:layout_gravity="bottom|end">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tukar Poin"
+            android:id="@+id/bTukarPoin"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Berapa Poin per transaksi?"
+            android:id="@+id/bdetaiPoin"
+            android:layout_below="@+id/bTukarPoin"/>
+    </RelativeLayout>
+
 
 
 </android.support.design.widget.CoordinatorLayout>

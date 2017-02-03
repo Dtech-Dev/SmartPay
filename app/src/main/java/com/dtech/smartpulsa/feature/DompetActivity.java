@@ -13,6 +13,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +31,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class DompetActivity extends AppCompatActivity {
+public class DompetActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView tsaldo, tpoin;
     RelativeLayout reldompet;
@@ -39,6 +40,7 @@ public class DompetActivity extends AppCompatActivity {
     String balance;
     String point;
     String txtEmail;
+    Button bTukarPoin, bDetailPoin;
 
     PrefManager prefManager;
     SharedPreferences sharedPreferences;
@@ -159,6 +161,10 @@ public class DompetActivity extends AppCompatActivity {
         waveDrawable = new WaveDrawable(this, R.drawable.circle_image);
         tsaldo = (TextView) findViewById(R.id.tsaldo);
         tpoin = (TextView) findViewById(R.id.tpoin);
+        bTukarPoin = (Button) findViewById(R.id.bTukarPoin);
+        bDetailPoin = (Button) findViewById(R.id.bdetaiPoin);
+        bTukarPoin.setOnClickListener(this);
+        bDetailPoin.setOnClickListener(this);
 
         sharedPreferences = getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
         txtEmail = (sharedPreferences.getString(Config.DISPLAY_EMAIL, ""));
@@ -175,4 +181,22 @@ public class DompetActivity extends AppCompatActivity {
         waveDrawable.setWaveSpeed(5);
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.bTukarPoin:
+                tukarPoin();
+                break;
+            case R.id.bdetaiPoin:
+                detailPoin();
+        }
+    }
+
+    private void detailPoin() {
+
+    }
+
+    private void tukarPoin() {
+
+    }
 }

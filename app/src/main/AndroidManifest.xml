@@ -16,9 +16,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".WelcomeActivity">
-
-        </activity>
+        <activity android:name=".WelcomeActivity"></activity>
         <activity
             android:name=".TempActivity"
             android:label="@string/title_activity_temp"
@@ -156,6 +154,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".feature.TukarActivity"></activity>
     </application>
 
 </manifest>
