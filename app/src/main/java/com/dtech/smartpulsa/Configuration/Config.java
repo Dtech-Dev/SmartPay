@@ -5,6 +5,14 @@ package com.dtech.smartpulsa.Configuration;
  */
 
 public class Config {
+    /*poin*/
+    public static final String WEBA = "http://samimi.web.id/dev/poina.php";
+    public static final String WEBB = "http://samimi.web.id/dev/poinb.php";
+    public static final String WEBC = "http://samimi.web.id/dev/poinc.php";
+    public static final String WEBD = "http://samimi.web.id/dev/poind.php";
+    public static final String WEBE = "http://samimi.web.id/dev/poine.php";
+    public static final String WEBF = "http://samimi.web.id/dev/poinf.php";
+
     /*Shared Preference*/
     public static final String PREF_NAME = "app-welcome";
     public static final String DISPLAY_NAME = "displayName";

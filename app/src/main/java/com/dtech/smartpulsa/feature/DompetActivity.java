@@ -193,6 +193,8 @@ public class DompetActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void detailPoin() {
+        Intent detail = new Intent(DompetActivity.this, PoinCatActivity.class);
+        startActivity(detail);
 
     }
 
