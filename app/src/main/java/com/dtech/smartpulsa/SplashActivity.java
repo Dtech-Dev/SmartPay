@@ -1,21 +1,27 @@
 package com.dtech.smartpulsa;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.SeekBar;
 
 import com.dtech.smartpulsa.preference.PrefManager;
+import com.race604.drawable.wave.WaveDrawable;
 
-import me.wangyuwei.particleview.ParticleView;
 
 public class SplashActivity extends AppCompatActivity {
 
     PrefManager prefManager;
-    ParticleView particleView;
+    //ParticleView particleView;
+    ImageView imgsplash;
+    WaveDrawable mWaveDrawable;
+    SeekBar mLevelSeekBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,23 +30,29 @@ public class SplashActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
 
-        prefManager = new PrefManager(this);
-
         setContentView(R.layout.activity_splash);
 
+        prefManager = new PrefManager(this);
         if (prefManager.isFirstTimeLaunch()) {
             launchWelcome();
         }
+        imgsplash = (ImageView) findViewById(R.id.imgsplash);
+        mWaveDrawable = new WaveDrawable(this, R.drawable.android_robot);
+        imgsplash.setImageDrawable(mWaveDrawable);
+        mWaveDrawable.setLevel(5000);
 
-        particleView = (ParticleView) findViewById(R.id.particle);
+        mWaveDrawable.setIndeterminate(true);
+        //mWaveDrawable.setLevel(30);
+        /*particleView = (ParticleView) findViewById(R.id.particle);
         particleView.startAnim();
         particleView.setOnParticleAnimListener(new ParticleView.ParticleAnimListener() {
             @Override
             public void onAnimationEnd() {
-                new Loading().execute();
-            }
-        });
 
+            }
+        });*/
+
+        new Loading().execute();
 
     }
 
@@ -55,7 +67,7 @@ public class SplashActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
 
             try {
-                Thread.sleep(2000);
+                Thread.sleep(4000);
             }catch(InterruptedException ie){
                 ie.printStackTrace();
             }

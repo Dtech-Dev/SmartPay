@@ -7,25 +7,44 @@
     android:layout_height="match_parent"
     tools:context="com.dtech.smartpulsa.SplashActivity">
 
-    <!--<TextView
-        android:text="Splash"
+    <TextView
+        android:text="Pay Point"
         android:textSize="40sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/textView3" />-->
-    <me.wangyuwei.particleview.ParticleView
-        android:id="@+id/particle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#0867AB"
-        pv:pv_host_text="Pay"
-        pv:pv_background_color="#0867AB"
-        pv:pv_particle_text="Point"
-        pv:pv_particle_text_size="14sp"
-        pv:pv_text_color="#FFF"
-        pv:pv_text_anim_time="3000"
-        pv:pv_spread_anim_time="2000"
-        pv:pv_host_text_anim_time="3000"/>
+        android:id="@+id/textView3" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+
+        android:layout_above="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="22dp"
+        android:id="@+id/imgsplash" />
+
+    <!--<SeekBar
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="69dp"
+        android:id="@+id/seekBar"
+        android:progress="4000"
+        android:max="10000"/>-->
+    <!-- <me.wangyuwei.particleview.ParticleView
+         android:id="@+id/particle"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:background="#0867AB"
+         pv:pv_host_text="Pay"
+         pv:pv_background_color="#0867AB"
+         pv:pv_particle_text="Point"
+         pv:pv_particle_text_size="14sp"
+         pv:pv_text_color="#FFF"
+         pv:pv_text_anim_time="3000"
+         pv:pv_spread_anim_time="2000"
+         pv:pv_host_text_anim_time="3000"/>-->
 </RelativeLayout>

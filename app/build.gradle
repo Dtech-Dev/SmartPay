@@ -71,7 +71,8 @@ dependencies {
     //compile 'com.github.bloder:magic:1.1'//magic button android-arsenal
     compile 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
     compile 'com.github.Hitomis:CircleMenu:v1.0.2'
-    compile 'me.wangyuwei:ParticleView:1.0.4'
+    compile 'com.race604.waveloading:library:1.1.1'
+    //compile 'me.wangyuwei:ParticleView:1.0.4'
     //compile project(':siriwaveview')
     //compile 'com.gelitenight.waveview:waveview:1.0.0'
 }

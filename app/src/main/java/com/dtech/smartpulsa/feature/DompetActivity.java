@@ -3,6 +3,7 @@ package com.dtech.smartpulsa.feature;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -12,6 +13,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +24,7 @@ import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.TempActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
 import com.dtech.smartpulsa.preference.SiriWaveView;
+import com.race604.drawable.wave.WaveDrawable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +33,7 @@ import org.json.JSONObject;
 public class DompetActivity extends AppCompatActivity {
 
     TextView tsaldo, tpoin;
+    RelativeLayout reldompet;
     String JSON_STRING;
     String status;
     String balance;
@@ -39,6 +43,7 @@ public class DompetActivity extends AppCompatActivity {
     PrefManager prefManager;
     SharedPreferences sharedPreferences;
     SiriWaveView waveView;
+    WaveDrawable waveDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,14 +156,23 @@ public class DompetActivity extends AppCompatActivity {
     }
 
     private void iniUi() {
+        waveDrawable = new WaveDrawable(this, R.drawable.circle_image);
         tsaldo = (TextView) findViewById(R.id.tsaldo);
         tpoin = (TextView) findViewById(R.id.tpoin);
 
         sharedPreferences = getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
         txtEmail = (sharedPreferences.getString(Config.DISPLAY_EMAIL, ""));
 
-        waveView = (SiriWaveView) findViewById(R.id.siriWaveView);
-        waveView.startAnimation();
+        /*waveView = (SiriWaveView) findViewById(R.id.siriWaveView);
+        waveView.startAnimation();*/
+
+
+        reldompet = (RelativeLayout) findViewById(R.id.reldompet);
+        //reldompet.setBackground(getResources().getDrawable(R.drawable.circle_image));
+        reldompet.setBackground(waveDrawable);
+        waveDrawable.setLevel(7000);
+        waveDrawable.setWaveAmplitude(40);
+        waveDrawable.setWaveSpeed(5);
     }
 
 }
