@@ -28,14 +28,13 @@ public class SplashActivity extends AppCompatActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        prefManager = new PrefManager(this);
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_splash);
 
-        prefManager = new PrefManager(this);
-        if (prefManager.isFirstTimeLaunch()) {
-            launchWelcome();
-        }
+
         imgsplash = (ImageView) findViewById(R.id.imgsplash);
         mWaveDrawable = new WaveDrawable(this, R.drawable.android_robot);
         imgsplash.setImageDrawable(mWaveDrawable);
@@ -52,13 +51,19 @@ public class SplashActivity extends AppCompatActivity {
             }
         });*/
 
-        new Loading().execute();
+        if (prefManager.isFirstTimeLaunch()) {
+            launchWelcome();
+        } else {
+            new Loading().execute();
+        }
+
 
     }
 
     private void launchWelcome() {
         Intent welcome = new Intent(this, WelcomeActivity.class);
         startActivity(welcome);
+        finish();
     }
 
     public class Loading extends AsyncTask<Void, Void, Void> {

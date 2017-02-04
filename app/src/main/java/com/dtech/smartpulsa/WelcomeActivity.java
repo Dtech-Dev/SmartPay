@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -20,6 +22,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.preference.PrefManager;
@@ -68,6 +72,9 @@ public class WelcomeActivity extends AppCompatActivity  implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         prefManager = new PrefManager(this);
         /*if (!prefManager.isFirstTimeLaunch()) {
@@ -79,6 +86,7 @@ public class WelcomeActivity extends AppCompatActivity  implements
         //telephonyManager=(TelephonyManager)this.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
         //userNumber = telephonyManager.getLine1Number();
 
+        initAnim();
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         findViewById(R.id.btn_next).setOnClickListener(this);
         findViewById(R.id.btn_next2).setOnClickListener(this);
@@ -132,6 +140,15 @@ public class WelcomeActivity extends AppCompatActivity  implements
 
 
 
+    }
+
+    private void initAnim() {
+        YoYo.with(Techniques.DropOut).duration(1000).playOn(findViewById(R.id.text1));
+        YoYo.with(Techniques.StandUp).duration(1500).playOn(findViewById(R.id.text2));
+        YoYo.with(Techniques.BounceInLeft).duration(1500).playOn(findViewById(R.id.garis));
+        YoYo.with(Techniques.BounceInRight).duration(1500).playOn(findViewById(R.id.textView));
+        YoYo.with(Techniques.BounceInLeft).duration(1500).playOn(findViewById(R.id.sign_in_button));
+        YoYo.with(Techniques.ZoomIn).duration(1500).playOn(findViewById(R.id.text3));
     }
 
     private void launchHomeA() {
@@ -309,5 +326,19 @@ public class WelcomeActivity extends AppCompatActivity  implements
         next1.setTextColor(Color.WHITE);
         next1.setEnabled(true);
 
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            if (hasFocus) {
+                getWindow().getDecorView()
+                        .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+            }
+        }
     }
 }

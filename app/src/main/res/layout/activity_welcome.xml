@@ -9,13 +9,40 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.dtech.smartpulsa.WelcomeActivity"
-    android:background="@android:color/holo_purple">
+    android:background="@drawable/bgfl">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/ui1"
         >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginTop="20dp"
+            android:text="Selamat Datang di"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/text1"
+            android:textColor="@android:color/white"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="40sp"
+            android:text="Pay Point"
+            android:layout_centerHorizontal="true"
+            android:textColor="@android:color/white"
+            android:id="@+id/text2"
+            android:layout_below="@+id/text1"/>
+
+        <View
+            android:layout_width="400dp"
+            android:layout_height="2dp"
+            android:background="@color/tosca"
+            android:layout_below="@+id/text2"
+            android:layout_marginTop="10dp"
+            android:id="@+id/garis"/>
+
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"
             android:layout_width="wrap_content"
@@ -24,13 +51,21 @@
             android:layout_centerHorizontal="true" />
 
         <TextView
-            android:text="TextView"
+            android:text="Silahkan login menggunakan akun Google anda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/sign_in_button"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="67dp"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="27dp"
             android:id="@+id/textView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sign_in_button"
+            android:textColor="@android:color/white"
+            android:text="@string/text_keterangan"
+            android:id="@+id/text3"/>
 
         <Button
             android:id="@+id/btn_next"

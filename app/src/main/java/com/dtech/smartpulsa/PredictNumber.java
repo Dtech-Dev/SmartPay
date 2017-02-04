@@ -81,7 +81,7 @@ public class PredictNumber {
                 ) {
             setTypeNumber("XL");
             setKodeTransaksi("xr");
-        } else if (subed.equals("0896") || subed.equals("0897") || subed.equals("0898")
+        } else if (subed.equals("0896") || subed.equals("0897") || subed.equals("0895") || subed.equals("0898")
                 || subed.equals("0899")) {
             setTypeNumber("Tri");
             setKodeTransaksi("t");
