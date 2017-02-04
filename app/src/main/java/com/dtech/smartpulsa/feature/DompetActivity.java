@@ -1,6 +1,7 @@
 package com.dtech.smartpulsa.feature;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -10,10 +11,15 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +40,10 @@ import org.json.JSONObject;
 public class DompetActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView tsaldo, tpoin;
+    EditText edTukarpoin;
+    RadioButton radioAll, radioSome;
+    RadioGroup rGroup;
+    Button bTukar;
     RelativeLayout reldompet;
     String JSON_STRING;
     String status;
@@ -158,6 +168,7 @@ public class DompetActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void iniUi() {
+
         waveDrawable = new WaveDrawable(this, R.drawable.circle_image);
         tsaldo = (TextView) findViewById(R.id.tsaldo);
         tpoin = (TextView) findViewById(R.id.tpoin);
@@ -199,6 +210,84 @@ public class DompetActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void tukarPoin() {
+
+         final CharSequence[] items = {" Tukar Semua Poin "," Tukar Sebagian Poin "};
+        AlertDialog.Builder builder = new AlertDialog.Builder(DompetActivity.this, R.style.MyDialogTheme);
+        builder.setTitle("Tukar Poin");
+        //builder.setMessage("Pilih Salah Satu");
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.custom_dialog_1, null);
+        /*builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                switch (i) {
+                    case 0:
+                        allPoint();
+                        break;
+                    case 1:
+                        somePoint();
+                        break;
+                }
+            }
+        });*/
+        builder.setView(dialogView);
+
+        AlertDialog alertDialog = builder.create();
+        //alertDialog.setTitle("Tukar Poin");
+
+        alertDialog.show();
+        rGroup = (RadioGroup) dialogView.findViewById(R.id.rGroup);
+        radioAll = (RadioButton) dialogView.findViewById(R.id.radioAll);
+        radioSome = (RadioButton) dialogView.findViewById(R.id.radioSome);
+        edTukarpoin = (EditText) dialogView.findViewById(R.id.editPoin);
+        bTukar = (Button) dialogView.findViewById(R.id.bTukar);
+
+        rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                switch (i) {
+                    case R.id.radioAll:
+                        edTukarpoin.setVisibility(View.GONE);
+                        break;
+                    case R.id.radioSome:
+                        edTukarpoin.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+        });
+
+        bTukar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int selectedId = rGroup.getCheckedRadioButtonId();
+                if (selectedId == radioAll.getId()) {
+                    String allPoin = tpoin.getText().toString();
+                    sendTukar(allPoin);
+                    Toast.makeText(DompetActivity.this, allPoin, Toast.LENGTH_SHORT).show();
+                } else if (selectedId == radioSome.getId()) {
+                    String somePoin = edTukarpoin.getText().toString();
+                    if (somePoin.matches("")) {
+                        Toast.makeText(DompetActivity.this, "Input jumlah poin yang akan di tukar", Toast.LENGTH_SHORT).show();
+                        edTukarpoin.requestFocus();
+                    } else {
+                        sendTukar(somePoin);
+                        Toast.makeText(DompetActivity.this, somePoin, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+    }
+
+    private void sendTukar(String poin) {
+
+    }
+
+    private void somePoint() {
+
+    }
+
+    private void allPoint() {
 
     }
 }
