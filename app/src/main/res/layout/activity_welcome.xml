@@ -73,6 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:textSize="18sp"
             android:background="@null"
             android:text="@string/next"
 
@@ -110,7 +111,7 @@
 
 
         <CheckBox
-            android:text="Dengan ini saya menyetujui Syarat dan Ketentuan dari Smart Pulsa"
+            android:text="Dengan ini saya menyetujui Syarat dan Ketentuan dari Pay Point"
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -122,7 +123,7 @@
             android:layout_alignParentStart="true" />
 
         <TextView
-            android:text="Default nomor HaPe"
+            android:text="Default nomor Handphone"
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -136,7 +137,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:inputType="phone"
-            android:background="#fff"
+
             android:ems="10"
             android:layout_below="@+id/textViewNo"
             android:layout_centerHorizontal="true"
@@ -146,8 +147,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/usrnumber"
+            android:id="@+id/tketerangan2"
             android:layout_marginTop="30dp"
-            android:text="Nomor anda akan kami gunakan untuk mengirim pemberitahuan tentang:\n- Transaksi pulsa yang gagal,\n- Provider yang mengalami gangguan, dll "/>
+            android:text="@string/text_keterangan_2"/>
     </RelativeLayout>
 
     <!--2nd ui-->

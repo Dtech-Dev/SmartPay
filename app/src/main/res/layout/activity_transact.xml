@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@drawable/bgc"
     tools:context="com.dtech.smartpulsa.TransactActivity">
 
     <!--<android.support.design.widget.AppBarLayout

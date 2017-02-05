@@ -149,6 +149,9 @@ public class WelcomeActivity extends AppCompatActivity  implements
         YoYo.with(Techniques.BounceInRight).duration(1500).playOn(findViewById(R.id.textView));
         YoYo.with(Techniques.BounceInLeft).duration(1500).playOn(findViewById(R.id.sign_in_button));
         YoYo.with(Techniques.ZoomIn).duration(1500).playOn(findViewById(R.id.text3));
+        YoYo.with(Techniques.Wobble).duration(1500).playOn(findViewById(R.id.textViewNo));
+        YoYo.with(Techniques.BounceInRight).duration(1500).playOn(findViewById(R.id.usrnumber));
+        YoYo.with(Techniques.Tada).duration(1500).playOn(findViewById(R.id.tketerangan2));
     }
 
     private void launchHomeA() {
@@ -189,7 +192,8 @@ public class WelcomeActivity extends AppCompatActivity  implements
         /*findViewById(R.id.textView).setVisibility(View.INVISIBLE);
         findViewById(R.id.sign_in_button).setVisibility(View.INVISIBLE);
         findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);*/
-        findViewById(R.id.activity_welcome).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        //findViewById(R.id.activity_welcome).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        findViewById(R.id.activity_welcome).setBackground(getResources().getDrawable(R.drawable.bgts));
 
         String token = FirebaseInstanceId.getInstance().getToken();
         prefManager.setFirebaseId(token);
