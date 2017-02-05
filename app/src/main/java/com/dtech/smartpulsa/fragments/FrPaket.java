@@ -41,7 +41,7 @@ public class FrPaket extends Fragment implements View.OnClickListener {
 
     View view;
 
-    GridView gridPaket, gridPaketDetail;
+    GridView gridPaket;
     RelativeLayout layMain, layDetail;
     ImageView imgjnspaket;
     TextView txtjnspaket;

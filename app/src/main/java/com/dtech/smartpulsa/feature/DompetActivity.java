@@ -4,14 +4,11 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -29,10 +26,7 @@ import com.dtech.smartpulsa.AddSaldoActivity;
 import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
-import com.dtech.smartpulsa.TempActivity;
-import com.dtech.smartpulsa.WelcomeActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
-import com.dtech.smartpulsa.preference.SiriWaveView;
 import com.race604.drawable.wave.WaveDrawable;
 
 import org.json.JSONArray;
@@ -49,19 +43,15 @@ public class DompetActivity extends AppCompatActivity implements View.OnClickLis
     RadioGroup rGroup;
     Button bTukar;
     RelativeLayout reldompet;
-    String balance2;
     String JSON_STRING;
     String status;
     String balance;
     String point;
     String txtEmail;
     Button bTukarPoin, bDetailPoin;
-    int updBal;
-
     AlertDialog alertDialog;
     PrefManager prefManager;
     SharedPreferences sharedPreferences;
-    SiriWaveView waveView;
     WaveDrawable waveDrawable;
 
     @Override
@@ -163,8 +153,6 @@ public class DompetActivity extends AppCompatActivity implements View.OnClickLis
                 point = "0";
             }
 
-            //String saldo=NumberFormat.getNumberInstance(Locale.US).format(balance);
-            //navusername.setText(textUser+"("+status+" user)");
             tsaldo.setText(balance);
             tpoin.setText(point);
             prefManager.setPoin(point);
@@ -187,13 +175,7 @@ public class DompetActivity extends AppCompatActivity implements View.OnClickLis
 
         sharedPreferences = getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
         txtEmail = (sharedPreferences.getString(Config.DISPLAY_EMAIL, ""));
-
-        /*waveView = (SiriWaveView) findViewById(R.id.siriWaveView);
-        waveView.startAnimation();*/
-
-
         reldompet = (RelativeLayout) findViewById(R.id.reldompet);
-        //reldompet.setBackground(getResources().getDrawable(R.drawable.circle_image));
         reldompet.setBackground(waveDrawable);
         waveDrawable.setLevel(7000);
         waveDrawable.setWaveAmplitude(40);
@@ -317,19 +299,8 @@ public class DompetActivity extends AppCompatActivity implements View.OnClickLis
             }
             CheckpCustomer checkCustomer = new CheckpCustomer();
             checkCustomer.execute();
-       /* int updpoint = Integer.parseInt(point) - Integer.parseInt(poin);
-        balance2 = balance.replace(",", "");
-        updBal = Integer.parseInt(balance2) + Integer.parseInt(poin);
-        prefManager.setPoin(Integer.toString(updpoint));*/
+
         alertDialog.dismiss();
-
-    }
-
-    private void somePoint() {
-
-    }
-
-    private void allPoint() {
 
     }
 

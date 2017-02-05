@@ -35,7 +35,7 @@ import java.util.List;
 
 public class PaketDataActivity extends AppCompatActivity implements View.OnClickListener {
 
-    GridView gridPaket, gridPaketDetail;
+    GridView gridPaket;
     RelativeLayout layMain, layDetail;
     ImageView imgjnspaket;
     TextView txtjnspaket;
@@ -88,15 +88,6 @@ public class PaketDataActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_paket_data);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         initUi();
 

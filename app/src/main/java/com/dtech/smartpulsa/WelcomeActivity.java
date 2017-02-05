@@ -5,12 +5,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -27,7 +25,6 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
-import com.dtech.smartpulsa.feature.DompetActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -60,7 +57,6 @@ public class WelcomeActivity extends AppCompatActivity  implements
     private static final int RC_SIGN_IN = 9001;
     String userName, userEmail, id;
     String userNumber;
-    TelephonyManager telephonyManager;
     RelativeLayout rel, relui1, relui2;
     TextView txtakun, txt2, txtNo;
     EditText eduserNumber;
@@ -68,7 +64,7 @@ public class WelcomeActivity extends AppCompatActivity  implements
     GoogleApiClient mGoogleApiClient;
     SignInButton signInButton;
     PrefManager prefManager;
-    Uri imgAcc;
+    String imgAcc;
 
      FirebaseAuth mAuth;
     // [END declare_auth]
@@ -90,9 +86,6 @@ public class WelcomeActivity extends AppCompatActivity  implements
             finish();
         }*/
         setContentView(R.layout.activity_welcome);
-
-        //telephonyManager=(TelephonyManager)this.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
-        //userNumber = telephonyManager.getLine1Number();
 
         initAnim();
         findViewById(R.id.sign_in_button).setOnClickListener(this);
@@ -162,12 +155,6 @@ public class WelcomeActivity extends AppCompatActivity  implements
         YoYo.with(Techniques.Tada).duration(1500).playOn(findViewById(R.id.tketerangan2));
     }
 
-    private void launchHomeA() {
-        Intent intent = new Intent(WelcomeActivity.this, TempActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
     private void launchHome() {
 
         Intent intent = new Intent(WelcomeActivity.this, TempActivity.class);
@@ -207,20 +194,13 @@ public class WelcomeActivity extends AppCompatActivity  implements
         /*String userNumber = "";*/
         /*GONE-ing 1st ui*/
         relui1.setVisibility(View.GONE);
-        /*findViewById(R.id.textView).setVisibility(View.INVISIBLE);
-        findViewById(R.id.sign_in_button).setVisibility(View.INVISIBLE);
-        findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);*/
-        //findViewById(R.id.activity_welcome).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         findViewById(R.id.activity_welcome).setBackground(getResources().getDrawable(R.drawable.bgts));
 
         String token = FirebaseInstanceId.getInstance().getToken();
         prefManager.setFirebaseId(token);
         /*VISIBLE-ing 2nd ui*/
         relui2.setVisibility(View.VISIBLE);
-        /*findViewById(R.id.textView2).setVisibility(View.VISIBLE);
-        findViewById(R.id.textViewNo).setVisibility(View.VISIBLE);
-        findViewById(R.id.btn_next2).setVisibility(View.VISIBLE);
-        findViewById(R.id.cbx).setVisibility(View.VISIBLE);*/
+
 
         cbx.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -268,11 +248,12 @@ public class WelcomeActivity extends AppCompatActivity  implements
             GoogleSignInAccount acct = result.getSignInAccount();
             userName = acct.getDisplayName();
             userEmail = acct.getEmail();
-            imgAcc = acct.getPhotoUrl();
+            imgAcc = acct.getPhotoUrl().toString();
+            Log.d("Google result ", imgAcc);
             txtakun.setText(userName+"\n"+userEmail);
             prefManager.setUserDisplay(userName);
             prefManager.setUserEmail(userEmail);
-            prefManager.setUri(imgAcc.toString());
+            prefManager.setUri(imgAcc);
 
             firebaseAuthWithGoogle(acct);
 

@@ -137,16 +137,11 @@ public class InboxActivity extends AppCompatActivity {
             for (int i=0; i<result.length();i++) {
                 JSONObject jo = result.getJSONObject(i);
                 DataInbox dataTagihan = new DataInbox();
-                /*String  jenis= jo.getString(Config.TAG_JENIS_TAGIHAN);
-                String nomorTagihan = jo.getString(Config.TAG_NOMOR_TAGIHAN);
-                String detail = jo.getString(Config.TAG_TAGIHAN);*/
                 dataTagihan.ket = jo.getString(Config.TAG_KET_INBOX);
                 dataTagihan.jenis = jo.getString(Config.TAG_JENIS_TAGIHAN);
                 dataTagihan.ketag = jo.getString(Config.TAG_KET_TAGIHAN);
                 dataTagihan.mes = jo.getString(Config.TAG_MES_INBOX);
                 dataTagihan.idTagihan = jo.getString(Config.TAG_ID_TAGIH);
-                /*dataTagihan.detailTagihan = "Tagihan "+jenis+ " dengan ID Pelanggan "
-                +nomorTagihan+", jumlah yang harus dibayar adalah "+detail;*/
                 detailToast = dataTagihan.detailTagihan;
                 //Toast.makeText(this, dataTagihan.detailTagihan, Toast.LENGTH_LONG).show();
 

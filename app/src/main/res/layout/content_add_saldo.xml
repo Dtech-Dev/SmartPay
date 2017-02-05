@@ -133,7 +133,7 @@
                 android:textColor="@color/cardview_light_background"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
+                android:background="@color/blueA"
                 android:id="@+id/btnbri"
                 android:clickable="false"
                 android:layout_alignBottom="@+id/imgbri"

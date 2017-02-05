@@ -265,12 +265,6 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
         laymainTagihan.setVisibility(View.VISIBLE);
     }
 
-    private void updateUser() {
-        /*if (!TextUtils.isEmpty(trx)) {
-            mFirebaseDatabase.child(userId).child("trx").setValue(trx);
-        }*/
-    }
-
     private void bayarTagihan() {
 
     }
@@ -347,13 +341,6 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
                 RequestHandler rh = new RequestHandler();
                 String s = rh.sendGetRequestParam(Config.URL_GET_TAGIHAN, trx);
                 showTagihan(s);
-
-                /*if (tagihanTampil == "" || tagihanTampil == null) {
-
-                    showTagihan(s);
-                } else {
-                    tagihanFix = tagihanTampil;
-                }*/
 
                 return s;
             }

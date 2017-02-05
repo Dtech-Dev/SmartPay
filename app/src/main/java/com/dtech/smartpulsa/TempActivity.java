@@ -1,82 +1,49 @@
 package com.dtech.smartpulsa;
 
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.dtech.smartpulsa.Configuration.Config;
-import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.feature.DompetActivity;
 import com.dtech.smartpulsa.feature.InboxActivity;
-import com.dtech.smartpulsa.feature.PaketDataActivity;
-import com.dtech.smartpulsa.feature.PulsaActivity;
-import com.dtech.smartpulsa.feature.QuickPayActivity;
-import com.dtech.smartpulsa.feature.TagihanActivity;
-import com.dtech.smartpulsa.feature.VoucherActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.hitomi.cmlibrary.CircleMenu;
 import com.hitomi.cmlibrary.OnMenuSelectedListener;
-import com.hitomi.cmlibrary.OnMenuStatusChangeListener;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
-import java.text.NumberFormat;
-import java.util.Arrays;
-import java.util.Locale;
+import com.pkmmte.view.CircularImageView;
 
 public class TempActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     LayoutInflater layoutInflater ;
     View headerNav;
-    TextView navemail, navusername, tbalance, tTempor;
-    Button btnIsiPulsa, btnCekTagihan, btnToken, btnVoucher, btnPaketData;
-    Dialog dialogPulsa;
+    TextView navemail, navusername, tbalance;
     ImageButton imageButton;
-    ImageView imageAcc;
+    CircularImageView imageAcc;
     PrefManager prefManager;
     NavigationView navigationView;
     SharedPreferences sharedPreferences;
-    Toolbar toolbar;
     public String textUser, txtEmail, txtFirebaseId;
     DrawerLayout drawer;
     CircleMenu circleMenu;
     private static int SPLASH_TIME_OUT = 1100;
-    //private static final String PREF_NAME = "app-welcome";
-    //private static final String DISPLAY_NAME = "displayName";
-    //private static final String DISPLAY_EMAIL = "displayEmail";
 
-    private String JSON_STRING, status, balance, point;
+    String imguri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,16 +54,8 @@ public class TempActivity extends AppCompatActivity
 
 
         prefManager = new PrefManager(this);
-        /*if (!prefManager.isFirstTimeLaunch()) {
-            launchLogin();
-            //finish();
-        }
-*/
 
-        /*String token = FirebaseInstanceId.getInstance().getToken();
-        prefManager.setFirebaseId(token);*/
-        //Log.d("Firebase id", "Refreshed token: " + token);
-         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         /*ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -105,50 +64,14 @@ public class TempActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        /*fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                Intent quickPay = new Intent(TempActivity.this, QuickPayActivity.class);
-                startActivity(quickPay);
-
-                drawer.openDrawer(GravityCompat.START);
-
-            }
-        });*/
-
-
-
-
         /*Embeks*/
 
-
-
         initUi();
-        //getJson();
-
-        //splitString();
-
-
-    }
-
-    private void launchLogin() {
 
     }
 
     private void initUi() {
-        /*btnIsiPulsa = (Button) findViewById(R.id.btnIsiPulsa);
-        btnCekTagihan = (Button) findViewById(R.id.btnCekTagihan);
-        btnToken = (Button) findViewById(R.id.btnToken);
-        btnVoucher = (Button) findViewById(R.id.btnVoucher);
-        btnPaketData = (Button) findViewById(R.id.btnpaketdata);
-        btnPaketData.setOnClickListener(this);
-        btnVoucher.setOnClickListener(this);
-        btnToken.setOnClickListener(this);
-        btnCekTagihan.setOnClickListener(this);
-        btnIsiPulsa.setOnClickListener(this);*/
+
         layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         /*headerNav = layoutInflater.inflate(R.dialog_kota.nav_header_temp,null, true);*/
         headerNav = navigationView.getHeaderView(0);
@@ -156,22 +79,22 @@ public class TempActivity extends AppCompatActivity
         navusername = (TextView) headerNav.findViewById(R.id.navusername);
         navemail = (TextView) headerNav.findViewById(R.id.navemail);
         tbalance = (TextView) findViewById(R.id.tbalance);
-        imageAcc = (ImageView) headerNav.findViewById(R.id.imageViewAcc);
-        Uri setImgAcc = Uri.parse((sharedPreferences.getString(Config.DISPLAY_ID, "")));
-        try {
-            imageAcc.setImageDrawable(Drawable.createFromStream(
-                    getContentResolver().openInputStream(setImgAcc),
-                    null));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        imageAcc = (CircularImageView) headerNav.findViewById(R.id.imageViewAcc);
+        //Uri setImgAcc = Uri.parse();
+        imguri = (sharedPreferences.getString(Config.DISPLAY_ID, ""));
+        Glide.with(getApplicationContext()).load(imguri)
+                .thumbnail(0.5f)
+                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imageAcc);
+
         textUser = (sharedPreferences.getString(Config.DISPLAY_NAME, ""));
         txtEmail = (sharedPreferences.getString(Config.DISPLAY_EMAIL, ""));
         txtFirebaseId = (sharedPreferences.getString(Config.DISPLAY_FIREBASE_ID, ""));
 
         //tTempor = (TextView) findViewById(R.id.textViewTempor);
 
-        navemail.setText(txtEmail+"\n"+txtFirebaseId);
+        navemail.setText(txtEmail);
         navusername.setText(textUser);
 
         imageButton = (ImageButton) findViewById(R.id.openNav);
@@ -284,84 +207,6 @@ public class TempActivity extends AppCompatActivity
         );*/
     }
 
-    private void splitString() {
-        String kalimat = "Trx: 385716875, Pengisian SUKSES. Semua TRX Lancar: te100.085731706444.3003, Harga: 10550, sisa saldo: .3 133189 SN:00704700000195581837";
-        String kata;
-        String[] arrayKalimat = kalimat.split("\\s");
-        String search = ".3003";
-        int indexKode = Arrays.asList(arrayKalimat).indexOf(search);
-        int start = kalimat.indexOf(".3003")-18;
-        int end = kalimat.indexOf(".3003")+5;
-        String kode = kalimat.substring(start, end);
-        String[] arrayKodeA = kode.split("\\s");
-        //int indexKode = Arrays.binarySearch(arrayKalimat, ".3003");
-        int countKlimat = arrayKalimat.length;
-        //String tempor = arrayKalimat[indexKode];
-        for (int i = 0; i < countKlimat; i++) {
-            kata = arrayKalimat[i];
-             //int searcha = arrayKalimat;
-            int indexKodea = Arrays.binarySearch(arrayKalimat, kode);
-            Log.d("Tag Array Kalimat", "index ke " + i + " = " + kata + "\n");
-            //tempor = "index ke " + i + " = " + kata + "\n";
-
-        }
-        //tTempor.setText("array ke "+"="+ kata+"\n");
-        //tTempor.setText(tempor);
-    }
-
-    public void getJson() {
-        /*class GetJSON extends AsyncTask<Void,Void,String> {
-
-            ProgressDialog loading;
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading = ProgressDialog.show(TempActivity.this,"Fetching Data","Wait...",false,false);
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                loading.dismiss();
-                JSON_STRING = s;
-                showCustomer(s);
-            }
-
-            @Override
-            protected String doInBackground(Void... params) {
-                RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequestParam(Config.URL_SELECT_ALL, txtEmail);
-                return s;
-            }
-        }
-        GetJSON gj = new GetJSON();
-        gj.execute();*/
-    }
-
-    public void showCustomer(String json) {
-        JSONObject jsonObject = null;
-
-        try {
-            jsonObject = new JSONObject(json);
-            JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_ARRAY);
-            JSONObject c = result.getJSONObject(0);
-            status = c.getString(Config.TAG_STATUS);
-            balance = c.getString(Config.TAG_BALANCE);
-            point = c.getString(Config.TAG_POINT);
-
-            if (point == "null") {
-                point = "0";
-            }
-
-            //String saldo=NumberFormat.getNumberInstance(Locale.US).format(balance);
-            //navusername.setText(textUser+"("+status+" user)");
-            tbalance.setText(balance+"\n"+point);
-
-            Toast.makeText(TempActivity.this, status, Toast.LENGTH_LONG).show();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void onBackPressed() {
@@ -427,83 +272,5 @@ public class TempActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onClick(View v) {
-        /*switch (v.getId()) {
-            case R.id.btnIsiPulsa:
-                isiPulsa();
-                break;
-            case R.id.btnCekTagihan:
-                frCekTagihan();
-                //openTagihan();
-                break;
-            case R.id.btnToken:
-                isiToken();
-                break;
-            case R.id.btnVoucher:
-                voucherGame();
-                break;
-            case R.id.btnpaketdata:
-                paketData();
-        }*/
-    }
 
-    /*private void paketData() {
-        Intent paketDataOpen = new Intent(this, PaketDataActivity.class);
-        startActivity(paketDataOpen);
-    }
-
-    private void voucherGame() {
-        Intent voucherGameOpen = new Intent(this, VoucherActivity.class);
-        startActivity(voucherGameOpen);
-    }
-
-    private void isiToken() {
-        Intent tokenOpen = new Intent(this, TokenActivity.class);
-        startActivity(tokenOpen);
-    }
-
-    private void openTagihan() {
-        Intent tagihanOpen = new Intent(this, TagihanActivity.class);
-        startActivity(tagihanOpen);
-    }
-
-    private void frCekTagihan() {
-        Intent intentCek = new Intent(this, PulsaActivity.class);
-        intentCek.putExtra("transaksi", "cek");
-        startActivity(intentCek);
-    }
-
-    private void isiPulsa() {
-        Intent intentTransaksi = new Intent(this, PulsaActivity.class);
-        intentTransaksi.putExtra("transaksi", "isi pulsa");
-        startActivity(intentTransaksi);*/
-        /*final Intent intentPulsa = new Intent(getApplicationContext(), PulsaActivity.class);
-
-        dialogPulsa = new Dialog(this);
-        dialogPulsa.setContentView(R.layout.dialog_kota);
-        dialogPulsa.setTitle("Choose One");
-
-        Button selfNumber = (Button) dialogPulsa.findViewById(R.id.selfNumber);
-        selfNumber.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Intent intentSelf = new Intent(TempActivity.this, PulsaActivity.class);
-                intentPulsa.putExtra("self", "selfNumber");
-                startActivity(intentPulsa);
-                dialogPulsa.dismiss();
-            }
-        });
-
-        Button otherNumber = (Button) dialogPulsa.findViewById(R.id.otherNumber);
-        otherNumber.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                intentPulsa.putExtra("self", "otherNumber");
-                startActivity(intentPulsa);
-                dialogPulsa.dismiss();
-            }
-        });
-        dialogPulsa.show();*/
-    //}
 }
