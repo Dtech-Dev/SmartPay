@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
  */
 
 public class PrefManager {
+
     SharedPreferences pref;
     public SharedPreferences.Editor editor;
     String userDisplayName;
@@ -24,7 +25,9 @@ public class PrefManager {
     private static final String DISPLAY_NAME = "displayName";
     private static final String DISPLAY_NUMBER = "displayNumber";
     private static final String DISPLAY_EMAIL = "displayEmail";
+    private static final String DISPLAY_POIN = "poin";
     private static final String DISPLAY_FIREBASE_ID = "firebaseId";
+    private static final String DISPLAY_ID = "id";
 
 
     public PrefManager(Context context) {
@@ -66,6 +69,15 @@ public class PrefManager {
         editor.commit();
     }
 
+    public void setPoin(String poin) {
+        editor.putString(DISPLAY_POIN, poin);
+        editor.commit();
+    }
+
+    public void setUri(String uri) {
+        editor.putString(DISPLAY_ID, uri);
+        editor.commit();
+    }
 
     public String getUserDisplay() {
         userDisplayName = PreferenceManager.getDefaultSharedPreferences(_context).getString(DISPLAY_NAME, "");

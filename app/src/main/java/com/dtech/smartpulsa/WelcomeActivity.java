@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
+import com.dtech.smartpulsa.feature.DompetActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -43,6 +45,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.FileOutputStream;
 import java.util.HashMap;
 
 public class WelcomeActivity extends AppCompatActivity  implements
@@ -51,7 +58,7 @@ public class WelcomeActivity extends AppCompatActivity  implements
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
-    String userName, userEmail;
+    String userName, userEmail, id;
     String userNumber;
     TelephonyManager telephonyManager;
     RelativeLayout rel, relui1, relui2;
@@ -61,6 +68,7 @@ public class WelcomeActivity extends AppCompatActivity  implements
     GoogleApiClient mGoogleApiClient;
     SignInButton signInButton;
     PrefManager prefManager;
+    Uri imgAcc;
 
      FirebaseAuth mAuth;
     // [END declare_auth]
@@ -180,6 +188,16 @@ public class WelcomeActivity extends AppCompatActivity  implements
                 userNumber = eduserNumber.getText().toString();
                 prefManager.setUserNumber(userNumber);
                 prefManager.setFirstTimeLaunch(false);
+                String string = "first time = false";
+                FileOutputStream outputStream;
+
+                try {
+                    outputStream = openFileOutput(Config.FIRST_TIME, Context.MODE_PRIVATE);
+                    outputStream.write(string.getBytes());
+                    outputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 launchHome();
                 break;
         }
@@ -250,9 +268,11 @@ public class WelcomeActivity extends AppCompatActivity  implements
             GoogleSignInAccount acct = result.getSignInAccount();
             userName = acct.getDisplayName();
             userEmail = acct.getEmail();
+            imgAcc = acct.getPhotoUrl();
             txtakun.setText(userName+"\n"+userEmail);
             prefManager.setUserDisplay(userName);
             prefManager.setUserEmail(userEmail);
+            prefManager.setUri(imgAcc.toString());
 
             firebaseAuthWithGoogle(acct);
 
@@ -308,6 +328,8 @@ public class WelcomeActivity extends AppCompatActivity  implements
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
+
+                showCustomer(s);
                 Toast.makeText(WelcomeActivity.this, "Welcome", Toast.LENGTH_LONG).show();
             }
 
@@ -330,6 +352,22 @@ public class WelcomeActivity extends AppCompatActivity  implements
         next1.setTextColor(Color.WHITE);
         next1.setEnabled(true);
 
+    }
+
+    private void showCustomer(String json) {
+        JSONObject jsonObject = null;
+
+        try {
+            jsonObject = new JSONObject(json);
+            JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_ARRAY);
+            JSONObject c = result.getJSONObject(0);
+            id = c.getString(Config.POST_ID);
+
+            //prefManager.setId(id);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

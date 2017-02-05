@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +48,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
 import java.text.NumberFormat;
 import java.util.Arrays;
@@ -59,6 +63,7 @@ public class TempActivity extends AppCompatActivity
     Button btnIsiPulsa, btnCekTagihan, btnToken, btnVoucher, btnPaketData;
     Dialog dialogPulsa;
     ImageButton imageButton;
+    ImageView imageAcc;
     PrefManager prefManager;
     NavigationView navigationView;
     SharedPreferences sharedPreferences;
@@ -151,6 +156,15 @@ public class TempActivity extends AppCompatActivity
         navusername = (TextView) headerNav.findViewById(R.id.navusername);
         navemail = (TextView) headerNav.findViewById(R.id.navemail);
         tbalance = (TextView) findViewById(R.id.tbalance);
+        imageAcc = (ImageView) headerNav.findViewById(R.id.imageViewAcc);
+        Uri setImgAcc = Uri.parse((sharedPreferences.getString(Config.DISPLAY_ID, "")));
+        try {
+            imageAcc.setImageDrawable(Drawable.createFromStream(
+                    getContentResolver().openInputStream(setImgAcc),
+                    null));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         textUser = (sharedPreferences.getString(Config.DISPLAY_NAME, ""));
         txtEmail = (sharedPreferences.getString(Config.DISPLAY_EMAIL, ""));
         txtFirebaseId = (sharedPreferences.getString(Config.DISPLAY_FIREBASE_ID, ""));
@@ -158,6 +172,7 @@ public class TempActivity extends AppCompatActivity
         //tTempor = (TextView) findViewById(R.id.textViewTempor);
 
         navemail.setText(txtEmail+"\n"+txtFirebaseId);
+        navusername.setText(textUser);
 
         imageButton = (ImageButton) findViewById(R.id.openNav);
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -401,10 +416,11 @@ public class TempActivity extends AppCompatActivity
         } else if (id == R.id.tiketnav) {
             Toast.makeText(TempActivity.this, "Coming Soon :\nPemesanan Tiket", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.dompetnav) {
-            getJson();
-        } else if (id == R.id.nav_send) {
+            Intent dompett = new Intent(TempActivity.this, DompetActivity.class);
+            startActivity(dompett);
+        } /*else if (id == R.id.nav_send) {
 
-        }
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

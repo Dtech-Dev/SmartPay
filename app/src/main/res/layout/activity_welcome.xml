@@ -88,7 +88,7 @@
 
         <Button
             android:id="@+id/btn_next2"
-
+            android:textSize="18sp"
             android:enabled="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
 
         <TextView
             android:text="Default nomor Handphone"
-
+            android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
@@ -149,6 +149,8 @@
             android:layout_below="@+id/usrnumber"
             android:id="@+id/tketerangan2"
             android:layout_marginTop="30dp"
+            android:textSize="14sp"
+            android:textColor="@android:color/white"
             android:text="@string/text_keterangan_2"/>
     </RelativeLayout>
 

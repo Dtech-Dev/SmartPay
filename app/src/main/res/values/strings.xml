@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SmartPulsa</string>
+    <string name="app_name">Pay Point</string>
     <string name="action_settings">Settings</string>
     <string name="signed_in_fmt">Signed In As:</string>
     <string name="next"><![CDATA[Next>]]></string>

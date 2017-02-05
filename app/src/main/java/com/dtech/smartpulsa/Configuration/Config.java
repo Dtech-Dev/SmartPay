@@ -5,6 +5,8 @@ package com.dtech.smartpulsa.Configuration;
  */
 
 public class Config {
+    /*file*/
+    public static final String FIRST_TIME = "first";
     /*poin*/
     public static final String WEBA = "http://samimi.web.id/dev/poina.php";
     public static final String WEBB = "http://samimi.web.id/dev/poinb.php";
@@ -12,6 +14,9 @@ public class Config {
     public static final String WEBD = "http://samimi.web.id/dev/poind.php";
     public static final String WEBE = "http://samimi.web.id/dev/poine.php";
     public static final String WEBF = "http://samimi.web.id/dev/poinf.php";
+    public static final String URL_UPD_POINT = "http://samimi.web.id/dev/admin/fbase-tagihan.php";
+    public static final String POST_POINT = "poin";
+    public static final String POST_ID = "id";
 
     /*Shared Preference*/
     public static final String PREF_NAME = "app-welcome";
@@ -19,6 +24,8 @@ public class Config {
     public static final String DISPLAY_NUMBER = "displayNumber";
     public static final String DISPLAY_EMAIL = "displayEmail";
     public static final String DISPLAY_FIREBASE_ID = "firebaseId";
+    public static final String DISPLAY_POIN = "poin";
+    public static final String DISPLAY_ID = "id";
     /**/
     public static final String URL_KODE="http://samimi.web.id/dev/add-code.php";
     public static final String URL_SELECT_CUSTOMER="http://samimi.web.id/dev/select-customer.php";

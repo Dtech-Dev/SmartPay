@@ -11,8 +11,11 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
+import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.preference.PrefManager;
 import com.race604.drawable.wave.WaveDrawable;
+
+import java.io.File;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -28,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        prefManager = new PrefManager(this);
+        //prefManager = new PrefManager(this);
 
         super.onCreate(savedInstanceState);
 
@@ -51,13 +54,23 @@ public class SplashActivity extends AppCompatActivity {
             }
         });*/
 
-        if (prefManager.isFirstTimeLaunch()) {
+        /*if (prefManager.isFirstTimeLaunch()) {
+            launchWelcome();
+        } else {
+            new Loading().execute();
+        }*/
+        if (!fileExistance(Config.FIRST_TIME)) {
             launchWelcome();
         } else {
             new Loading().execute();
         }
 
 
+    }
+
+    public boolean fileExistance(String fname){
+        File file = getBaseContext().getFileStreamPath(fname);
+        return file.exists();
     }
 
     private void launchWelcome() {

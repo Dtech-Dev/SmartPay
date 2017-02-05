@@ -1,5 +1,6 @@
 package com.dtech.smartpulsa;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +21,7 @@ import com.dtech.smartpulsa.fragments.FrSingleNumber;
 import com.dtech.smartpulsa.fragments.FrTagihan;
 import com.dtech.smartpulsa.fragments.FrToken;
 import com.dtech.smartpulsa.fragments.FrVgame;
+import com.dtech.smartpulsa.fragments.TempFragment;
 import com.mikepenz.crossfader.Crossfader;
 
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
@@ -86,9 +88,10 @@ public class TransactActivity extends AppCompatActivity {
                 //.withSliderBackgroundColorRes(R.color.blueA)
                 .withTranslucentStatusBar(false)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_compact_header).withIcon(GoogleMaterial.Icon.gmd_sun).withIdentifier(1),
-                        new PrimaryDrawerItem().withName("Home").withIcon(FontAwesome.Icon.faw_home).withBadge("22").withBadgeStyle(new BadgeStyle(Color.RED, Color.RED)).withIdentifier(2).withSelectable(false),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_multi_drawer).withIcon(GoogleMaterial.Icon.gmd_balance_wallet).withIdentifier(3).withBadge("beta"),
+                        new PrimaryDrawerItem().withName("Halaman Transaksi").withIcon(GoogleMaterial.Icon.gmd_grain).withIdentifier(1),
+                        //new PrimaryDrawerItem().withName("Home").withIcon(FontAwesome.Icon.faw_home).withBadge("22").withBadgeStyle(new BadgeStyle(Color.RED, Color.RED)).withIdentifier(2).withSelectable(false),
+                        new PrimaryDrawerItem().withName("Home").withIcon(FontAwesome.Icon.faw_home).withIdentifier(2).withSelectable(false),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_multi_drawer).withIcon(GoogleMaterial.Icon.gmd_balance_wallet).withIdentifier(3),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_non_translucent_status_drawer).withIcon(GoogleMaterial.Icon.gmd_flash).withIdentifier(4),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_voucher).withIcon(FontAwesome.Icon.faw_gamepad).withIdentifier(5),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_paket).withIcon(GoogleMaterial.Icon.gmd_network_wifi).withIdentifier(6),
@@ -158,6 +161,8 @@ public class TransactActivity extends AppCompatActivity {
             fragment = new FrVgame();
         } else if (name.equals("Paket Data")) {
             fragment = new FrPaket();
+        } else if (name.equals("Home")) {
+            super.onBackPressed();
         }
 
         fragmentManager = getSupportFragmentManager();

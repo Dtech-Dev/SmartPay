@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.TempActivity;
+import com.dtech.smartpulsa.WelcomeActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
 import com.dtech.smartpulsa.preference.SiriWaveView;
 import com.race604.drawable.wave.WaveDrawable;
@@ -36,6 +38,8 @@ import com.race604.drawable.wave.WaveDrawable;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class DompetActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -45,13 +49,16 @@ public class DompetActivity extends AppCompatActivity implements View.OnClickLis
     RadioGroup rGroup;
     Button bTukar;
     RelativeLayout reldompet;
+    String balance2;
     String JSON_STRING;
     String status;
     String balance;
     String point;
     String txtEmail;
     Button bTukarPoin, bDetailPoin;
+    int updBal;
 
+    AlertDialog alertDialog;
     PrefManager prefManager;
     SharedPreferences sharedPreferences;
     SiriWaveView waveView;
@@ -160,6 +167,7 @@ public class DompetActivity extends AppCompatActivity implements View.OnClickLis
             //navusername.setText(textUser+"("+status+" user)");
             tsaldo.setText(balance);
             tpoin.setText(point);
+            prefManager.setPoin(point);
 
             Toast.makeText(DompetActivity.this, status, Toast.LENGTH_LONG).show();
         } catch (JSONException e) {
@@ -211,28 +219,16 @@ public class DompetActivity extends AppCompatActivity implements View.OnClickLis
 
     private void tukarPoin() {
 
-         final CharSequence[] items = {" Tukar Semua Poin "," Tukar Sebagian Poin "};
+
         AlertDialog.Builder builder = new AlertDialog.Builder(DompetActivity.this, R.style.MyDialogTheme);
         builder.setTitle("Tukar Poin");
         //builder.setMessage("Pilih Salah Satu");
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.custom_dialog_1, null);
-        /*builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                switch (i) {
-                    case 0:
-                        allPoint();
-                        break;
-                    case 1:
-                        somePoint();
-                        break;
-                }
-            }
-        });*/
+
         builder.setView(dialogView);
 
-        AlertDialog alertDialog = builder.create();
+        alertDialog = builder.create();
         //alertDialog.setTitle("Tukar Poin");
 
         alertDialog.show();
@@ -277,9 +273,55 @@ public class DompetActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
+        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+
+                getJson();
+            }
+        });
     }
 
-    private void sendTukar(String poin) {
+    private void sendTukar(final String poin) {
+
+            class CheckpCustomer extends AsyncTask<Void, Void, String> {
+
+                ProgressDialog loading;
+
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    //loading = ProgressDialog.show(WelcomeActivity.this, "Proccessing ..", "Reading Server", false, false);
+
+                }
+
+                @Override
+                protected void onPostExecute(String s) {
+                    super.onPostExecute(s);
+                    //loading.dismiss();
+                }
+
+
+                @Override
+                protected String doInBackground(Void... v) {
+                    HashMap<String, String> params = new HashMap<>();
+                    params.put(Config.POST_POINT, poin);
+                    params.put(Config.TRX_PULSA_EMAIL, txtEmail);
+
+
+                    RequestHandler requestHandler = new RequestHandler();
+                    String result = requestHandler.sendPostRequest(Config.URL_UPD_POINT, params);
+
+                    return result;
+                }
+            }
+            CheckpCustomer checkCustomer = new CheckpCustomer();
+            checkCustomer.execute();
+       /* int updpoint = Integer.parseInt(point) - Integer.parseInt(poin);
+        balance2 = balance.replace(",", "");
+        updBal = Integer.parseInt(balance2) + Integer.parseInt(poin);
+        prefManager.setPoin(Integer.toString(updpoint));*/
+        alertDialog.dismiss();
 
     }
 
@@ -290,4 +332,6 @@ public class DompetActivity extends AppCompatActivity implements View.OnClickLis
     private void allPoint() {
 
     }
+
+
 }
