@@ -65,6 +65,7 @@ public class WelcomeActivity extends AppCompatActivity  implements
     SignInButton signInButton;
     PrefManager prefManager;
     String imgAcc;
+    String usrStatus;
 
      FirebaseAuth mAuth;
     // [END declare_auth]
@@ -185,7 +186,8 @@ public class WelcomeActivity extends AppCompatActivity  implements
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                launchHome();
+                checkCustomer();
+                /*launchHome();*/
                 break;
         }
     }
@@ -257,8 +259,8 @@ public class WelcomeActivity extends AppCompatActivity  implements
 
             firebaseAuthWithGoogle(acct);
 
-            checkCustomer();
-
+            next1.setTextColor(Color.WHITE);
+            next1.setEnabled(true);
 
         }
 
@@ -312,6 +314,7 @@ public class WelcomeActivity extends AppCompatActivity  implements
 
                 showCustomer(s);
                 Toast.makeText(WelcomeActivity.this, "Welcome", Toast.LENGTH_LONG).show();
+                launchHome();
             }
 
 
@@ -330,8 +333,9 @@ public class WelcomeActivity extends AppCompatActivity  implements
         }
         CheckCustomer checkCustomer = new CheckCustomer();
         checkCustomer.execute();
-        next1.setTextColor(Color.WHITE);
-        next1.setEnabled(true);
+
+        /*next1.setTextColor(Color.WHITE);
+        next1.setEnabled(true);*/
 
     }
 
@@ -343,8 +347,13 @@ public class WelcomeActivity extends AppCompatActivity  implements
             JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_ARRAY);
             JSONObject c = result.getJSONObject(0);
             id = c.getString(Config.POST_ID);
-
-            //prefManager.setId(id);
+            usrStatus = c.getString("user_status");
+            Log.d("Id from Server : ", id);
+            //if (!usrStatus.contains("Advance")) {
+                prefManager.setStatus(usrStatus);
+                Log.d("prefManager : ", "sukses set pref status user");
+            //}
+            prefManager.setIdUsr(id);
 
         } catch (JSONException e) {
             e.printStackTrace();

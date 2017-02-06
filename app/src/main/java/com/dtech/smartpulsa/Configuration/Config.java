@@ -26,6 +26,7 @@ public class Config {
     public static final String DISPLAY_FIREBASE_ID = "firebaseId";
     public static final String DISPLAY_POIN = "poin";
     public static final String DISPLAY_ID = "id";
+    public static final String DISPLAY_STATUS = "status";
     /**/
     public static final String URL_KODE="http://samimi.web.id/dev/add-code.php";
     public static final String URL_SELECT_CUSTOMER="http://samimi.web.id/dev/select-customer.php";

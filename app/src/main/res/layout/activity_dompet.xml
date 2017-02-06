@@ -47,7 +47,7 @@
                         android:text="Saldo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="40dp"
                         android:textStyle="bold"
                         android:layout_centerHorizontal="true"
                         android:id="@+id/textView2" />
@@ -97,25 +97,37 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_margin="@dimen/fab_margin"
+        android:layout_marginBottom="10dp"
         app:srcCompat="@mipmap/ic_assistant_white_24dp" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end">
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="15dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:orientation="horizontal">
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="0.5"
             android:text="Tukar Poin"
-            android:id="@+id/bTukarPoin"/>
-
+            android:id="@+id/bTukarPoin"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/ripple_1"/>
+        <View
+            android:layout_width="8dp"
+            android:layout_height="3dp"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Berapa Poin per transaksi?"
+            android:layout_centerHorizontal="true"
+            android:text="Info Point"
             android:id="@+id/bdetaiPoin"
-            android:layout_below="@+id/bTukarPoin"/>
-    </RelativeLayout>
+            android:background="@drawable/ripple_1"
+            android:layout_weight="0.5"/>
+    </LinearLayout>
 
 
 

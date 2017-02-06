@@ -47,7 +47,7 @@
                         android:background="@color/md_light_primary_text"/>
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_height="150dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp">
                         <TextView
@@ -55,14 +55,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="18sp"
+                            android:layout_marginTop="30dp"
                             android:id="@+id/textView9"
                             android:layout_centerHorizontal="true"/>
                         <TextView
-                            android:text="TextView"
+                            android:text="0"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-
+                            android:layout_marginTop="25dp"
                             android:layout_centerVertical="true"
                             android:textSize="24sp"
                             android:id="@+id/tpoin" />

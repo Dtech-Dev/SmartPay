@@ -59,6 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnMainTagihan"
+            android:background="@drawable/ripple_1"
             android:text="Main Menu Tagihan"/>
         <TextView
             android:text="TextView"
@@ -98,6 +99,7 @@
             android:layout_below="@+id/txtTagihan"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="73dp"
+            android:background="@drawable/ripple_1"
             android:id="@+id/btnCek" />
 
         <Button
@@ -108,6 +110,7 @@
             android:layout_below="@+id/txtTagihan"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="73dp"
+            android:background="@drawable/ripple_1"
             android:id="@+id/btnPay" />
 
         <ProgressBar

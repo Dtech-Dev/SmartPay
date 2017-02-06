@@ -115,7 +115,7 @@ public class DompetActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(DompetActivity.this,"Fetching Data","Wait...",false,false);
+                loading = ProgressDialog.show(DompetActivity.this,"Loading...","Wait...",false,false);
             }
 
             @Override
@@ -157,7 +157,7 @@ public class DompetActivity extends AppCompatActivity implements View.OnClickLis
             tpoin.setText(point);
             prefManager.setPoin(point);
 
-            Toast.makeText(DompetActivity.this, status, Toast.LENGTH_LONG).show();
+            //Toast.makeText(DompetActivity.this, status, Toast.LENGTH_LONG).show();
         } catch (JSONException e) {
             e.printStackTrace();
         }

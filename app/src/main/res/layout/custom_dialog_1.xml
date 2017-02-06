@@ -10,6 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@color/blueA"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Poin yang ditukar akan ditambahkan ke saldo anda"/>
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,5 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:text="Tukar"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/ripple_1"
         android:id="@+id/bTukar"/>
 </LinearLayout>

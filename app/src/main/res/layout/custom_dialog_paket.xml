@@ -40,6 +40,7 @@
         android:layout_alignRight="@+id/edNomorPaket"
         android:layout_alignEnd="@+id/edNomorPaket"
         android:layout_marginTop="12dp"
+        android:background="@drawable/ripple_1"
         android:layout_marginBottom="32dp"/>
 
 </RelativeLayout>

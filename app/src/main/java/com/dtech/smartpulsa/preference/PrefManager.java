@@ -28,6 +28,8 @@ public class PrefManager {
     private static final String DISPLAY_POIN = "poin";
     private static final String DISPLAY_FIREBASE_ID = "firebaseId";
     private static final String DISPLAY_ID = "id";
+    private static final String DISPLAY_IDUSR = "idUsr";
+    private static final String DISPLAY_STATUS = "status";
 
 
     public PrefManager(Context context) {
@@ -76,6 +78,16 @@ public class PrefManager {
 
     public void setUri(String uri) {
         editor.putString(DISPLAY_ID, uri);
+        editor.commit();
+    }
+
+    public void setStatus(String status) {
+        editor.putString(DISPLAY_STATUS, status);
+        editor.commit();
+    }
+
+    public void setIdUsr(String idUsr) {
+        editor.putString(DISPLAY_IDUSR, idUsr);
         editor.commit();
     }
 

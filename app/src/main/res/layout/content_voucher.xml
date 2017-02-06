@@ -83,6 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnMainVoucher"
+            android:background="@drawable/ripple_1"
             android:text="Ke Menu Utama Voucher"/>
 
         <ImageView

@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/btnProviderNull"
         android:layout_below="@+id/textProviderNull"
+        android:background="@drawable/ripple_1"
         android:text="Close"/>
 
 </RelativeLayout>
