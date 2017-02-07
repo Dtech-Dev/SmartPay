@@ -75,9 +75,9 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:layout_below="@+id/txtjenisTagihan"
-            android:text="Name"
+            android:text=""
             android:ems="10"
-
+            android:hint="nomor pelanggan"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:id="@+id/edNmrTagihan" />

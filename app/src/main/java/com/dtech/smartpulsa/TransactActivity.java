@@ -15,6 +15,7 @@ import com.dtech.smartpulsa.fragments.FrSingleNumber;
 import com.dtech.smartpulsa.fragments.FrTagihan;
 import com.dtech.smartpulsa.fragments.FrToken;
 import com.dtech.smartpulsa.fragments.FrVgame;
+import com.dtech.smartpulsa.preference.PrefManager;
 import com.mikepenz.crossfader.Crossfader;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -29,6 +30,11 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.mikepenz.materialize.util.UIUtils;
 
+import tourguide.tourguide.Overlay;
+import tourguide.tourguide.Pointer;
+import tourguide.tourguide.ToolTip;
+import tourguide.tourguide.TourGuide;
+
 public class TransactActivity extends AppCompatActivity {
 
     private static final int PROFILE_SETTING = 1;
@@ -38,22 +44,25 @@ public class TransactActivity extends AppCompatActivity {
     private Drawer result = null;
     private MiniDrawer miniResult = null;
     private Crossfader crossFader;
+    PrefManager prefManager;
 
     Fragment fragment;
     FragmentManager fragmentManager;
+    View first;
+    TourGuide mTourGuideHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transact);
 
+        prefManager = new PrefManager(TransactActivity.this);
         fragment = new FrSingleNumber();
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentPulsa, fragment);
         fragmentTransaction.commit();
 
-        createDrawer();
         result = new DrawerBuilder()
                 .withActivity(this)
                 //.withToolbar(toolbar)
@@ -61,9 +70,10 @@ public class TransactActivity extends AppCompatActivity {
                 //.withSliderBackgroundColorRes(R.color.blueA)
                 .withTranslucentStatusBar(false)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName("Halaman Transaksi").withIcon(GoogleMaterial.Icon.gmd_grain).withIdentifier(1),
+                        new PrimaryDrawerItem().withName("Halaman Transaksi").withIcon(GoogleMaterial.Icon.gmd_grain).withIdentifier(1).withSelectable(false),
                         //new PrimaryDrawerItem().withName("Home").withIcon(FontAwesome.Icon.faw_home).withBadge("22").withBadgeStyle(new BadgeStyle(Color.RED, Color.RED)).withIdentifier(2).withSelectable(false),
                         new PrimaryDrawerItem().withName("Home").withIcon(FontAwesome.Icon.faw_home).withIdentifier(2).withSelectable(false),
+                        new DividerDrawerItem(),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_multi_drawer).withIcon(GoogleMaterial.Icon.gmd_balance_wallet).withIdentifier(3),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_non_translucent_status_drawer).withIcon(GoogleMaterial.Icon.gmd_flash).withIdentifier(4),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_voucher).withIcon(FontAwesome.Icon.faw_gamepad).withIdentifier(5),
@@ -120,6 +130,19 @@ public class TransactActivity extends AppCompatActivity {
         //define a shadow (this is only for normal LTR layouts if you have a RTL app you need to define the other one
         crossFader.getCrossFadeSlidingPaneLayout().setShadowResourceLeft(R.drawable.material_drawer_shadow_right);
 
+        first = findViewById(R.id.viewFirst);
+        if (prefManager.isTrFirstTimeLaunch()) {
+            iniTour();
+        }
+
+    }
+
+    private void iniTour() {
+        mTourGuideHandler = TourGuide.init(this).with(TourGuide.Technique.Click)
+                .setPointer(new Pointer())
+                .setToolTip(new ToolTip().setTitle("Selamat Datang di Halaman Transaksi!").setDescription(getResources().getString(R.string.desc_tr_first)))
+                .setOverlay(new Overlay())
+                .playOn(first);
     }
 
     private void openFragment(String name) {
@@ -136,6 +159,12 @@ public class TransactActivity extends AppCompatActivity {
             fragment = new FrPaket();
         } else if (name.equals("Home")) {
             super.onBackPressed();
+        } else if (name.equals("Halaman Transaksi")) {
+            crossFader.crossFade();
+            if (prefManager.isTrFirstTimeLaunch()) {
+                mTourGuideHandler.cleanUp();
+                prefManager.setTrFirstTimeLaunch(false);
+            }
         }
 
         fragmentManager = getSupportFragmentManager();
@@ -155,10 +184,6 @@ public class TransactActivity extends AppCompatActivity {
             }
         }
     };
-
-    private void createDrawer() {
-
-    }
 
     @Override
     public void onBackPressed() {

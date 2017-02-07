@@ -25,7 +25,13 @@ import com.dtech.smartpulsa.feature.InboxActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
 import com.hitomi.cmlibrary.CircleMenu;
 import com.hitomi.cmlibrary.OnMenuSelectedListener;
+import com.hitomi.cmlibrary.OnMenuStatusChangeListener;
 import com.pkmmte.view.CircularImageView;
+
+import tourguide.tourguide.Overlay;
+import tourguide.tourguide.Pointer;
+import tourguide.tourguide.ToolTip;
+import tourguide.tourguide.TourGuide;
 
 public class TempActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -41,6 +47,7 @@ public class TempActivity extends AppCompatActivity
     public String textUser, txtEmail, txtFirebaseId;
     DrawerLayout drawer;
     CircleMenu circleMenu;
+    TourGuide mTourGuideHandler, mTourGuideHandler2, mTourGuideHandler3;
     private static int SPLASH_TIME_OUT = 1100;
 
     String imguri;
@@ -56,6 +63,7 @@ public class TempActivity extends AppCompatActivity
         prefManager = new PrefManager(this);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         /*ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -64,9 +72,32 @@ public class TempActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
         /*Embeks*/
 
         initUi();
+        if (prefManager.isTempFirstTimeLaunch()) {
+            initTour();
+        }
+
+
+    }
+
+    private void initTour() {
+       mTourGuideHandler = TourGuide.init(this).with(TourGuide.Technique.Click)
+                .setPointer(new Pointer())
+                .setToolTip(new ToolTip().setTitle("Welcome!").setDescription("Click on Get Started to begin..."))
+                .setOverlay(new Overlay())
+                .playOn(circleMenu);
+
+        mTourGuideHandler2 = TourGuide.init(this).with(TourGuide.Technique.Click)
+                .setPointer(new Pointer())
+                .setToolTip(new ToolTip().setTitle("Welcome!").setDescription("Menu kami desain dalam bentuk icon. Click 'X' untuk menutup menu"))
+                .setOverlay(new Overlay());
+        mTourGuideHandler3 = TourGuide.init(this).with(TourGuide.Technique.Click)
+                .setPointer(new Pointer())
+                .setToolTip(new ToolTip().setTitle("Navigation Menu").setDescription("Keterangan dari icon pada menu utama bisa anda liat di sini(membukan Navigasi Menu juga bisa anda lakukan dengan menggeser bagian kiri layar anda ke arah kanan)"))
+                .setOverlay(new Overlay());
 
     }
 
@@ -102,9 +133,15 @@ public class TempActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 drawer.openDrawer(GravityCompat.START);
+
+                if (prefManager.isTempFirstTimeLaunch()) {
+                   mTourGuideHandler3.cleanUp();
+                        //mTourGuideHandler3.playOn(imageButton);
+                    prefManager.setTempFirstTimeLaunch(false);
+                }
+
             }
         });
-
 
         /*circle menu*/
         circleMenu = (CircleMenu) findViewById(R.id.circle_menu);
@@ -192,19 +229,27 @@ public class TempActivity extends AppCompatActivity
 
         );
 
-        /*circleMenu.setOnMenuStatusChangeListener(new OnMenuStatusChangeListener() {
+        circleMenu.setOnMenuStatusChangeListener(new OnMenuStatusChangeListener() {
 
                                                      @Override
                                                      public void onMenuOpened() {
-                                                         Toast.makeText(TempActivity.this, "Menu Opend", Toast.LENGTH_SHORT).show();
+                                                         //Toast.makeText(TempActivity.this, "Menu Opend", Toast.LENGTH_SHORT).show();
+                                                         if (prefManager.isTempFirstTimeLaunch()) {
+                                                             mTourGuideHandler.cleanUp();
+                                                             mTourGuideHandler2.playOn(circleMenu);
+                                                         }
                                                      }
 
                                                      @Override
                                                      public void onMenuClosed() {
-                                                         Toast.makeText(TempActivity.this, "Menu Closed", Toast.LENGTH_SHORT).show();
+                                                         //Toast.makeText(TempActivity.this, "Menu Closed", Toast.LENGTH_SHORT).show();
+                                                         if (prefManager.isTempFirstTimeLaunch()) {
+                                                             mTourGuideHandler2.cleanUp();
+                                                             mTourGuideHandler3.playOn(imageButton);
+                                                         }
                                                      }
                                                  }
-        );*/
+        );
     }
 
 
