@@ -101,7 +101,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
             "Aora TV",
             "FIF",
             "Astra Credit\nCompany",
-            "WOM Finane"
+            "WOM Finance"
 
     };
 
@@ -114,7 +114,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
             "Aora TV",
             "FIF",
             "Astra Credit\nCompany",
-            "WOM Finane"
+            "WOM Finance"
 
     };
 
