@@ -23,8 +23,8 @@ public class PrefManager {
 
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
     private static final String IS_FIRST_TIME_TEMP = "IsFirstTimeTemp";
-    private static final String IS_FIRST_TIME_ADD = "IsFirstTimeAdd";
-    private static final String IS_FIRST_TIME_DOMPET = "IsFirstTimeDompet";
+    /*private static final String IS_FIRST_TIME_ADD = "IsFirstTimeAdd";
+    private static final String IS_FIRST_TIME_DOMPET = "IsFirstTimeDompet";*/
     private static final String IS_FIRST_TIME_TR = "IsFirstTimeTr";
     private static final String DISPLAY_NAME = "displayName";
     private static final String DISPLAY_NUMBER = "displayNumber";
@@ -54,7 +54,7 @@ public class PrefManager {
         return pref.getBoolean(IS_FIRST_TIME_TEMP, true);
     }
 
-    public void setAddFirstTimeLaunch(boolean isFirstTime) {
+    /*public void setAddFirstTimeLaunch(boolean isFirstTime) {
         editor.putBoolean(IS_FIRST_TIME_ADD, isFirstTime);
         editor.commit();
     }
@@ -70,7 +70,7 @@ public class PrefManager {
 
     public boolean isDompetFirstTimeLaunch() {
         return pref.getBoolean(IS_FIRST_TIME_DOMPET, true);
-    }
+    }*/
 
     public void setTrFirstTimeLaunch(boolean isFirstTime) {
         editor.putBoolean(IS_FIRST_TIME_TR, isFirstTime);

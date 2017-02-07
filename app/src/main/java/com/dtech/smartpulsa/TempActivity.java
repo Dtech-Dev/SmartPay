@@ -86,17 +86,17 @@ public class TempActivity extends AppCompatActivity
     private void initTour() {
        mTourGuideHandler = TourGuide.init(this).with(TourGuide.Technique.Click)
                 .setPointer(new Pointer())
-                .setToolTip(new ToolTip().setTitle("Welcome!").setDescription("Click on Get Started to begin..."))
+                .setToolTip(new ToolTip().setTitle("Selamat Datang di Pay Point").setDescription("Klik Button Utama tersebut untuk kami perkenalkan beberapa fitur di Pay Point"))
                 .setOverlay(new Overlay())
                 .playOn(circleMenu);
 
         mTourGuideHandler2 = TourGuide.init(this).with(TourGuide.Technique.Click)
                 .setPointer(new Pointer())
-                .setToolTip(new ToolTip().setTitle("Welcome!").setDescription("Menu kami desain dalam bentuk icon. Click 'X' untuk menutup menu"))
+                .setToolTip(new ToolTip().setTitle("Menu Utama").setDescription("Menu kami desain dalam bentuk icon. Click 'X' untuk menutup menu"))
                 .setOverlay(new Overlay());
         mTourGuideHandler3 = TourGuide.init(this).with(TourGuide.Technique.Click)
                 .setPointer(new Pointer())
-                .setToolTip(new ToolTip().setTitle("Navigation Menu").setDescription("Keterangan dari icon pada menu utama bisa anda liat di sini(membukan Navigasi Menu juga bisa anda lakukan dengan menggeser bagian kiri layar anda ke arah kanan)"))
+                .setToolTip(new ToolTip().setTitle("Menu Navigasi").setDescription("Keterangan dari ikon menu sebelumnya bisa anda liat di sini (membuka Menu Navigasi juga bisa anda lakukan dengan menggeser bagian kiri layar anda ke arah kanan)"))
                 .setOverlay(new Overlay());
 
     }
