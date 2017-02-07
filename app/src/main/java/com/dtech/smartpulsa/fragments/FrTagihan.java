@@ -282,7 +282,6 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
         final String formatTrx = jnsTagihan+" "+trx+" cek 3003";
         class InsCekTagihan extends AsyncTask<Void, Void, String> {
 
-            ProgressDialog loading;
             @Override
             protected String doInBackground(Void... params) {
                 HashMap<String, String> paramsCekTagihan = new HashMap<>();
@@ -296,75 +295,24 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
                 RequestHandler reqHandler = new RequestHandler();
                 String res = reqHandler.sendPostRequest(Config.URL_INSERT_TAGIHAN, paramsCekTagihan);
 
-
-
                 return res;
             }
 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                //loading = ProgressDialog.show(getActivity(), "Processing...", "Wait....", false, false);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                //loading.dismiss();
                 Toast.makeText(getActivity(), "We'll Processing Your Request", Toast.LENGTH_SHORT).show();
             }
         }
 
-        /*InsCekTagihan cekTagihan = new InsCekTagihan();
-        cekTagihan.execute();*/
-        Log.d("formatTrx : ", formatTrx);
+        InsCekTagihan cekTagihan = new InsCekTagihan();
+        cekTagihan.execute();
+        //Log.d("formatTrx : ", formatTrx);
     }
-
-    public void tagihanData() {
-        class TampilTagihan extends AsyncTask<Void, Void, String> {
-            String tagihanFix;
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-
-                txtTagihan.setText(tagihanFix);
-
-            }
-
-            @Override
-            protected String doInBackground(Void... params) {
-                RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequestParam(Config.URL_GET_TAGIHAN, trx);
-                showTagihan(s);
-
-                return s;
-            }
-        }
-        TampilTagihan tampilTagihan = new TampilTagihan();
-        tampilTagihan.execute();
-    }
-
-    public void showTagihan(String json) {
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-            JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_ARRAY);
-            JSONObject c = result.getJSONObject(0);
-            tagihanTampil = c.getString(Config.JML_TAGIHAN);
-
-
-            //txtTagihan.setText(tagihan);
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
 
 }
