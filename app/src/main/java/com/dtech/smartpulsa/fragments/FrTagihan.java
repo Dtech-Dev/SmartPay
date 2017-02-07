@@ -109,12 +109,12 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
             "PLN",
             "PDAM",
             "Telkom",
-            "Orange TV",
+            "orange",
             "Indovision",
-            "Aora TV",
+            "Aora",
             "FIF",
-            "Astra Credit\nCompany",
-            "WOM Finance"
+            "acc",
+            "wom"
 
     };
 
@@ -144,17 +144,17 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
         gridView.setAdapter(new CustomGridVoucher(getActivity(), gridViewStrings, gridViewImages, gridViewStrings, gridid));
 
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        userF = firebaseAuth.getCurrentUser();
+        /*firebaseAuth = FirebaseAuth.getInstance();
+        userF = firebaseAuth.getCurrentUser();*/
         //userId = userF.getUid();
-        mFirebaseInstance = FirebaseDatabase.getInstance();
+        /*mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference("users");
-        mFirebaseInstance.getReference("app_title").setValue("Cek Tagihan");
+        mFirebaseInstance.getReference("app_title").setValue("Cek Tagihan");*/
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                TextView textView = (TextView) view.findViewById(R.id.gridvoucher_text);
+                TextView textView = (TextView) view.findViewById(R.id.txtid);
                 String pilihan = textView.getText().toString();
 
                 if (pilihan.contains("PDAM")) {
@@ -315,8 +315,9 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
             }
         }
 
-        InsCekTagihan cekTagihan = new InsCekTagihan();
-        cekTagihan.execute();
+        /*InsCekTagihan cekTagihan = new InsCekTagihan();
+        cekTagihan.execute();*/
+        Log.d("formatTrx : ", formatTrx);
     }
 
     public void tagihanData() {
