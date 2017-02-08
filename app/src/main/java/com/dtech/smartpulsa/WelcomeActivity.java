@@ -252,7 +252,7 @@ public class WelcomeActivity extends AppCompatActivity  implements
             userEmail = acct.getEmail();
             imgAcc = acct.getPhotoUrl().toString();
             Log.d("Google result ", imgAcc);
-            txtakun.setText(userName+"\n"+userEmail);
+            txtakun.setText(userName + "\n" + userEmail);
             prefManager.setUserDisplay(userName);
             prefManager.setUserEmail(userEmail);
             prefManager.setUri(imgAcc);
@@ -262,6 +262,8 @@ public class WelcomeActivity extends AppCompatActivity  implements
             next1.setTextColor(Color.WHITE);
             next1.setEnabled(true);
 
+        } else {
+            Toast.makeText(WelcomeActivity.this, "Failed to sign in. Please Try Again", Toast.LENGTH_SHORT).show();
         }
 
     }
