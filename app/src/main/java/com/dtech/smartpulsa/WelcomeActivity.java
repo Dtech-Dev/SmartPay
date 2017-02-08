@@ -222,8 +222,13 @@ public class WelcomeActivity extends AppCompatActivity  implements
     }
 
     private void signIn() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+
+        try {
+            Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+            startActivityForResult(signInIntent, RC_SIGN_IN);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -262,9 +267,9 @@ public class WelcomeActivity extends AppCompatActivity  implements
             next1.setTextColor(Color.WHITE);
             next1.setEnabled(true);
 
-        } else {
+        } /*else {
             Toast.makeText(WelcomeActivity.this, "Failed to sign in. Please Try Again", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
     }
 
