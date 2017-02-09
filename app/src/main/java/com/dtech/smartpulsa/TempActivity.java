@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class TempActivity extends AppCompatActivity
     TextView navemail, navusername, tbalance;
     ImageButton imageButton;
     CircularImageView imageAcc;
+    /*ImageView imageAcc;*/
     PrefManager prefManager;
     NavigationView navigationView;
     SharedPreferences sharedPreferences;
@@ -111,11 +113,10 @@ public class TempActivity extends AppCompatActivity
         navemail = (TextView) headerNav.findViewById(R.id.navemail);
         tbalance = (TextView) findViewById(R.id.tbalance);
         imageAcc = (CircularImageView) headerNav.findViewById(R.id.imageViewAcc);
+        /*imageAcc = (ImageView) headerNav.findViewById(R.id.imageViewAcc);*/
         //Uri setImgAcc = Uri.parse();
         imguri = (sharedPreferences.getString(Config.DISPLAY_ID, ""));
         Glide.with(getApplicationContext()).load(imguri)
-                .thumbnail(0.5f)
-                .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageAcc);
 

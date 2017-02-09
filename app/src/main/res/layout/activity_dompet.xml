@@ -99,7 +99,6 @@
             android:layout_weight="0.5"
             android:text="Tukar Poin"
             android:id="@+id/bTukarPoin"
-            android:layout_centerHorizontal="true"
             android:background="@drawable/ripple_1"/>
         <View
             android:layout_width="8dp"
@@ -107,7 +106,6 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:text="Info Point"
             android:id="@+id/bdetaiPoin"
             android:background="@drawable/ripple_1"
