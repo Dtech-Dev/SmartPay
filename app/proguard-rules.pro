@@ -20,3 +20,4 @@
   **[] $VALUES;
   public *;
 }
+-keep public class com.google.android.gms.auth.** { public *; }
