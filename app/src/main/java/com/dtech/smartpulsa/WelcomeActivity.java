@@ -95,7 +95,7 @@ public class WelcomeActivity extends AppCompatActivity  implements
 
         /*initialize google sign in*/
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("1003648665919-1dcuht955rmlsg1cnccpfboi2kes37ot.apps.googleusercontent.com")
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 

@@ -1,12 +1,15 @@
 package com.dtech.smartpulsa;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 
 import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
+import com.dtech.smartpulsa.feature.DompetActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
 
 import java.util.HashMap;
@@ -93,8 +97,24 @@ public class TrfConfirmActivity extends AppCompatActivity {
                 Toast.makeText(TrfConfirmActivity.this, "We'll Processing Your Request", Toast.LENGTH_LONG).show();
             }
         }
-        AddSaldo addSaldo = new AddSaldo();
-        addSaldo.execute();
+        if (email.matches("") || noRekUser.matches("") || namaRekUser.matches("") || jmlTrf.matches("")) {
+            //Toast.makeText(TrfConfirmActivity.this, "Mohon lengkapi data terlebih dahulu",Toast.LENGTH_SHORT).show();
+            final AlertDialog alertDialog;
+            AlertDialog.Builder builder = new AlertDialog.Builder(TrfConfirmActivity.this);
+            builder.setTitle("Data Transfer");
+            builder.setMessage("Mohon untuk melengkapi data-data terlebih dahulu");
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            alertDialog = builder.create();
+            alertDialog.show();
+        } else {
+            AddSaldo addSaldo = new AddSaldo();
+            addSaldo.execute();
+        }
     }
 
     private void initUI() {
