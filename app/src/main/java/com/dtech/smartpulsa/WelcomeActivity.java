@@ -223,12 +223,12 @@ public class WelcomeActivity extends AppCompatActivity  implements
 
     private void signIn() {
 
-        try {
+        //try {
             Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
             startActivityForResult(signInIntent, RC_SIGN_IN);
-        } catch (Exception e) {
+        /*} catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @Override
