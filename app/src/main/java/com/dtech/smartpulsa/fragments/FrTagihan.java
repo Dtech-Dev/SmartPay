@@ -2,11 +2,13 @@ package com.dtech.smartpulsa.fragments;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -27,6 +29,7 @@ import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.ItemClickListener;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
+import com.dtech.smartpulsa.TrfConfirmActivity;
 import com.dtech.smartpulsa.custom.CustomGridTagihan;
 import com.dtech.smartpulsa.custom.CustomGridVoucher;
 import com.dtech.smartpulsa.data.AdapterKota;
@@ -245,11 +248,24 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
             case R.id.btnCek:
                 //prgBar.setVisibility(View.VISIBLE);
                 trx = edNmrTagihan.getText().toString();
-                //if (TextUtils.isEmpty(userId)) {
+                if (trx.matches("")) {
+                    final AlertDialog alertDialog;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setCancelable(false);
+                    builder.setTitle("Konfirmasi");
+                    builder.setMessage("Mohon untuk mengisi nomor tagihan anda terlebih dahulu");
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    alertDialog = builder.create();
+                    alertDialog.show();
+                } else {
                     cekTagihan();
-                //} else {
-                //    updateUser();
-                //}
+                }
+
                 break;
             case R.id.btnPay:
                 bayarTagihan();

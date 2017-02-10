@@ -13,10 +13,6 @@
     tools:context="com.dtech.smartpulsa.feature.TagihanActivity"
     tools:showIn="@layout/activity_tagihan">
 
-
-
-
-
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:id="@+id/nestedscrollview"

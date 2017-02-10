@@ -101,7 +101,7 @@ public class WelcomeActivity extends AppCompatActivity  implements
 
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .enableAutoManage(WelcomeActivity.this /* FragmentActivity */, WelcomeActivity.this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
         /**/

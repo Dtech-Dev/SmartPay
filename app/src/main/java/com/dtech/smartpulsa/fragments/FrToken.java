@@ -149,7 +149,7 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
 
             Toast.makeText(getActivity(), formatTrx, Toast.LENGTH_SHORT).show();
         //}
-            transaksi = new Transaksi(this.getActivity());
+            transaksi = new Transaksi(getActivity());
             transaksi.setUser(email);
             transaksi.setNomorTuj(idpel);
             transaksi.setJenisTransaksi(tkodetoken);

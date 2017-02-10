@@ -252,7 +252,7 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
         String transaksi = trProvider + trNominal;
         formatTrx = transaksi+"."+nomorTuj+".3003";
         Toast.makeText(getActivity(), formatTrx,Toast.LENGTH_SHORT).show();
-        transaksiPulsa = new Transaksi(this.getActivity());
+        transaksiPulsa = new Transaksi(getActivity());
         transaksiPulsa.setUser(email);
         transaksiPulsa.setNomorTuj(nomorTuj);
         transaksiPulsa.setJenisTransaksi(transaksi);
