@@ -15,6 +15,8 @@ import com.dtech.smartpulsa.fragments.FrSingleNumber;
 import com.dtech.smartpulsa.fragments.FrTagihan;
 import com.dtech.smartpulsa.fragments.FrToken;
 import com.dtech.smartpulsa.fragments.FrVgame;
+import com.dtech.smartpulsa.fragments.TempFragment;
+import com.dtech.smartpulsa.fragments.TransactFragment;
 import com.dtech.smartpulsa.preference.PrefManager;
 import com.mikepenz.crossfader.Crossfader;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
@@ -50,6 +52,7 @@ public class TransactActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     View first;
     TourGuide mTourGuideHandler;
+    FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +60,9 @@ public class TransactActivity extends AppCompatActivity {
         setContentView(R.layout.activity_transact);
 
         prefManager = new PrefManager(TransactActivity.this);
-        fragment = new FrSingleNumber();
+        fragment = new TransactFragment();
         fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentPulsa, fragment);
         fragmentTransaction.commit();
 
@@ -168,7 +171,7 @@ public class TransactActivity extends AppCompatActivity {
         }
 
         fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentPulsa, fragment);
         fragmentTransaction.commit();
 

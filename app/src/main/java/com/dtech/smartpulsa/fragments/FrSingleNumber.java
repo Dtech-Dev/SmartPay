@@ -1,21 +1,27 @@
 package com.dtech.smartpulsa.fragments;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +30,7 @@ import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.PredictNumber;
 import com.dtech.smartpulsa.R;
+import com.dtech.smartpulsa.TrfConfirmActivity;
 import com.dtech.smartpulsa.custom.CustomGridToken;
 import com.dtech.smartpulsa.feature.PulsaActivity;
 import com.dtech.smartpulsa.feature.Transaksi;
@@ -64,10 +71,12 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
     View view;
     TextView totherNumber;
     EditText edOtherNumber;
+    ImageButton imgPin;
 
     String harga;
     GridView gridView;
      String json_string;
+    InputMethodManager imm;
 
     @Nullable
     @Override
@@ -79,6 +88,7 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
         firebaseId = (sharedPreferences.getString(Config.DISPLAY_FIREBASE_ID, ""));
         email = (sharedPreferences).getString(Config.DISPLAY_EMAIL, "");
 
+         imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         initUI();
         return view;
     }
@@ -88,6 +98,22 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
         gridView.setVisibility(View.INVISIBLE);
         totherNumber = (TextView) view.findViewById(R.id.txtOtherNumber);
         edOtherNumber = (EditText) view.findViewById(R.id.editOtherNumber);
+        imgPin = (ImageButton) view.findViewById(R.id.imgPin);
+        imgPin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (edOtherNumber.getText().toString().matches("")) {
+                    Toast.makeText(getActivity(), "Isikan nomor anda terlebih dahulu", Toast.LENGTH_SHORT).show();
+                } else {
+                    /*getActivity().getWindow().setSoftInputMode(
+                            WindowManager.LayoutParams.HI
+                    );*/
+                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                    queryKodeProvider(kodeProvider);
+                }
+
+            }
+        });
 
         edOtherNumber.addTextChangedListener(this);
     }
@@ -115,28 +141,12 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
             e.printStackTrace();
             //Toast.makeText(PulsaActivity.this, "Nomor tidak dikenali", Toast.LENGTH_SHORT).show();
 
-            final Dialog dialog = new Dialog(getActivity());
-            dialog.setContentView(R.layout.dialog_provider);
-            dialog.setCancelable(false);
-            dialog.setTitle("Oopss");
-            TextView txtError = (TextView) dialog.findViewById(R.id.textProviderNull);
-            txtError.setText("Nomor Tidak Dikenali");
-
-            Button btnError = (Button) dialog.findViewById(R.id.btnProviderNull);
-            btnError.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                    edOtherNumber.setText("");
-                }
-            });
-
-            dialog.show();
+            /*f*/
         }
         //ListAdapter adapter = new SimpleAdapter(PulsaActivity.this, list, android.R.layout.simple_spinner_item, null, null);
         try {
             String[] kodetoken = listkode.toArray(new String[listkode.size()]);
-            String[] hargaToken = listharga.toArray(new String[list.size()]);
+            String[] hargaToken = listharga.toArray(new String[listharga.size()]);
 
             gridView.setAdapter(new CustomGridToken(hargaToken, kodetoken, getActivity()));
             gridView.setOnItemClickListener(this);
@@ -153,7 +163,7 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (s.length() >= 6) {
+        if (s.length() == 6) {
 
             /*String prepredict = s.toString();
             if (prepredict.contains("-")) {
@@ -167,11 +177,31 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
             provider = predictNumber.getTypeNumber();
             kodeProvider = predictNumber.getKodeTransaksi();
             setTrProvider(predictNumber.getKodeTransaksi());
-            totherNumber.setText("Provider : "+provider+" ("+trProvider+")");
-            queryKodeProvider(kodeProvider);
-        } else {
-            gridView.setVisibility(View.INVISIBLE);
-            totherNumber.setText("Provider : ");
+
+            if (provider.equals("Unknown")) {
+                final Dialog dialog = new Dialog(getActivity());
+                dialog.setContentView(R.layout.dialog_provider);
+                dialog.setCancelable(false);
+                dialog.setTitle("Oopss");
+                TextView txtError = (TextView) dialog.findViewById(R.id.textProviderNull);
+                txtError.setText("Nomor Tidak Dikenali");
+
+                Button btnError = (Button) dialog.findViewById(R.id.btnProviderNull);
+                btnError.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        edOtherNumber.setText("");
+                    }
+                });
+
+                dialog.show();
+                gridView.setVisibility(View.INVISIBLE);
+                totherNumber.setText("Provider : ");
+            } else {
+                totherNumber.setText("Provider : "+provider+" ("+trProvider+")");
+            }
+
         }
     }
 
@@ -183,6 +213,7 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
     }
 
     private void queryKodeProvider(final String providerCode) {
+
         gridView.setVisibility(View.VISIBLE);
         class QueryKodeAsync extends AsyncTask<Void, Void, String> {
             @Override
@@ -251,13 +282,42 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
         //String nomorTuj = predictNumber.getNomorTujuan();
         String transaksi = trProvider + trNominal;
         formatTrx = transaksi+"."+nomorTuj+".3003";
-        Toast.makeText(getActivity(), formatTrx,Toast.LENGTH_SHORT).show();
         transaksiPulsa = new Transaksi(getActivity());
         transaksiPulsa.setUser(email);
         transaksiPulsa.setNomorTuj(nomorTuj);
         transaksiPulsa.setJenisTransaksi(transaksi);
         transaksiPulsa.setFirebaseId(firebaseId);
         transaksiPulsa.setKode(formatTrx);
-        transaksiPulsa.execute();
+
+        //Toast.makeText(getActivity(), formatTrx,Toast.LENGTH_SHORT).show();
+        final AlertDialog alertDialog ;
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Transaksi");
+        builder.setMessage("Anda akan melakukan transaksi dengan detail :\nNomor Tujuan : "+nomorTuj+"\nProvider : "+provider+"\nNominal : "+nominalTemp);
+        builder.setPositiveButton("Proses", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                transaksiPulsa.execute();
+            }
+        });
+        builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+
+
+
     }
+
+    /*@Override
+    public void onResume() {
+        super.onResume();
+        edOtherNumber.setText("");
+        gridView.setVisibility(View.INVISIBLE);
+    }*/
 }

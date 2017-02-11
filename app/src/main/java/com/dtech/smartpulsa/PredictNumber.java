@@ -91,6 +91,8 @@ public class PredictNumber {
             setTypeNumber("Smartfren");
             setKodeTransaksi("sf");
         } else {
+            setTypeNumber("Unknown");
+            setKodeTransaksi("Unknown");
             /*final Dialog dialog = new Dialog(context);
             dialog.setContentView(R.layout.dialog_provider);
             dialog.setTitle("Oopss");

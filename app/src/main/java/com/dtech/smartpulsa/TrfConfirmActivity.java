@@ -45,7 +45,7 @@ public class TrfConfirmActivity extends AppCompatActivity {
         bank = intentButtonBank.getStringExtra("bank");
         prefManager = new PrefManager(this);
         SharedPreferences sp = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        strEmail = (sp.getString(DISPLAY_EMAIL, ""));
+        strEmail = (sp.getString(Config.DISPLAY_EMAIL, ""));
         initUI();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
