@@ -237,6 +237,15 @@ public class WelcomeActivity extends AppCompatActivity  implements
     }
 
     @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        try {
+            super.startActivityForResult(intent, requestCode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
