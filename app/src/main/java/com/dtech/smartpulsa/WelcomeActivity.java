@@ -95,7 +95,7 @@ public class WelcomeActivity extends AppCompatActivity  implements
 
         /*initialize google sign in*/
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken(getString(R.string.api_sign_in))
                 .requestEmail()
                 .build();
 
@@ -242,6 +242,7 @@ public class WelcomeActivity extends AppCompatActivity  implements
 
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            Log.d(TAG, "onActivityResult:GET_TOKEN:success:" + result.getStatus().isSuccess());
             handleSignInResult(result);
         }
     }
