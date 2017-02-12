@@ -35,6 +35,7 @@ import com.dtech.smartpulsa.custom.CustomGridToken;
 import com.dtech.smartpulsa.feature.PulsaActivity;
 import com.dtech.smartpulsa.feature.Transaksi;
 import com.dtech.smartpulsa.preference.PrefManager;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -99,6 +100,7 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
         totherNumber = (TextView) view.findViewById(R.id.txtOtherNumber);
         edOtherNumber = (EditText) view.findViewById(R.id.editOtherNumber);
         imgPin = (ImageButton) view.findViewById(R.id.imgPin);
+        /*imgPin.setImageDrawable(GoogleMaterial.Icon.gmd_search);*/
         imgPin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,7 +165,9 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (s.length() == 6) {
+        gridView.setVisibility(View.INVISIBLE);
+        gridView.setAdapter(null);
+        if (s.length() >= 6) {
 
             /*String prepredict = s.toString();
             if (prepredict.contains("-")) {
@@ -309,6 +313,13 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
         alertDialog = builder.create();
         alertDialog.setCancelable(false);
         alertDialog.show();
+        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                edOtherNumber.setText("");
+                gridView.setAdapter(null);
+            }
+        });
 
 
 
