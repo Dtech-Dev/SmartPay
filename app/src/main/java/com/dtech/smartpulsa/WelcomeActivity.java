@@ -1,12 +1,17 @@
 package com.dtech.smartpulsa;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +36,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -51,10 +57,18 @@ import java.util.HashMap;
 
 public class WelcomeActivity extends AppCompatActivity  implements
         GoogleApiClient.OnConnectionFailedListener,
-        View.OnClickListener{
+        View.OnClickListener, GoogleApiClient.ConnectionCallbacks {
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
+    /**/
+    // Request code to use when launching the resolution activity
+    private static final int REQUEST_RESOLVE_ERROR = 1001;
+    // Unique tag for the error dialog fragment
+    private static final String DIALOG_ERROR = "dialog_error";
+    // Bool to track whether the app is already resolving an error
+    private boolean mResolvingError = false;
+    /**/
     String userName, userEmail, id;
     String userNumber;
     RelativeLayout rel, relui1, relui2;
@@ -101,9 +115,14 @@ public class WelcomeActivity extends AppCompatActivity  implements
 
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(WelcomeActivity.this /* FragmentActivity */, WelcomeActivity.this /* OnConnectionFailedListener */)
+                .enableAutoManage(WelcomeActivity.this  /*FragmentActivity*/ , WelcomeActivity.this  /*OnConnectionFailedListener*/ )
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+        /*mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();*/
         /**/
         /*1st ui*/
         relui1 = (RelativeLayout) findViewById(R.id.ui1);
@@ -234,6 +253,23 @@ public class WelcomeActivity extends AppCompatActivity  implements
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
+
+        if (mResolvingError) {
+            // Already attempting to resolve an error.
+            return;
+        } else if (connectionResult.hasResolution()) {
+            try {
+                mResolvingError = true;
+                connectionResult.startResolutionForResult(this, REQUEST_RESOLVE_ERROR);
+            } catch (IntentSender.SendIntentException e) {
+                // There was an error with the resolution intent. Try again.
+                mGoogleApiClient.connect();
+            }
+        } else {
+            // Show dialog using GoogleApiAvailability.getErrorDialog()
+            showErrorDialog(connectionResult.getErrorCode());
+            mResolvingError = true;
+        }
     }
 
     @Override
@@ -389,5 +425,61 @@ public class WelcomeActivity extends AppCompatActivity  implements
                                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
             }
         }
+    }
+
+    /*senin, 13 feb '17*/
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        Log.v("Google API papoi: ", "Connected");
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.v("Google API papoi: ", "Connection Suspend");
+    }
+
+    @Override
+    protected void onStart() {
+        Log.v("Google API papoi:", "Starting");
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
+    }
+
+    private void showErrorDialog(int errorCode) {
+        // Create a fragment for the error dialog
+        ErrorDialogFragment dialogFragment = new ErrorDialogFragment();
+        // Pass the error that should be displayed
+        Bundle args = new Bundle();
+        args.putInt(DIALOG_ERROR, errorCode);
+        dialogFragment.setArguments(args);
+        dialogFragment.show(getSupportFragmentManager(), "errordialog");
+    }
+
+
+    public static class ErrorDialogFragment extends DialogFragment {
+        public ErrorDialogFragment() { }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Get the error code and retrieve the appropriate dialog
+            int errorCode = this.getArguments().getInt(DIALOG_ERROR);
+            return GoogleApiAvailability.getInstance().getErrorDialog(
+                    this.getActivity(), errorCode, REQUEST_RESOLVE_ERROR);
+        }
+
+        @Override
+        public void onDismiss(DialogInterface dialog) {
+            ((WelcomeActivity) getActivity()).onDialogDismissed();
+        }
+    }
+
+    private void onDialogDismissed() {
+        mResolvingError = false;
     }
 }
