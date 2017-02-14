@@ -26,6 +26,7 @@ public class Config {
     public static final String DISPLAY_FIREBASE_ID = "firebaseId";
     public static final String DISPLAY_POIN = "poin";
     public static final String DISPLAY_ID = "id";
+    public static final String DISPLAY_IDUSR = "idUsr";
     public static final String DISPLAY_STATUS = "status";
     public static final String IS_FIRST_TIME_TEMP = "IsFirstTimeTemp";
     public static final String IS_FIRST_TIME_ADD = "IsFirstTimeAdd";

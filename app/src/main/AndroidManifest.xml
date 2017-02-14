@@ -2,10 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dtech.smartpulsa">
 
-    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
+    <!-- <uses-permission android:name="android.permission.READ_PHONE_STATE" /> -->
     <!-- <uses-permission android:name="android.permission.READ_SMS"/> -->
     <uses-permission android:name="android.permission.INTERNET" />
-
 
     <application
         android:allowBackup="true"
@@ -18,6 +17,7 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".WelcomeActivity" />
+        <activity android:name=".WelcomeActivity2" />
         <activity
             android:name=".TempActivity"
             android:label="@string/title_activity_temp"
@@ -156,12 +156,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".feature.TukarActivity" />
-        <activity android:name=".feature.PoinCatActivity"></activity>
-
+        <activity android:name=".feature.PoinCatActivity" />
         <activity
             android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity android:name=".HistoryActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -114,10 +115,15 @@ public class WelcomeActivity extends AppCompatActivity  implements
                 .build();
 
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(WelcomeActivity.this  /*FragmentActivity*/ , WelcomeActivity.this  /*OnConnectionFailedListener*/ )
+        mGoogleApiClient = new GoogleApiClient.Builder(WelcomeActivity.this)
+                .enableAutoManage(this  /*FragmentActivity*/ , this  /*OnConnectionFailedListener*/ )
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addConnectionCallbacks(this)
                 .build();
+        /*mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(WelcomeActivity.this  *//*FragmentActivity*//* , WelcomeActivity.this  *//*OnConnectionFailedListener*//* )
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();*/
         /*mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API)
                 .addConnectionCallbacks(this)
@@ -218,6 +224,7 @@ public class WelcomeActivity extends AppCompatActivity  implements
         findViewById(R.id.activity_welcome).setBackground(getResources().getDrawable(R.drawable.bgts));
 
         String token = FirebaseInstanceId.getInstance().getToken();
+        Log.d(TAG, "FirebaseInstanceId: " + token);
         prefManager.setFirebaseId(token);
         /*VISIBLE-ing 2nd ui*/
         relui2.setVisibility(View.VISIBLE);

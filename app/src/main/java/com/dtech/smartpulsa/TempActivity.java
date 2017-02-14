@@ -1,26 +1,29 @@
 package com.dtech.smartpulsa;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.dtech.smartpulsa.Configuration.Config;
+import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.feature.DompetActivity;
 import com.dtech.smartpulsa.feature.InboxActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
@@ -28,6 +31,12 @@ import com.hitomi.cmlibrary.CircleMenu;
 import com.hitomi.cmlibrary.OnMenuSelectedListener;
 import com.hitomi.cmlibrary.OnMenuStatusChangeListener;
 import com.pkmmte.view.CircularImageView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 import tourguide.tourguide.Overlay;
 import tourguide.tourguide.Pointer;
@@ -46,7 +55,7 @@ public class TempActivity extends AppCompatActivity
     PrefManager prefManager;
     NavigationView navigationView;
     SharedPreferences sharedPreferences;
-    public String textUser, txtEmail, txtFirebaseId;
+    public String textUser, txtEmail, txtFirebaseId, txtNumber, idUsr;
     DrawerLayout drawer;
     CircleMenu circleMenu;
     TourGuide mTourGuideHandler, mTourGuideHandler2, mTourGuideHandler3;
@@ -116,13 +125,26 @@ public class TempActivity extends AppCompatActivity
         /*imageAcc = (ImageView) headerNav.findViewById(R.id.imageViewAcc);*/
         //Uri setImgAcc = Uri.parse();
         imguri = (sharedPreferences.getString(Config.DISPLAY_ID, ""));
-        Glide.with(getApplicationContext()).load(imguri)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imageAcc);
+        if (imguri.matches("")) {
+            Log.d("Image Uri:", "null");
+        } else {
+            Glide.with(getApplicationContext()).load(imguri)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imageAcc);
+        }
+
 
         textUser = (sharedPreferences.getString(Config.DISPLAY_NAME, ""));
         txtEmail = (sharedPreferences.getString(Config.DISPLAY_EMAIL, ""));
+        txtNumber = (sharedPreferences.getString(Config.DISPLAY_NUMBER, ""));
         txtFirebaseId = (sharedPreferences.getString(Config.DISPLAY_FIREBASE_ID, ""));
+        idUsr = (sharedPreferences.getString(Config.DISPLAY_IDUSR, ""));
+        if (idUsr.matches("") || idUsr.isEmpty()) {
+            checkCustomer();
+        } else {
+            String status = (sharedPreferences.getString(Config.DISPLAY_STATUS, ""));
+            Log.d("Has been set ", "id user: " + idUsr + ", status: " + status);
+        }
 
         //tTempor = (TextView) findViewById(R.id.textViewTempor);
 
@@ -309,13 +331,80 @@ public class TempActivity extends AppCompatActivity
         } else if (id == R.id.dompetnav) {
             Intent dompett = new Intent(TempActivity.this, DompetActivity.class);
             startActivity(dompett);
-        } /*else if (id == R.id.nav_send) {
-
-        }*/
+        } else if (id == R.id.nav_history) {
+            Intent history = new Intent(TempActivity.this, HistoryActivity.class);
+            startActivity(history);
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void checkCustomer() {
+        class CheckCustomer extends AsyncTask<Void, Void, String> {
+
+            private ProgressDialog loading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(TempActivity.this, "Proccessing ..", "Reading Server", false, false);
+
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+
+                showCustomer(s);
+                //Toast.makeText(WelcomeActivity.this, "Welcome", Toast.LENGTH_LONG).show();
+
+            }
+
+
+            @Override
+            protected String doInBackground(Void... v) {
+                HashMap<String, String> params = new HashMap<>();
+                params.put(Config.TAG_NAME, textUser);
+                params.put(Config.TAG_EMAIL, txtEmail);
+                params.put(Config.TAG_PHONE, txtNumber);
+
+                RequestHandler requestHandler = new RequestHandler();
+                String result = requestHandler.sendPostRequest(Config.URL_SELECT_CUSTOMER, params);
+
+                return result;
+            }
+        }
+        CheckCustomer checkCustomer = new CheckCustomer();
+        checkCustomer.execute();
+
+        /*next1.setTextColor(Color.WHITE);
+        next1.setEnabled(true);*/
+
+    }
+
+    private void showCustomer(String json) {
+        JSONObject jsonObject;
+        String id, usrStatus;
+
+        try {
+            jsonObject = new JSONObject(json);
+            JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_ARRAY);
+            JSONObject c = result.getJSONObject(0);
+            id = c.getString(Config.POST_ID);
+            usrStatus = c.getString("user_status");
+            Log.d("user id : ", id);
+            //if (!usrStatus.contains("Advance")) {
+            prefManager.setStatus(usrStatus);
+            Log.d("prefManager : ", "sukses set pref status user: "+usrStatus);
+            //}
+            prefManager.setIdUsr(id);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 

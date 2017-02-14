@@ -77,7 +77,8 @@ public class PredictNumber {
                 || subed.equals("0851")) {
             readSimpati(finalString);
         } else if (subed.equals("0817") || subed.equals("0818") || subed.equals("0819")
-                || subed.equals("0859") || subed.equals("0877") || subed.equals("0878")
+                || subed.equals("0859") || subed.equals("0877") || subed.equals("0878") || subed.equals("0838")
+                || subed.equals("0831") || subed.equals("0832") || subed.equals("0833")
                 ) {
             setTypeNumber("XL");
             setKodeTransaksi("xr");
