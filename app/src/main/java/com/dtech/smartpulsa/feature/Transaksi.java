@@ -3,12 +3,14 @@ package com.dtech.smartpulsa.feature;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dtech.smartpulsa.AddSaldoActivity;
 import com.dtech.smartpulsa.Configuration.Config;
 import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
@@ -38,6 +40,8 @@ public class Transaksi extends AsyncTask<Void, Void, String> {
     public Transaksi(Context context) {
         //this.kode = kode;
         this.context = context;
+        //Intent addSaldo = new Intent(context, AddSaldoActivity.class);
+
     }
 
     public String getJenisTransaksi() {
@@ -130,6 +134,7 @@ public class Transaksi extends AsyncTask<Void, Void, String> {
                 btnadd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                         dialog.dismiss();
                     }
                 });
