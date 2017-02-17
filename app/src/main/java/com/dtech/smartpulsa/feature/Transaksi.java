@@ -134,7 +134,7 @@ public class Transaksi extends AsyncTask<Void, Void, String> {
                 btnadd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        context.startActivity(new Intent(context, AddSaldoActivity.class));
                         dialog.dismiss();
                     }
                 });
