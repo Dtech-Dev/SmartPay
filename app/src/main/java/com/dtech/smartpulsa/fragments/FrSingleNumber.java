@@ -206,8 +206,10 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
                 totherNumber.setText("Provider : "+provider+" ("+trProvider+")");
             }
 
-            if (s.length() == 10) {
+            if (s.length() >= 10) {
                 imgPin.setVisibility(View.VISIBLE);
+            } else {
+                imgPin.setVisibility(View.INVISIBLE);
             }
 
         }
