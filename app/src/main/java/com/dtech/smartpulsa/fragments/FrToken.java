@@ -147,7 +147,7 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
         } else {
             formatTrx = "pln " + idpel + " " + kodetoken + " 3003";
 
-            Toast.makeText(getActivity(), formatTrx, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), formatTrx, Toast.LENGTH_SHORT).show();
         //}
             transaksi = new Transaksi(getActivity());
             transaksi.setUser(email);

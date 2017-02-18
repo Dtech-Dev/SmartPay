@@ -118,7 +118,7 @@ public class AdapterPaket extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         Toast.makeText(context, "Silahkan isi nomor anda", Toast.LENGTH_SHORT).show();
                         edNomorPaket.requestFocus();
                     } else {
-                        Toast.makeText(context, kodePaket+"."+nomorPaket+".3003", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, kodePaket+"."+nomorPaket+".3003", Toast.LENGTH_SHORT).show();
                         transaksiPulsa = new Transaksi(context);
                         transaksiPulsa.setUser(email);
                         transaksiPulsa.setNomorTuj(nomorPaket);
