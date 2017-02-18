@@ -116,7 +116,7 @@ public class TagihanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     break;
                 case R.id.btnItemBayar:
                     id_tagihan = idtagih.getText().toString();
-                    Toast.makeText(v.getContext(), "btn bayar clicked with id tagihan = "+id_tagihan, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(v.getContext(), "btn bayar clicked with id tagihan = "+id_tagihan, Toast.LENGTH_SHORT).show();
                     asyncBayar(id_tagihan);
                     break;
             }
