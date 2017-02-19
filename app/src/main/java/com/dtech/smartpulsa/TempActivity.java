@@ -27,6 +27,7 @@ import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.configuration.ConnectivityReceiver;
 import com.dtech.smartpulsa.configuration.MyApplication;
 import com.dtech.smartpulsa.configuration.RequestHandler;
+import com.dtech.smartpulsa.feature.AboutActivity;
 import com.dtech.smartpulsa.feature.DompetActivity;
 import com.dtech.smartpulsa.feature.InboxActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
@@ -353,7 +354,6 @@ public class TempActivity extends AppCompatActivity
         } else if (id == R.id.tambahsaldonav) {
             Intent saldo = new Intent(TempActivity.this, AddSaldoActivity.class);
             startActivity(saldo);
-
         } else if (id == R.id.tiketnav) {
             Toast.makeText(TempActivity.this, "Coming Soon :\nPemesanan Tiket", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.dompetnav) {
@@ -362,6 +362,9 @@ public class TempActivity extends AppCompatActivity
         } else if (id == R.id.nav_history) {
             Intent history = new Intent(TempActivity.this, HistoryActivity.class);
             startActivity(history);
+        } else if (id == R.id.nav_send) {
+            Intent about = new Intent(TempActivity.this, AboutActivity.class);
+            startActivity(about);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
