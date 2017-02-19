@@ -14,8 +14,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.dtech.smartpulsa.Configuration.Config;
-import com.dtech.smartpulsa.Configuration.RequestHandler;
+import com.dtech.smartpulsa.configuration.Config;
+import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.data.DataInbox;
 import com.dtech.smartpulsa.data.TagihanAdapter;

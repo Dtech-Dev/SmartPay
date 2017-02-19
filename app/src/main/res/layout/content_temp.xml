@@ -27,7 +27,11 @@
         android:background="#00ffffff"
         android:id="@+id/tbalance" />
 
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:id="@+id/vsnack"
+        android:background="@color/blueA"/>
 
 
 

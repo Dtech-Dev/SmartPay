@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.dtech.smartpulsa.Configuration.Config;
-import com.dtech.smartpulsa.Configuration.RequestHandler;
+import com.dtech.smartpulsa.configuration.Config;
+import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.custom.CustomDetailVgame;
 import com.dtech.smartpulsa.custom.CustomGridVoucher;

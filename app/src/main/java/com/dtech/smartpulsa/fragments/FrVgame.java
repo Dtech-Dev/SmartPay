@@ -16,13 +16,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.dtech.smartpulsa.Configuration.Config;
-import com.dtech.smartpulsa.Configuration.RequestHandler;
+import com.dtech.smartpulsa.configuration.Config;
+import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.custom.CustomDetailVgame;
 import com.dtech.smartpulsa.custom.CustomGridVoucher;
 import com.dtech.smartpulsa.feature.Transaksi;
-import com.dtech.smartpulsa.feature.VoucherActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
 
 import org.json.JSONArray;

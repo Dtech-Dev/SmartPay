@@ -1,27 +1,14 @@
 package com.dtech.smartpulsa.data;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.dtech.smartpulsa.Configuration.Config;
-import com.dtech.smartpulsa.Configuration.ItemClickListener;
-import com.dtech.smartpulsa.Configuration.RequestHandler;
+import com.dtech.smartpulsa.configuration.ItemClickListener;
 import com.dtech.smartpulsa.R;
-import com.dtech.smartpulsa.fragments.FrTagihan;
-import com.dtech.smartpulsa.fragments.FrTagihanInterface;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by aris on 16/12/16.

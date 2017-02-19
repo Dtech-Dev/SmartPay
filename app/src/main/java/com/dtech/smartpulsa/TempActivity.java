@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -22,8 +23,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.dtech.smartpulsa.Configuration.Config;
-import com.dtech.smartpulsa.Configuration.RequestHandler;
+import com.dtech.smartpulsa.configuration.Config;
+import com.dtech.smartpulsa.configuration.ConnectivityReceiver;
+import com.dtech.smartpulsa.configuration.MyApplication;
+import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.feature.DompetActivity;
 import com.dtech.smartpulsa.feature.InboxActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
@@ -44,7 +47,7 @@ import tourguide.tourguide.ToolTip;
 import tourguide.tourguide.TourGuide;
 
 public class TempActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener, ConnectivityReceiver.ConnectivityReceiverListener{
 
     LayoutInflater layoutInflater ;
     View headerNav;
@@ -82,7 +85,7 @@ public class TempActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        checkConnection();
 
         /*Embeks*/
 
@@ -110,6 +113,31 @@ public class TempActivity extends AppCompatActivity
                 .setToolTip(new ToolTip().setTitle("Menu Navigasi").setDescription("Keterangan dari ikon menu sebelumnya bisa anda liat di sini (membuka Menu Navigasi juga bisa anda lakukan dengan menggeser bagian kiri layar anda ke arah kanan)"))
                 .setOverlay(new Overlay());
 
+    }
+
+    private void checkConnection() {
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        showSnack(isConnected);
+    }
+
+    private void showSnack(boolean isConnected) {
+        String message;
+        int color;
+        if (isConnected) {
+            message = "Koneksi Internet Bagus";
+            color = Color.WHITE;
+        } else {
+            message = "Tidak Ada Koneksi Internet\nFitur-fitur tidak bisa dijalankan";
+            color = Color.YELLOW;
+        }
+
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.vsnack), message, Snackbar.LENGTH_LONG);
+
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
     }
 
     private void initUi() {
@@ -407,5 +435,16 @@ public class TempActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(this);
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        showSnack(isConnected);
+    }
 }

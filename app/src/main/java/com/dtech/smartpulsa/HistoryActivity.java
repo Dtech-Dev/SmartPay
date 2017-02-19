@@ -7,7 +7,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 
-import com.dtech.smartpulsa.Configuration.Config;
+import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.preference.PrefManager;
 
 public class HistoryActivity extends AppCompatActivity implements View.OnClickListener {

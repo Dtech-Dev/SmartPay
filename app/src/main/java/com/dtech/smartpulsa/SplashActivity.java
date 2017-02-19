@@ -1,7 +1,6 @@
 package com.dtech.smartpulsa;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +10,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
-import com.dtech.smartpulsa.Configuration.Config;
+import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.preference.PrefManager;
 import com.race604.drawable.wave.WaveDrawable;
 

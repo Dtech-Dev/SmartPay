@@ -6,7 +6,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 
-import com.dtech.smartpulsa.Configuration.Config;
+import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.R;
 
 public class PoinCatActivity extends AppCompatActivity implements View.OnClickListener {

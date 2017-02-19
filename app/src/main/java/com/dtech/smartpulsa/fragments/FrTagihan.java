@@ -11,8 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,32 +23,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dtech.smartpulsa.Configuration.Config;
-import com.dtech.smartpulsa.Configuration.ItemClickListener;
-import com.dtech.smartpulsa.Configuration.RequestHandler;
+import com.dtech.smartpulsa.configuration.Config;
+import com.dtech.smartpulsa.configuration.ItemClickListener;
+import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
-import com.dtech.smartpulsa.TrfConfirmActivity;
-import com.dtech.smartpulsa.custom.CustomGridTagihan;
 import com.dtech.smartpulsa.custom.CustomGridVoucher;
 import com.dtech.smartpulsa.data.AdapterKota;
 import com.dtech.smartpulsa.data.KotaAdapter;
-import com.dtech.smartpulsa.firedatabase.DatabaseCek;
 import com.dtech.smartpulsa.preference.PrefManager;
 
 import static android.content.Context.MODE_PRIVATE;
-import static android.content.Context.USER_SERVICE;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 

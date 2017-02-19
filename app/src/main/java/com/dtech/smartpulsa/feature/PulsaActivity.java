@@ -1,8 +1,5 @@
 package com.dtech.smartpulsa.feature;
 
-import android.app.Dialog;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,31 +11,15 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.dtech.smartpulsa.Configuration.Config;
-import com.dtech.smartpulsa.Configuration.RequestHandler;
 import com.dtech.smartpulsa.PredictNumber;
 import com.dtech.smartpulsa.R;
-import com.dtech.smartpulsa.fragments.FrMultipleNumber;
 import com.dtech.smartpulsa.fragments.FrSingleNumber;
 import com.dtech.smartpulsa.fragments.FrTagihan;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class PulsaActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
