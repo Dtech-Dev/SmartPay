@@ -15,8 +15,8 @@ android {
         applicationId "com.dtech.smartpulsa"
         minSdkVersion 16
         targetSdkVersion 24
-        versionCode 10
-        versionName "1.10"
+        versionCode 11
+        versionName "1.1.1"
         //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -71,6 +71,7 @@ dependencies {
     compile 'com.mikepenz:google-material-typeface:2.2.0.1@aar'
     compile 'com.mikepenz:fontawesome-typeface:4.6.0.3@aar'
     compile 'com.mikepenz:octicons-typeface:3.0.0.1@aar'
+    compile 'com.mikepenz:material-design-iconic-typeface:+@aar'
     //compile 'com.github.bloder:magic:1.1'//magic button android-arsenal
     compile 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
     compile 'com.github.Hitomis:CircleMenu:v1.0.2'

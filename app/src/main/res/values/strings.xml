@@ -33,4 +33,8 @@
     <string name="text_keterangan">Catatan :\n- Bila sebelumnya anda telah menggunakan Pay Point maka data-data anda masih tersimpan aman dan akan di tampilkan di device ini\n\n- Bila anda pengguna baru Pay Point maka ini adalah satu langkah awal Keamanan dan Kenyamanan anda dalam melakukan transakai dan menikmati fitur-fitur yang kami berikan</string>
     <string name="text_keterangan_2">Nomor anda akan kami gunakan untuk mengirim pemberitahuan tentang:\n- Transaksi pulsa yang gagal,\n- Provider yang mengalami gangguan\n- Promo dan pemberitahuan yang lain</string>
     <string name="desc_tr_first">di halaman ini menu-menu transaksi di wakili oleh icon - icon. Keterangan untuk masing-masing icon bisa anda lihat dengan klik menu tersebut</string>
+    <string name="title_activity_about">About Us</string>
+    <string name="about_store">Jl. Kedung Asem gang 2, No. 10, Rungkut\nSurabaya, Jawa Timur</string>
+    <string name="about_phone">089678382795</string>
+    <string name="about_mail">achmad.aris30@gmail.com</string>
 </resources>
