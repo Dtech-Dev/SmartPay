@@ -148,5 +148,6 @@ public class Config {
     public static final String TAG_REK_TUJ = "rekening";
     public static final String TAG_JML_TRF = "jmlTransfer";
     public static final String TAG_EMAIL_USER = "email";
+
 }
 

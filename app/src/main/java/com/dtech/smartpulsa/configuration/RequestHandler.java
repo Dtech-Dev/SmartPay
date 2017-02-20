@@ -19,7 +19,6 @@ import java.util.Map;
 public class RequestHandler {
     public String sendPostRequest(String requestURL, HashMap<String, String> postDataParams) {
         URL url;
-
         StringBuilder sb = new StringBuilder();
 
         try {

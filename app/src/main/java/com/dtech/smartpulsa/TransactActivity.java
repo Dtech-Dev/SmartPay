@@ -63,7 +63,7 @@ public class TransactActivity extends AppCompatActivity {
         fragment = new TransactFragment();
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentPulsa, fragment);
+        fragmentTransaction.add(R.id.fragmentPulsa, fragment);
         fragmentTransaction.commit();
 
         result = new DrawerBuilder()
