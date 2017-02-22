@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.dtech.smartpulsa.R;
@@ -69,7 +70,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     private void sendNotification(RemoteMessage messageBody) {
         Intent intent;
         String click = messageBody.getNotification().getClickAction();
-        if (click.equals("") || click == null) {
+        if (TextUtils.isEmpty(click)) {
             intent = new Intent(this, TempActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         } else {

@@ -1,6 +1,7 @@
 package com.dtech.smartpulsa;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -61,10 +62,14 @@ public class TransactActivity extends AppCompatActivity {
 
         prefManager = new PrefManager(TransactActivity.this);
         fragment = new TransactFragment();
+        //fragment.setRetainInstance(true);
         fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragmentPulsa, fragment);
-        fragmentTransaction.commit();
+        if (savedInstanceState == null) {
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentPulsa, fragment);
+
+            fragmentTransaction.commit();
+        }
 
         result = new DrawerBuilder()
                 .withActivity(this)
@@ -198,4 +203,8 @@ public class TransactActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
 }

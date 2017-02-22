@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="Fragment"
         android:id="@+id/txtTran"/>-->
-    <fragment
+    <FrameLayout
         android:name="com.dtech.smartpulsa.fragments.TempFragment"
         android:id="@+id/fragmentPulsa"
         android:layout_width="match_parent"
