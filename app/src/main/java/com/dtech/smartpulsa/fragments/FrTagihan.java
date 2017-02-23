@@ -266,7 +266,8 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
     private void backMenuTagihan() {
         laydetailTagihan.setVisibility(View.GONE);
         laymainTagihan.setVisibility(View.VISIBLE);
-        if (!trx.matches("")) {
+        String trxa = edNmrTagihan.getText().toString();
+        if (!trxa.matches("")) {
             edNmrTagihan.setText("");
         }
     }
