@@ -266,6 +266,9 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
     private void backMenuTagihan() {
         laydetailTagihan.setVisibility(View.GONE);
         laymainTagihan.setVisibility(View.VISIBLE);
+        if (!trx.matches("")) {
+            edNmrTagihan.setText("");
+        }
     }
 
     private void bayarTagihan() {
@@ -276,8 +279,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
 
         postCekTagihan();
         txtTagihan.setText("Transaksi sedang di proses\nAnda akan mendapat pemberitahuan jumlah tagihan tersebut");
-
-
+        edNmrTagihan.setText("");
     }
 
     private void postCekTagihan() {
@@ -309,7 +311,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                Toast.makeText(getActivity(), "We'll Processing Your Request", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Processing...", Toast.LENGTH_SHORT).show();
             }
         }
 

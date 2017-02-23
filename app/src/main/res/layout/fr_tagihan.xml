@@ -88,6 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/edNmrTagihan"
             android:layout_centerHorizontal="true"
+            android:textAlignment="center"
             android:layout_marginTop="44dp"
             android:textIsSelectable="true"
             android:id="@+id/txtTagihan" />
