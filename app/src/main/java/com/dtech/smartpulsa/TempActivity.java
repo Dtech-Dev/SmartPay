@@ -31,6 +31,11 @@ import com.dtech.smartpulsa.feature.AboutActivity;
 import com.dtech.smartpulsa.feature.DompetActivity;
 import com.dtech.smartpulsa.feature.InboxActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hitomi.cmlibrary.CircleMenu;
 import com.hitomi.cmlibrary.OnMenuSelectedListener;
 import com.hitomi.cmlibrary.OnMenuStatusChangeListener;
@@ -52,7 +57,7 @@ public class TempActivity extends AppCompatActivity
 
     LayoutInflater layoutInflater ;
     View headerNav;
-    TextView navemail, navusername, tbalance;
+    TextView navemail, navusername, tbalance, tstatus;
     ImageButton imageButton;
     CircularImageView imageAcc;
     /*ImageView imageAcc;*/
@@ -89,8 +94,11 @@ public class TempActivity extends AppCompatActivity
         checkConnection();
 
         /*Embeks*/
+        //FirebaseDatabase database = FirebaseDatabase.getInstance();
 
+        //myRef.child("server").child("status");
         initUi();
+
         if (prefManager.isTempFirstTimeLaunch()) {
             initTour();
         }
@@ -151,6 +159,7 @@ public class TempActivity extends AppCompatActivity
         navemail = (TextView) headerNav.findViewById(R.id.navemail);
         tbalance = (TextView) findViewById(R.id.tbalance);
         imageAcc = (CircularImageView) headerNav.findViewById(R.id.imageViewAcc);
+        tstatus = (TextView) findViewById(R.id.status);
         /*imageAcc = (ImageView) headerNav.findViewById(R.id.imageViewAcc);*/
         //Uri setImgAcc = Uri.parse();
         imguri = (sharedPreferences.getString(Config.DISPLAY_ID, ""));
@@ -302,6 +311,20 @@ public class TempActivity extends AppCompatActivity
                                                      }
                                                  }
         );
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("server").child("status");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String sstatus= String.valueOf(dataSnapshot.getValue());
+                tstatus.setText(sstatus);
+                Log.d("dbase real", sstatus);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 

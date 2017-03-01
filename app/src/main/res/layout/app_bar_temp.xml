@@ -71,6 +71,26 @@
         android:src="@mipmap/ic_dehaze_white_24dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_gravity="top|start"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Status Server:"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:id="@+id/status"
+            android:text="Aktif"/>
+    </LinearLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>

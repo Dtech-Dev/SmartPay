@@ -2,6 +2,7 @@ package com.dtech.smartpulsa;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dtech.smartpulsa.fragments.FrPaket;
@@ -19,6 +21,11 @@ import com.dtech.smartpulsa.fragments.FrVgame;
 import com.dtech.smartpulsa.fragments.TempFragment;
 import com.dtech.smartpulsa.fragments.TransactFragment;
 import com.dtech.smartpulsa.preference.PrefManager;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mikepenz.crossfader.Crossfader;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -71,6 +78,7 @@ public class TransactActivity extends AppCompatActivity {
             fragmentTransaction.commit();
         }
 
+        initUi();
         result = new DrawerBuilder()
                 .withActivity(this)
                 //.withToolbar(toolbar)
@@ -143,6 +151,33 @@ public class TransactActivity extends AppCompatActivity {
             iniTour();
         }
 
+    }
+
+    private void initUi() {
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("server").child("status");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String sstatus= String.valueOf(dataSnapshot.getValue());
+                showSnakck(sstatus);
+                Log.d("dbase real", sstatus);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void showSnakck(String sstatus) {
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.snackstatus), "Server status: "+sstatus, Snackbar.LENGTH_LONG);
+
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        //textView.setTextColor(color);
+        snackbar.show();
     }
 
     private void iniTour() {

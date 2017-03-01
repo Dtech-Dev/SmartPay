@@ -1,5 +1,6 @@
 package com.dtech.smartpulsa.fragments;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,9 +11,11 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,9 +44,10 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
     Transaksi transaksi;
     PrefManager prefManager;
     String json_string, firebaseId, email;
-
+    ImageButton imgDone;
     GridView gridToken;
     EditText edIdPelanggan;
+    InputMethodManager inputMethodManager;
 
     @Nullable
     @Override
@@ -53,7 +57,7 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
         firebaseId = (sharedPreferences.getString(Config.DISPLAY_FIREBASE_ID, ""));
         email = (sharedPreferences).getString(Config.DISPLAY_EMAIL, "");
-
+        inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         initUI();
         getHargaToken();
         return view;
@@ -119,9 +123,21 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
 
     private void initUI() {
         gridToken = (GridView) view.findViewById(R.id.gridToken);
-        //gridToken.setEnabled(false);
         edIdPelanggan = (EditText) view.findViewById(R.id.idPelangganToken);
-        //edIdPelanggan.addTextChangedListener(this);
+        edIdPelanggan.addTextChangedListener(this);
+        imgDone = (ImageButton) view.findViewById(R.id.imgPintoken);
+        imgDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (edIdPelanggan.getText().toString().matches("")) {
+                    Toast.makeText(getActivity(), "Isikan nomor anda terlebih dahulu", Toast.LENGTH_SHORT).show();
+                } else {
+                    inputMethodManager.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                    gridToken.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        //gridToken.setEnabled(false);
     }
 
     @Override
@@ -157,6 +173,8 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
             transaksi.setKode(formatTrx);
             transaksi.execute();
 
+            imgDone.setVisibility(View.INVISIBLE);
+            gridToken.setVisibility(View.INVISIBLE);
             edIdPelanggan.setText("");
         }
 
@@ -164,12 +182,18 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
 
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        gridToken.setEnabled(false);
+        //gridToken.setEnabled(false);
+        if (charSequence.length() >= 5) {
+            imgDone.setVisibility(View.VISIBLE);
+        } else {
+            imgDone.setVisibility(View.INVISIBLE);
+            gridToken.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        gridToken.setEnabled(true);
+        //gridToken.setEnabled(true);
     }
 
     @Override

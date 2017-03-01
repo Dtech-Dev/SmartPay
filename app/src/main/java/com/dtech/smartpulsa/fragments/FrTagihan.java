@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.custom.CustomGridVoucher;
 import com.dtech.smartpulsa.data.AdapterKota;
 import com.dtech.smartpulsa.data.KotaAdapter;
+import com.dtech.smartpulsa.feature.DompetActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -79,6 +81,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
     private FirebaseDatabase mFirebaseInstance;
     FirebaseAuth firebaseAuth;
     FirebaseUser userF;
+    Dialog dialogtagihan;
 
     ProgressDialog loading;
 
@@ -199,10 +202,33 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
 
 
     public void updateUi(String jnsTagihan) {
-        laymainTagihan.setVisibility(View.GONE);
-        laydetailTagihan.setVisibility(View.VISIBLE);
+        /*laymainTagihan.setVisibility(View.GONE);
+        laydetailTagihan.setVisibility(View.VISIBLE);*/
 
-        txtjnsTagihan.setText("Masukkan Id pelanggan "+jnsTagihan+" anda");
+        //txtjnsTagihan.setText("Masukkan Id pelanggan "+jnsTagihan+" anda");
+
+        dialogtagihan = new Dialog(getActivity());
+        dialogtagihan.setContentView(R.layout.custom_dialog_paket);
+        dialogtagihan.setTitle("Konfirmasi");
+
+        TextView ketPaket = (TextView) dialogtagihan.findViewById(R.id.ketPaket);
+        ketPaket.setText("Masukkan Id pelanggan "+jnsTagihan+" anda");
+        Button btagihdialog = (Button) dialogtagihan.findViewById(R.id.btnProsesPaket);
+        btagihdialog.setText("Cek Tagihan");
+        final EditText edNomorTagih = (EditText) dialogtagihan.findViewById(R.id.edNomorPaket);
+        edNomorTagih.setInputType(InputType.TYPE_CLASS_TEXT);
+        btagihdialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                trx = edNomorTagih.getText().toString();
+                if (trx.matches("")) {
+                    edNomorTagih.setHint("Mohon isi nomor tagihan anda");
+                } else {
+                    postCekTagihan();
+                }
+            }
+        });
+        dialogtagihan.show();
     }
 
     private void initUI() {
@@ -234,7 +260,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
         switch (v.getId()) {
             case R.id.btnCek:
                 //prgBar.setVisibility(View.VISIBLE);
-                trx = edNmrTagihan.getText().toString();
+                //trx = edNmrTagihan.getText().toString();
                 if (trx.matches("")) {
                     final AlertDialog alertDialog;
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -287,7 +313,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
 
         final String formatTrx = jnsTagihan+" "+trx+" cek 3003";
         class InsCekTagihan extends AsyncTask<Void, Void, String> {
-
+            ProgressDialog loading;
             @Override
             protected String doInBackground(Void... params) {
                 HashMap<String, String> paramsCekTagihan = new HashMap<>();
@@ -307,12 +333,15 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                loading = ProgressDialog.show(getActivity(),"Loading...","Wait...",false,false);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 Toast.makeText(getActivity(), "Processing...", Toast.LENGTH_SHORT).show();
+                loading.dismiss();
+                dialogtagihan.dismiss();
             }
         }
 
