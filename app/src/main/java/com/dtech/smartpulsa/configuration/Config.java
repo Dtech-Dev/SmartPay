@@ -149,5 +149,20 @@ public class Config {
     public static final String TAG_JML_TRF = "jmlTransfer";
     public static final String TAG_EMAIL_USER = "email";
 
+    /*url and json data for history*/
+    public static final String URL_HIST_TRX_NEW = "http://samimi.web.id/dev/hist-tr-new.php?id=";
+    public static final String ARRAY_HIST_DETAIL = "detail";
+    public static final String ARRAY_HIST_DETAIL_PULSA = "pulsa";
+    public static final String ARRAY_HIST_DETAIL_TOKEN = "token";
+    public static final String ARRAY_HIST_DETAIL_TAGIHAN = "tagihan";
+    public static final String ARRAY_HIST_DETAIL_VOUCHER = "voucher";
+    public static final String HIST_DATA_LASTDATESALDO = "last_date_saldo";
+    public static final String HIST_DATA_LASTSALDO = "last_saldo";
+    public static final String HIST_DATA_CURRENTSALDO = "current_saldo";
+    public static final String HIST_DATA_TOTALTRX = "total_trx";
+    public static final String HIST_DATA_TOTALPULSA = "total_pulsa";
+    public static final String HIST_DATA_TOTALTAGIHAN = "total_tagihan";
+    public static final String HIST_DATA_TOTALTOKEN = "total_token";
+    public static final String HIST_DATA_TOTALVOUCHER = "total_voucher";
 }
 

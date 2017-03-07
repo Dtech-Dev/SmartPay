@@ -38,4 +38,6 @@
     <string name="about_phone">089678382795</string>
     <string name="about_mail">achmad.aris30@gmail.com</string>
     <string name="text_add_saldo">Penambahan saldo lewat Transfer akan di proses dari pukul 04.00 sampai dengan pukul 22.00 wib, jika transfer yang melewati pukul 22.00 wib, akan diproses keesokan harinya.\n\nPenambahan saldo minimal Rp. 20.000\n\nSetelah anda melakukan Transfer ke salah satu nomor rekening yang tertera di bawah, silahkan melakukan KONFIRMASI dengan klik tombol \"Confirm\" </string>
+    <string name="tket1">Terakhir Dompet Di isi</string>
+    <string name="tket2">Isi Dompet Saat ini</string>
 </resources>
