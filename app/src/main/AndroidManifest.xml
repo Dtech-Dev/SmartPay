@@ -134,7 +134,7 @@
                 android:value="com.dtech.smartpulsa.TempActivity" />
         </activity>
         <activity
-            android:name=".feature.PaketDataActivity"
+            android:name=".feature.DetailHistActivity"
             android:label="@string/title_activity_paket_data"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

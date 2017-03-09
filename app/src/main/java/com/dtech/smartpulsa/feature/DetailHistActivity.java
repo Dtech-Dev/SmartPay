@@ -14,6 +14,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.configuration.RequestHandler;
@@ -21,6 +22,7 @@ import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.custom.CustomGridVoucher;
 import com.dtech.smartpulsa.data.AdapterPaket;
 import com.dtech.smartpulsa.data.DataPaket;
+import com.dtech.smartpulsa.data.DataPul;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class PaketDataActivity extends AppCompatActivity implements View.OnClickListener {
+public class DetailHistActivity extends AppCompatActivity implements View.OnClickListener {
 
     GridView gridPaket;
     RelativeLayout layMain, layDetail;
@@ -79,6 +81,9 @@ public class PaketDataActivity extends AppCompatActivity implements View.OnClick
     };
     private String json_string;
 
+    List<DataPul> datapulsa;
+    private TextView titlehist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,22 +91,21 @@ public class PaketDataActivity extends AppCompatActivity implements View.OnClick
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*initUi();
+        initUi();
 
-        gridPaket.setAdapter(new CustomGridVoucher(this, gridStringPaket, gridImagePaket, gridImageTagPaket, grididpaket));
-        gridPaket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ImageView imageView = (ImageView) view.findViewById(R.id.gridvocher_image);
-                String tag = (String) imageView.getTag();
-                TextView textView = (TextView) view.findViewById(R.id.gridvoucher_text);
-                String jenisPaket = textView.getText().toString();
-                TextView textView1 = (TextView) view.findViewById(R.id.txtid);
-                String idItem = textView1.getText().toString();
+        //Bundle bundle = getIntent().getBundleExtra("extra");
+        String title = getIntent().getStringExtra("title");
 
-                updateUi(idItem, tag, jenisPaket);
+        if (title.matches("pulsa")) {
+            titlehist.setText(title);
+            /*datapulsa = (List<DataPul>) bundle.getSerializable("ob");
+            StringBuilder builder = new StringBuilder();
+            for (int a =0 ;a < datapulsa.size(); a++) {
+                builder.append(datapulsa.get(a) + "\n");
             }
-        });*/
+            Toast.makeText(DetailHistActivity.this, builder+"\n"+datapulsa.size(), Toast.LENGTH_LONG).show();*/
+        }
+
 
     }
 
@@ -120,7 +124,7 @@ public class PaketDataActivity extends AppCompatActivity implements View.OnClick
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(PaketDataActivity.this, "Loading...", "Please wait", false, false);
+                loading = ProgressDialog.show(DetailHistActivity.this, "Loading...", "Please wait", false, false);
             }
 
             @Override
@@ -171,22 +175,14 @@ public class PaketDataActivity extends AppCompatActivity implements View.OnClick
             e.printStackTrace();
         }
 
-        madapter = new AdapterPaket(PaketDataActivity.this, data);
+        madapter = new AdapterPaket(DetailHistActivity.this, data);
         recyclerPaket.setAdapter(madapter);
-        recyclerPaket.setLayoutManager(new LinearLayoutManager(PaketDataActivity.this));
+        recyclerPaket.setLayoutManager(new LinearLayoutManager(DetailHistActivity.this));
     }*/
 
-    /*private void initUi() {
-        gridPaket = (GridView) findViewById(R.id.gridpaket);
-        //gridPaketDetail = (GridView) findViewById(R.id.gridpaketdetail);
-        recyclerPaket = (RecyclerView) findViewById(R.id.recyclerpaket);
-        layMain = (RelativeLayout) findViewById(R.id.layMainPaket);
-        layDetail = (RelativeLayout) findViewById(R.id.layDetailPaket);
-        txtjnspaket = (TextView) findViewById(R.id.txtJnsPaket);
-        imgjnspaket = (ImageView) findViewById(R.id.imageJnsPaket);
-        btnmainpaket = (Button) findViewById(R.id.btnMainPaket);
-        btnmainpaket.setOnClickListener(this);
-    }*/
+    private void initUi() {
+        titlehist = (TextView) findViewById(R.id.titlehist);
+    }
 
     @Override
     public void onClick(View view) {

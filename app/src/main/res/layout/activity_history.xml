@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_history"
-    android:background="@color/White"
+
     android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -233,6 +233,17 @@
                             android:layout_toRightOf="@+id/tket3"
                             android:textSize="18sp"
                             android:id="@+id/tTotaltrxPulsa"/>
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Detail"
+                            android:id="@+id/btndetailpulsa"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:textColor="@color/CadetBlue"
+                            android:textStyle="bold"/>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -273,6 +284,17 @@
                             android:layout_toRightOf="@+id/tket4"
                             android:textSize="18sp"
                             android:id="@+id/tTotaltrxToken"/>
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Detail"
+                            android:id="@+id/btndetailtoken"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:textColor="@color/CadetBlue"
+                            android:textStyle="bold"/>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -313,6 +335,17 @@
                             android:layout_toRightOf="@+id/tket5"
                             android:textSize="18sp"
                             android:id="@+id/tTotaltrxTagihan"/>
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Detail"
+                            android:id="@+id/btndetailtagihan"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:textColor="@color/CadetBlue"
+                            android:textStyle="bold"/>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -353,6 +386,17 @@
                             android:layout_toRightOf="@+id/tket6"
                             android:textSize="18sp"
                             android:id="@+id/tTotaltrxVoucher"/>
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Detail"
+                            android:id="@+id/btndetailvoucher"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:textColor="@color/CadetBlue"
+                            android:textStyle="bold"/>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"

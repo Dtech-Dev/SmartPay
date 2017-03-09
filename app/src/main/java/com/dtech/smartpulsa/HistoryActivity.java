@@ -1,6 +1,7 @@
 package com.dtech.smartpulsa;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.data.DataPaket;
+import com.dtech.smartpulsa.data.DataPul;
+import com.dtech.smartpulsa.data.DataTa;
+import com.dtech.smartpulsa.data.DataTo;
+import com.dtech.smartpulsa.data.DataVo;
+import com.dtech.smartpulsa.feature.DetailHistActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -36,6 +42,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,22 +61,28 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     PieChart mChart;
     //private int[] yData ;
     private String[] xData = { "Pulsa", "Token", "Tagihan", "Voucher"};
-
+    int a = 0;//referensi jumlah data pulsa awal
+    int b = 0;//referensi jumlah data token awal
+    int c = 0;//referensi jumlah data tagihan awal
+    int d = 0;//referensi jumlah data voucher awal
     /*json variables*/
-    String[] dateP, kodeP, hargaP, nomorP, dateTo, kodeTo, hargaTo, nomorTo, dateTa, jnsTa, jmlTa, nomorTa,
-            dateVo, kodeVo, hargaVo, nomorVo;
+    List<DataPul> datapul = new ArrayList<>();
+    List<DataTo> datato = new ArrayList<>();
+    List<DataTa> datata = new ArrayList<>();
+    List<DataVo> datavo = new ArrayList<>();
     String lastdatesaldo, lastsaldo, currentsaldo, totaltrx, totalpulsa, totaltoken, totaltagihan, totalvoucher,
             jmltrx, jmlpulsa, jmltoken, jmltagihan, jmlvoucher;
     TextView tlastdatesaldo, tcurrentsaldo, ttotaltransaksi, totalspend, ttotaltrxpulsa, ttotaltrxtoken,
             ttotaltrxtagihan, ttotaltrxvoucher, tdetailpulsa, tdetailtoken, tdetailtagihan, tdetailvoucher;
-    RelativeLayout reldetailpulsa, reldetailtoken, reldetailtagihan, reldetailvoucher;
+
+    Button btndetailpulsa;
     //String[] kodeP;
 
     ProgressDialog loading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history);
+        setContentView(R.layout.a_activity_history);
 
         initUi();
         getDataHist();
@@ -130,12 +143,16 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
             JSONArray voucher = detaildata.getJSONArray(Config.ARRAY_HIST_DETAIL_VOUCHER);
             jmlpulsa = (pulsa.length()==0)?"0":Integer.toString(pulsa.length());
             ttotaltrxpulsa.setText("("+jmlpulsa+" transaksi)");
+            a = pulsa.length();
             jmltoken = (token.length()==0)?"0": Integer.toString(token.length());
             ttotaltrxtoken.setText("("+jmltoken+" transaksi)");
+            b = token.length();
             jmltagihan = (tagihan.length()==0)?"0":Integer.toString(tagihan.length());
             ttotaltrxtagihan.setText("("+jmltagihan+" transksi)");
+            c = tagihan.length();
             jmlvoucher = (voucher.length()==0)?"0": Integer.toString(voucher.length());
             ttotaltrxvoucher.setText("("+jmlvoucher+" transaksi)");
+            d = voucher.length();
 
             float[] yData = {Float.parseFloat(jmlpulsa), Float.parseFloat(jmltoken), Float.parseFloat(jmltagihan), Float.parseFloat(jmlvoucher)};
             ArrayList<PieEntry> yVals1 = new ArrayList<PieEntry>();
@@ -153,86 +170,56 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
             for (int c : ColorTemplate.MATERIAL_COLORS)
                 colors.add(c);
 
-            /*for (int c : ColorTemplate.PASTEL_COLORS)
-                colors.add(c);
-
-            for (int c : ColorTemplate.COLORFUL_COLORS)
-                colors.add(c);
-
-            for (int c : ColorTemplate.JOYFUL_COLORS)
-                colors.add(c);*/
-
-
-            //colors.add(ColorTemplate.getHoloBlue());
             set.setColors(colors);
             PieData datax = new PieData(set);
             mChart.setData(datax);
             mChart.invalidate();
-            //jmlpulsa.contains("0") ? "no history" : jmlpulsa;
-            /*if (jmlpulsa.contains("0")) {
-                ttotaltrxpulsa.setText("(tidak ada histori transaki");
-            } else {
-                ttotaltrxpulsa.setText("("+jmlpulsa+")");
-            }*/
+
             jmltrx = Integer.toString(pulsa.length() + token.length() + tagihan.length() + voucher.length());
             ttotaltransaksi.setText(jmltrx);
 
-            dateP = new String[pulsa.length()];
-            kodeP = new String[pulsa.length()];
-            hargaP = new String[pulsa.length()];
-            nomorP = new String[pulsa.length()];
-            dateTo = new String[token.length()];
-            kodeTo = new String[token.length()];
-            hargaTo = new String[token.length()];
-            nomorTo = new String[token.length()];
-            dateTa = new String[tagihan.length()];
-            jnsTa = new String[tagihan.length()];
-            jmlTa = new String[tagihan.length()];
-            nomorTa = new String[tagihan.length()];
             for (int i = 0; i<pulsa.length(); i++) {
-                JSONObject datapulsa = pulsa.getJSONObject(i);
-                //DataPaket dataPaket = new DataPaket();
-                //dataPaket.kode = datapulsa.getString("kode");
-                //JSONObject jo = datapulsa.getJSONObject();
-                dateP[i] = datapulsa.getString("date");
-                kodeP[i] = datapulsa.getString("kode");
-                hargaP[i] = datapulsa.getString("harga");
-                nomorP[i] = datapulsa.getString("nomor_tujuan");
-                //kodepulsa.add(dataPaket);
+                JSONObject jopulsa = pulsa.getJSONObject(i);
+                DataPul datapulsa = new DataPul();
+                datapulsa.dateP = jopulsa.getString("date");
+                datapulsa.kodeP = jopulsa.getString("kode");
+                datapulsa.hargaP = jopulsa.getString("harga");
+                datapulsa.nomorP = jopulsa.getString("nomor_tujuan");
+                datapul.add(datapulsa);
+
             }
             /*jsaon array token*/
-
-
-
             for (int j = 0; j < token.length(); j++) {
-                JSONObject datatoken = token.getJSONObject(j);
-                //DataPaket dataPaket = new DataPaket();
-                //dataPaket.kode = datapulsa.getString("kode");
-                //JSONObject jo = datapulsa.getJSONObject();
-                dateTo[j] = datatoken.getString("date");
-                kodeTo[j] = datatoken.getString("kode");
-                hargaTo[j] = datatoken.getString("harga");
-                nomorTo[j] = datatoken.getString("nomor_tujuan");
-                //kodepulsa.add(dataPaket);
+                JSONObject jotoken = token.getJSONObject(j);
+                DataTo datatoken = new DataTo();
+                datatoken.dateTo = jotoken.getString("date");
+                datatoken.kodeTo = jotoken.getString("kode");
+                datatoken.hargaTo = jotoken.getString("harga");
+                datatoken.nomorTo= jotoken.getString("nomor_tujuan");
+                datato.add(datatoken);
+
             }
-            /*jsaon array tagihan*/
-
-
-
+            /*json array tagihan*/
             for (int k = 0; k < tagihan.length(); k++) {
-                JSONObject datatagih = tagihan.getJSONObject(k);
-                //DataPaket dataPaket = new DataPaket();
-                //dataPaket.kode = datapulsa.getString("kode");
-                //JSONObject jo = datapulsa.getJSONObject();
-                /*dateTa[k] = datatagih.getString("date");
-                kodeTa[k] = datatagih.getString("kode");
-                hargaTa[k] = datatagih.getString("harga");
-                nomorTo[k] = datatagih.getString("nomor_tujuan");*/
-                //kodepulsa.add(dataPaket);
+                JSONObject jotagih = tagihan.getJSONObject(k);
+                DataTa datatagihan = new DataTa();
+                datatagihan.dateTa = jotagih.getString("date");
+                datatagihan.jnsTa = jotagih.getString("jenis_tagihan");
+                datatagihan.jmlTa = jotagih.getString("jumlah_tagihan");
+                datatagihan.nomorTa= jotagih.getString("nomor_tujuan");
+                datata.add(datatagihan);
             }
-            /*jsaon array tagihan*/
+            /*jsaon array Voucher*/
+            for (int j = 0; j < voucher.length(); j++) {
+                JSONObject jovoucher = voucher.getJSONObject(j);
+                DataVo datavoucher = new DataVo();
+                datavoucher.dateVo = jovoucher.getString("date");
+                datavoucher.kodeVo = jovoucher.getString("kode");
+                datavoucher.hargaVo = jovoucher.getString("harga");
+                datavoucher.nomorVo= jovoucher.getString("nomor_tujuan");
+                datavo.add(datavoucher);
 
-
+            }
             //Log.d(TAG, "showJSON: "+kodepulsa);
             /*StringBuilder builder = new StringBuilder();
             for (int a =0 ;a < kodeTo.length; a++) {
@@ -272,10 +259,9 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         tdetailtagihan = (TextView) findViewById(R.id.tdetailtagihan);
         tdetailvoucher = (TextView) findViewById(R.id.tdetailvoucher);
 
-        reldetailpulsa = (RelativeLayout) findViewById(R.id.reldetailPulsa);
-        reldetailtoken = (RelativeLayout) findViewById(R.id.reldetailtoken);
-        reldetailtagihan = (RelativeLayout) findViewById(R.id.reldetailtagihan);
-        reldetailvoucher = (RelativeLayout) findViewById(R.id.reldetailvoucher);
+        btndetailpulsa = (Button) findViewById(R.id.btndetailpulsa);
+
+        btndetailpulsa.setOnClickListener(this);
         mChart = (PieChart) findViewById(R.id.piechart);
         //mChart.setDescription(new Description().setText("Analisa Transaksi"));
 
@@ -295,8 +281,26 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.bhistTagih:
                 showHistTagih();
                 break;
+            case R.id.btndetailpulsa:
+                if (a == 0) {
+                    Toast.makeText(HistoryActivity.this, "Tidak Ada Transaksi", Toast.LENGTH_SHORT).show();
+                } else {
+                    showDetail();
+                }
         }
 
+    }
+
+    private void showDetail() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("ob", (Serializable) datapul);
+        //bundle.putStringArrayList("ob", datapul);
+        //bundle.putString("title", "pulsa");
+        Intent detailhist = new Intent(HistoryActivity.this, DetailHistActivity.class);
+        //detailhist.putExtra("extra", bundle);
+        detailhist.putExtra("title", "pulsa");
+
+        startActivity(detailhist);
     }
 
     private void showHistTagih() {
