@@ -93,7 +93,7 @@ public class VoucherActivity extends AppCompatActivity implements View.OnClickLi
         initUi();
         gridVoucher.setAdapter(new CustomGridVoucher(this, gridStringsVoucher, gridImageVouchers, gridImageTag, grididVoucher));
 
-        gridVoucher.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       /* gridVoucher.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ImageView imageView = (ImageView) view.findViewById(R.id.gridvocher_image);
@@ -105,10 +105,10 @@ public class VoucherActivity extends AppCompatActivity implements View.OnClickLi
 
                 updateUi(idItem, tag, jenisVoucher);
             }
-        });
+        });*/
     }
 
-    private void updateUi(final String jenisVoucher, String tag, String keterangan) {
+    /*private void updateUi(final String jenisVoucher, String tag, String keterangan) {
         layoutVoucher.setVisibility(View.GONE);
         layoutDetailVoucher.setVisibility(View.VISIBLE);
 
@@ -187,31 +187,27 @@ public class VoucherActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
-    }
+    }*/
 
     private void initUi() {
-        gridVoucher = (GridView) findViewById(R.id.gridvoucher);
+        /*gridVoucher = (GridView) findViewById(R.id.gridvoucher);
         gridVoucherDetail = (GridView) findViewById(R.id.gridvoucherdetail);
         txtjnsvoucher = (TextView) findViewById(R.id.txtJnsVoucher);
         imgJenisVoucher = (ImageView) findViewById(R.id.imageJnsVoucher);
         layoutVoucher = (RelativeLayout) findViewById(R.id.layVoucher);
         layoutDetailVoucher = (RelativeLayout) findViewById(R.id.layVoucherDetail);
         mainMenuVoucher = (Button) findViewById(R.id.btnMainVoucher);
-        mainMenuVoucher.setOnClickListener(this);
-        /*layoutVoucher.setVisibility(View.VISIBLE);
-        layoutDetailVoucher.setVisibility(View.GONE);*/
+        mainMenuVoucher.setOnClickListener(this);*/
+
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btnMainVoucher:
-                showMainMenuVoucher();
-        }
+
     }
 
     private void showMainMenuVoucher() {
-        layoutDetailVoucher.setVisibility(View.GONE);
-        layoutVoucher.setVisibility(View.VISIBLE);
+        /*layoutDetailVoucher.setVisibility(View.GONE);
+        layoutVoucher.setVisibility(View.VISIBLE);*/
     }
 }

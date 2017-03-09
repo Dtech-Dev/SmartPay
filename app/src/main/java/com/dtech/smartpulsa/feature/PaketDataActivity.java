@@ -86,7 +86,7 @@ public class PaketDataActivity extends AppCompatActivity implements View.OnClick
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        initUi();
+        /*initUi();
 
         gridPaket.setAdapter(new CustomGridVoucher(this, gridStringPaket, gridImagePaket, gridImageTagPaket, grididpaket));
         gridPaket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -101,11 +101,11 @@ public class PaketDataActivity extends AppCompatActivity implements View.OnClick
 
                 updateUi(idItem, tag, jenisPaket);
             }
-        });
+        });*/
 
     }
 
-    private void updateUi(final String idItem, String tag, String jenisPaket) {
+    /*private void updateUi(final String idItem, String tag, String jenisPaket) {
         layMain.setVisibility(View.GONE);
         layDetail.setVisibility(View.VISIBLE);
 
@@ -148,9 +148,9 @@ public class PaketDataActivity extends AppCompatActivity implements View.OnClick
 
         DetailPaket detailPaket = new DetailPaket();
         detailPaket.execute();
-    }
+    }*/
 
-    private void showHargaPaket() {
+    /*private void showHargaPaket() {
 
         JSONObject jsonObject = null;
         List<DataPaket> data = new ArrayList<>();
@@ -174,9 +174,9 @@ public class PaketDataActivity extends AppCompatActivity implements View.OnClick
         madapter = new AdapterPaket(PaketDataActivity.this, data);
         recyclerPaket.setAdapter(madapter);
         recyclerPaket.setLayoutManager(new LinearLayoutManager(PaketDataActivity.this));
-    }
+    }*/
 
-    private void initUi() {
+    /*private void initUi() {
         gridPaket = (GridView) findViewById(R.id.gridpaket);
         //gridPaketDetail = (GridView) findViewById(R.id.gridpaketdetail);
         recyclerPaket = (RecyclerView) findViewById(R.id.recyclerpaket);
@@ -186,19 +186,19 @@ public class PaketDataActivity extends AppCompatActivity implements View.OnClick
         imgjnspaket = (ImageView) findViewById(R.id.imageJnsPaket);
         btnmainpaket = (Button) findViewById(R.id.btnMainPaket);
         btnmainpaket.setOnClickListener(this);
-    }
+    }*/
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
+        /*switch (view.getId()) {
             case R.id.btnMainPaket:
                 backToMainPaket();
-        }
+        }*/
     }
 
     private void backToMainPaket() {
 
-        layMain.setVisibility(View.VISIBLE);
-        layDetail.setVisibility(View.GONE);
+        /*layMain.setVisibility(View.VISIBLE);
+        layDetail.setVisibility(View.GONE);*/
     }
 }

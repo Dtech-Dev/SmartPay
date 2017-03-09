@@ -63,37 +63,32 @@ public class PulsaActivity extends AppCompatActivity implements View.OnClickList
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setFragment();
+        //setFragment();
 
 
 
 
     }
 
-    public void setFragment() {
+    /*public void setFragment() {
         extras=getIntent().getExtras();
         if (extras!=null) {
             selfIntent = extras.getString("transaksi");
-            //Toast.makeText(this, selfIntent, Toast.LENGTH_LONG).show();
+
             if (selfIntent.equals("isi pulsa") ) {
-                //tuserNumber.setText("Self");
-                //UISelfNumber();
+
                 fragment = new FrSingleNumber();
             } else if (selfIntent.equals("cek")) {
                 fragment = new FrTagihan();
             }
-            /*else {
 
-                fragment = new FrMultipleNumber();
-
-            }*/
         }
 
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentPulsa, fragment);
         fragmentTransaction.commit();
-    }
+    }*/
 
     private void UIOtherNumber() {
         findViewById(R.id.otherLayout).setVisibility(View.VISIBLE);

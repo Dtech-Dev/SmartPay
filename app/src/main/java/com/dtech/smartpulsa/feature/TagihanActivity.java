@@ -65,7 +65,7 @@ public class TagihanActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        gridView = (GridView) findViewById(R.id.grid);
+        /*gridView = (GridView) findViewById(R.id.grid);
         gridView.setAdapter(new CustomGridTagihan(this, gridViewStrings, gridViewImages));
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -100,16 +100,13 @@ public class TagihanActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        //Intent intentBayar = new Intent(TagihanActivity.this, InboxActivity.class);
-                        //intentBayar.putExtra("jenis", data);
-                        //startActivity(intentBayar);
                         dialogTagihan.dismiss();
                     }
                 });
                 dialogTagihan.setView(promptView);
                 dialogTagihan.show();
             }
-        });
+        });*/
 
     }
 

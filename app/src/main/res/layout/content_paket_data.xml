@@ -7,14 +7,13 @@
     android:layout_height="match_parent"
 
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.dtech.smartpulsa.feature.PaketDataActivity"
-    tools:showIn="@layout/activity_paket_data">
+    >
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="5dp"
         android:id="@+id/toolbarPaket">
 
         <android.support.v7.widget.Toolbar

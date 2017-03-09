@@ -157,7 +157,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".feature.TukarActivity" />
         <activity android:name=".feature.PoinCatActivity" />
         <activity
             android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
