@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,9 @@ import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.custom.CustomGridToken;
 import com.dtech.smartpulsa.feature.Transaksi;
 import com.dtech.smartpulsa.preference.PrefManager;
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,7 +59,7 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
 
     String trProvider;
     String trNominal;
-    String transaksiKode;
+    String transaksiKode, numToPred;
 
     String kodeProvider, provider;
     String formatTrx;
@@ -104,8 +108,65 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
                     /*getActivity().getWindow().setSoftInputMode(
                             WindowManager.LayoutParams.HI
                     );*/
+                    String natio = "";
+                    String numberisi = edOtherNumber.getText().toString();
                     imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+
+                    if (Character.toString(numberisi.charAt(0)).matches("0") && numberisi.contains("-")) {
+
+                        numToPred = numberisi.replaceAll("-", "");;
+                    } else if (numberisi.contains("+")) {
+                        // phone must begin with '+'
+                        try {
+                            PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+                            Phonenumber.PhoneNumber numberProto = null;
+                            numberProto = phoneUtil.parse(numberisi, "");
+                            int countryCode = numberProto.getCountryCode();
+                            long nationalNumber = numberProto.getNationalNumber();
+                            //natio =  Long.toString(nationalNumber);
+                            natio = ""+nationalNumber;
+                            Log.i("code", "code " + countryCode);
+                            Log.i("code", "national number " + numToPred);
+
+                            numToPred = "0" + natio;
+
+                        } catch (NumberParseException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        numToPred = numberisi;
+                    }
+
+                    predictNumber.readProvider(numToPred);
+                    provider = predictNumber.getTypeNumber();
+                    kodeProvider = predictNumber.getKodeTransaksi();
+                    setTrProvider(predictNumber.getKodeTransaksi());
+
+                    if (provider.equals("Unknown")) {
+                        final Dialog dialog = new Dialog(getActivity());
+                        dialog.setContentView(R.layout.dialog_provider);
+                        dialog.setCancelable(false);
+                        dialog.setTitle("Oopss");
+                        TextView txtError = (TextView) dialog.findViewById(R.id.textProviderNull);
+                        txtError.setText("Nomor Tidak Dikenali");
+
+                        Button btnError = (Button) dialog.findViewById(R.id.btnProviderNull);
+                        btnError.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                edOtherNumber.setText("");
+                            }
+                        });
+
+                        dialog.show();
+                        gridView.setVisibility(View.INVISIBLE);
+                        totherNumber.setText("Provider : ");
+                    } else {
+                        totherNumber.setText("Provider : "+provider+" ("+trProvider+")");
+                    }
                     queryKodeProvider(kodeProvider);
+
                 }
 
             }
@@ -163,50 +224,16 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
         gridView.setAdapter(null);
         if (s.length() >= 6) {
 
-            
-            /*String prepredict = s.toString();
-            if (prepredict.contains("-")) {
-                prepredict.replaceAll("-", "");
-                edOtherNumber.setText(prepredict);
-            }*/
-            //String numberToRead = s.toString().substring(0, 6);
-            //String numberToPredict = numberToRead
-            predictNumber.readProvider(s.toString());
-            //predictNumber.readNumber(numberToRead);
-            provider = predictNumber.getTypeNumber();
-            kodeProvider = predictNumber.getKodeTransaksi();
-            setTrProvider(predictNumber.getKodeTransaksi());
-
-            if (provider.equals("Unknown")) {
-                final Dialog dialog = new Dialog(getActivity());
-                dialog.setContentView(R.layout.dialog_provider);
-                dialog.setCancelable(false);
-                dialog.setTitle("Oopss");
-                TextView txtError = (TextView) dialog.findViewById(R.id.textProviderNull);
-                txtError.setText("Nomor Tidak Dikenali");
-
-                Button btnError = (Button) dialog.findViewById(R.id.btnProviderNull);
-                btnError.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                        edOtherNumber.setText("");
-                    }
-                });
-
-                dialog.show();
-                gridView.setVisibility(View.INVISIBLE);
-                totherNumber.setText("Provider : ");
-            } else {
-                totherNumber.setText("Provider : "+provider+" ("+trProvider+")");
-            }
-
             if (s.length() >= 10) {
                 imgPin.setVisibility(View.VISIBLE);
             } else {
                 imgPin.setVisibility(View.INVISIBLE);
             }
 
+        }
+
+        if (s.length() <= 4) {
+            totherNumber.setText("Provider : ");
         }
     }
 
@@ -278,8 +305,8 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
         String kodeTnsk = nominalTemp.replace(".000", "");
         setTrNominal(kodeTnsk);
 
-        String nomorTuj = edOtherNumber.getText().toString();
-        if (nomorTuj.length() < 6 || nomorTuj.matches("")) {
+        String nomorTuj = numToPred;
+        if (nomorTuj.length() < 9 || nomorTuj.matches("")) {
             Toast.makeText(getActivity(), "Cek nomor tujuan anda", Toast.LENGTH_SHORT).show();
             edOtherNumber.requestFocus();
         }

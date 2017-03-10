@@ -8,44 +8,6 @@
     android:background="@drawable/bgd"
     tools:context="com.dtech.smartpulsa.TempActivity">
 
-    <!--<android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:theme="@style/AppTheme.NoActionBar.PopupOverlay">
-
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#00ffffff"
-            app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Smart Pay"
-                    android:textSize="30sp"
-                    android:layout_marginTop="10dp"/>
-                <ImageButton
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/ic_wallet"
-                    android:id="@+id/icWallet"/>
-            </RelativeLayout>
-
-        </android.support.v7.widget.Toolbar>
-
-
-    </android.support.design.widget.AppBarLayout>-->
-
     <include layout="@layout/content_temp" />
 
     <com.hitomi.cmlibrary.CircleMenu
@@ -53,14 +15,6 @@
         android:layout_width="260dp"
         android:layout_height="260dp"
         android:layout_gravity="center" />
-
-    <!--<android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />-->
 
     <ImageButton
         android:layout_width="30dp"
@@ -105,5 +59,10 @@
             android:text="Aktif"/>
     </LinearLayout>
 
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:id="@+id/vsnack"
+        android:background="@color/blueA"
+        android:layout_gravity="bottom"/>
 </android.support.design.widget.CoordinatorLayout>

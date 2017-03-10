@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -24,6 +25,9 @@ import com.dtech.smartpulsa.custom.CustomGridVoucher;
 import com.dtech.smartpulsa.data.AdapterPaket;
 import com.dtech.smartpulsa.data.DataPaket;
 import com.dtech.smartpulsa.data.DataPul;
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,18 +64,7 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
 
         initUi();
 
-        //Bundle bundle = getIntent().getBundleExtra("extra");
-        String title = getIntent().getStringExtra("title");
 
-        if (title.matches("pulsa")) {
-            titlehist.setText(title);
-            /*datapulsa = (List<DataPul>) bundle.getSerializable("ob");
-            StringBuilder builder = new StringBuilder();
-            for (int a =0 ;a < datapulsa.size(); a++) {
-                builder.append(datapulsa.get(a) + "\n");
-            }
-            Toast.makeText(DetailHistActivity.this, builder+"\n"+datapulsa.size(), Toast.LENGTH_LONG).show();*/
-        }
 
 
     }
@@ -89,13 +82,25 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bb:
-                backToMainPaket();
+                String no = eded.getText().toString();
+                backToMainPaket(no);
+
         }
     }
 
-    private void backToMainPaket() {
-        String no = eded.getText().toString();
-        
+    private void backToMainPaket(String no) {
+
+        try {
+            // phone must begin with '+'
+            PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+            Phonenumber.PhoneNumber numberProto = phoneUtil.parse(no, "");
+            int countryCode = numberProto.getCountryCode();
+            long nationalNumber = numberProto.getNationalNumber();
+            Log.i("code", "code " + countryCode);
+            Log.i("code", "national number " + nationalNumber);
+        } catch (NumberParseException e) {
+            System.err.println("NumberParseException was thrown: " + e.toString());
+        }
 
         /*layMain.setVisibility(View.VISIBLE);
         layDetail.setVisibility(View.GONE);*/

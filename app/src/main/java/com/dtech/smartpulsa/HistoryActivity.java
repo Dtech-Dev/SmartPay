@@ -268,6 +268,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         // enable hole and configure
         mChart.setDrawHoleEnabled(true);
         mChart.setUsePercentValues(true);
+        mChart.setDrawSliceText(false);
         //mChart.setHoleColorTransparent(true);
 
     }

@@ -15,8 +15,8 @@ android {
         applicationId "com.dtech.smartpulsa"
         minSdkVersion 16
         targetSdkVersion 24
-        versionCode 16
-        versionName "1.1.6"
+        versionCode 21
+        versionName "2.0.1"
         //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -34,8 +34,8 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     /*androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-                    exclude group: 'com.android.support', module: 'support-annotations'
-                })*/
+                        exclude group: 'com.android.support', module: 'support-annotations'
+                    })*/
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:design:25.0.1'
     compile 'com.mcxiaoke.volley:library-aar:1.0.0'
@@ -52,8 +52,8 @@ dependencies {
     compile('com.mikepenz:materialdrawer:5.8.1@aar') {
         transitive = true
     }
-    compile ('com.github.worker8:tourguide:1.0.17-SNAPSHOT@aar'){
-        transitive=true
+    compile('com.github.worker8:tourguide:1.0.17-SNAPSHOT@aar') {
+        transitive = true
     }
     //chart library
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
@@ -67,8 +67,7 @@ dependencies {
     // used to provide the two step crossfade DrawerLayout. Which allows to have a mini layout which transforms to a normal layout within the drawer
     // --> https://github.com/mikepenz/MaterialDrawer/blob/develop/app/src/main/java/com/mikepenz/materialdrawer/app/CrossfadeDrawerLayoutActvitiy.java
     // https://github.com/mikepenz/CrossfadeDrawerLayout
-    compile('com.mikepenz:crossfadedrawerlayout:1.0.0@aar')
-
+    compile 'com.mikepenz:crossfadedrawerlayout:1.0.0@aar'
     // icon fonts used inside the sample
     // https://github.com/mikepenz/Android-Iconics
     compile 'com.mikepenz:google-material-typeface:2.2.0.1@aar'
@@ -86,5 +85,6 @@ dependencies {
     compile 'com.pkmmte.view:circularimageview:1.1'
     //compile 'com.github.rey5137:material:1.2.4'
     testCompile 'junit:junit:4.12'
+    compile files('libs/libphonenumber-8.3.2.jar')
 }
 apply plugin: 'com.google.gms.google-services'

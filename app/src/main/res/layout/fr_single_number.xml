@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Masukkan Nomor"
                     android:textSize="20sp"
-                    android:inputType="number"
+                    android:inputType="phone"
                     android:paddingRight="60dp"
                     />
                 <ImageButton
