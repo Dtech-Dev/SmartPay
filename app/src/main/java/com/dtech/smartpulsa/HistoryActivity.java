@@ -267,7 +267,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
 
         // enable hole and configure
         mChart.setDrawHoleEnabled(true);
-        //mChart.setUsePercentValues(true);
+        mChart.setUsePercentValues(true);
         //mChart.setHoleColorTransparent(true);
 
     }
@@ -285,20 +285,20 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                 if (a == 0) {
                     Toast.makeText(HistoryActivity.this, "Tidak Ada Transaksi", Toast.LENGTH_SHORT).show();
                 } else {
-                    //showDetail();
+                    showDetail();
                 }
         }
 
     }
 
     private void showDetail() {
-        Bundle bundle = new Bundle();
+        /*Bundle bundle = new Bundle();
         bundle.putSerializable("ob", (Serializable) datapul);
-        //bundle.putStringArrayList("ob", datapul);
-        //bundle.putString("title", "pulsa");
+
+        */
         Intent detailhist = new Intent(HistoryActivity.this, DetailHistActivity.class);
-        //detailhist.putExtra("extra", bundle);
-        detailhist.putExtra("title", "pulsa");
+
+
 
         startActivity(detailhist);
     }

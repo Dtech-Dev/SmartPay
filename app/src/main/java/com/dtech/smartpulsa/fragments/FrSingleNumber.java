@@ -163,6 +163,7 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
         gridView.setAdapter(null);
         if (s.length() >= 6) {
 
+            
             /*String prepredict = s.toString();
             if (prepredict.contains("-")) {
                 prepredict.replaceAll("-", "");

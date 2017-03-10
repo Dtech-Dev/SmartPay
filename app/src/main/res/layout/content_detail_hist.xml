@@ -26,14 +26,25 @@
             android:layout_height="wrap_content"
             android:id="@+id/titlehist"
             android:text="this layout contains title, date time picker for filtering, and another view needed"/>
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titlehist"
+            android:id="@+id/eded"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bb"
+            android:layout_below="@+id/eded"
+            android:text="submit"/>
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <!--<android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/rechist"
         android:layout_marginTop="20dp">
 
-    </android.support.v7.widget.RecyclerView>
+    </android.support.v7.widget.RecyclerView>-->
 
 </LinearLayout>

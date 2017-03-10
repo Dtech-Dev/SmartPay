@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -47,6 +48,8 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
 
     List<DataPul> datapulsa;
     private TextView titlehist;
+    EditText eded;
+    Button bb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,17 +80,22 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
 
     private void initUi() {
         titlehist = (TextView) findViewById(R.id.titlehist);
+        eded = (EditText) findViewById(R.id.eded);
+        bb = (Button) findViewById(R.id.bb);
+        bb.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        /*switch (view.getId()) {
-            case R.id.btnMainPaket:
+        switch (view.getId()) {
+            case R.id.bb:
                 backToMainPaket();
-        }*/
+        }
     }
 
     private void backToMainPaket() {
+        String no = eded.getText().toString();
+        
 
         /*layMain.setVisibility(View.VISIBLE);
         layDetail.setVisibility(View.GONE);*/
