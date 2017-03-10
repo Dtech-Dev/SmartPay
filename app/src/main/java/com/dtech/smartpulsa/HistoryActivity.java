@@ -25,6 +25,7 @@ import com.dtech.smartpulsa.data.DataPul;
 import com.dtech.smartpulsa.data.DataTa;
 import com.dtech.smartpulsa.data.DataTo;
 import com.dtech.smartpulsa.data.DataVo;
+import com.dtech.smartpulsa.data.MyPercentFormatter;
 import com.dtech.smartpulsa.feature.DetailHistActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
 import com.github.mikephil.charting.charts.PieChart;
@@ -48,7 +49,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class HistoryActivity extends AppCompatActivity implements View.OnClickListener {
+public class HistoryActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = "Volley";
     Button bhistTr, bhistTagih;
@@ -154,22 +155,26 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
             ttotaltrxvoucher.setText("("+jmlvoucher+" transaksi)");
             d = voucher.length();
 
+
             float[] yData = {Float.parseFloat(jmlpulsa), Float.parseFloat(jmltoken), Float.parseFloat(jmltagihan), Float.parseFloat(jmlvoucher)};
-            ArrayList<PieEntry> yVals1 = new ArrayList<PieEntry>();
 
             List<PieEntry> entries = new ArrayList<>();
+
 
             for (int i=0;i<yData.length;i++) {
                 entries.add(new PieEntry(yData[i], xData[i]));
             }
 
-
-            PieDataSet set = new PieDataSet(entries, "");
             ArrayList<Integer> colors = new ArrayList<Integer>();
 
             for (int c : ColorTemplate.MATERIAL_COLORS)
                 colors.add(c);
 
+            /*if (!entries.contains(0.0)) {
+
+            }*/
+            PieDataSet set = new PieDataSet(entries, "");
+            set.setValueFormatter(new MyPercentFormatter());
             set.setColors(colors);
             PieData datax = new PieData(set);
             mChart.setData(datax);
@@ -238,11 +243,6 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         idUsr = (sharedPreferences.getString(Config.DISPLAY_IDUSR, ""));
         bhistTr = (Button) findViewById(R.id.bhistTr);
         bhistTagih = (Button) findViewById(R.id.bhistTagih);
-        //webHistTr = (WebView) findViewById(R.id.webHistTr);
-        //webhistTagih = (WebView) findViewById(R.id.webHistTagih);
-        //webhistTagih.loadUrl("http://samimi.web.id/dev/hist-tagih.php?id="+idUsr);
-        //webHistTr.loadUrl("http://samimi.web.id/dev/hist-tr.php?id="+idUsr);
-
         bhistTr.setOnClickListener(this);
         bhistTagih.setOnClickListener(this);
         tlastdatesaldo = (TextView) findViewById(R.id.lastdatesaldo);
@@ -285,7 +285,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                 if (a == 0) {
                     Toast.makeText(HistoryActivity.this, "Tidak Ada Transaksi", Toast.LENGTH_SHORT).show();
                 } else {
-                    showDetail();
+                    //showDetail();
                 }
         }
 

@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,7 +61,7 @@ public class TempActivity extends AppCompatActivity
     TextView navemail, navusername, tbalance, tstatus;
     ImageButton imageButton;
     CircularImageView imageAcc;
-    /*ImageView imageAcc;*/
+    ImageView imageserver;
     PrefManager prefManager;
     NavigationView navigationView;
     SharedPreferences sharedPreferences;
@@ -171,7 +172,7 @@ public class TempActivity extends AppCompatActivity
                     .into(imageAcc);
         }
 
-
+        imageserver = (ImageView) findViewById(R.id.imgserver);
         textUser = (sharedPreferences.getString(Config.DISPLAY_NAME, ""));
         txtEmail = (sharedPreferences.getString(Config.DISPLAY_EMAIL, ""));
         txtNumber = (sharedPreferences.getString(Config.DISPLAY_NUMBER, ""));
@@ -317,6 +318,11 @@ public class TempActivity extends AppCompatActivity
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String sstatus= String.valueOf(dataSnapshot.getValue());
                 tstatus.setText(sstatus);
+                if (sstatus.contains("Tidak")) {
+                    imageserver.setImageResource(R.drawable.red_circle_icon);
+                } else {
+                    imageserver.setImageResource(R.drawable.green_circle_icon);
+                }
                 Log.d("dbase real", sstatus);
             }
 

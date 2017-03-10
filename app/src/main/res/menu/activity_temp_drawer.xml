@@ -29,7 +29,7 @@
             <item
                 android:id="@+id/nav_history"
                 android:icon="@drawable/ic_history_black_24dp"
-                android:title="History Transaksi" />
+                android:title="History &amp; Analisa " />
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_shopping_cart_black_24dp"

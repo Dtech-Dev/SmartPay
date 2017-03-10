@@ -243,7 +243,8 @@
                             android:layout_alignParentEnd="true"
                             android:background="?android:attr/selectableItemBackground"
                             android:textColor="@color/CadetBlue"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold"
+                            android:visibility="gone"/>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -294,7 +295,8 @@
                             android:layout_alignParentEnd="true"
                             android:background="?android:attr/selectableItemBackground"
                             android:textColor="@color/CadetBlue"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold"
+                            android:visibility="gone"/>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -345,7 +347,8 @@
                             android:layout_alignParentEnd="true"
                             android:background="?android:attr/selectableItemBackground"
                             android:textColor="@color/CadetBlue"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold"
+                            android:visibility="gone"/>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -396,7 +399,8 @@
                             android:layout_alignParentEnd="true"
                             android:background="?android:attr/selectableItemBackground"
                             android:textColor="@color/CadetBlue"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold"
+                            android:visibility="gone"/>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
