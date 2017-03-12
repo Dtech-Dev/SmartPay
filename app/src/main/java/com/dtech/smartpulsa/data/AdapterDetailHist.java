@@ -1,0 +1,82 @@
+package com.dtech.smartpulsa.data;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.dtech.smartpulsa.R;
+import com.dtech.smartpulsa.configuration.Config;
+import com.dtech.smartpulsa.feature.Transaksi;
+import com.dtech.smartpulsa.preference.PrefManager;
+
+import java.util.Collections;
+import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
+
+/**
+ * Created by aris on 31/12/16.
+ */
+
+public class AdapterDetailHist extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
+
+    private Context context;
+    private LayoutInflater inflater;
+    List<DataPul> data = Collections.emptyList();
+    DataPaket current;
+    int currentPos = 0;
+
+    public AdapterDetailHist(Context context, List<DataPul> data) {
+        this.context = context;
+        inflater = LayoutInflater.from(context);
+        this.data = data;
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = inflater.inflate(R.layout.custom_item_detailhist, parent, false);
+        MyHolder holder = new MyHolder(view);
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+        MyHolder myHolder = (MyHolder) holder;
+        DataPul current = data.get(position);
+        myHolder.dateDetail.setText(current.dateP);
+        myHolder.nomorDetail.setText(current.nomorP);
+        myHolder.hargaDetail.setText(current.hargaP);
+        myHolder.kodeDetail.setText(current.kodeP);
+        /*myHolder.keterangan.setText(current.keterangan);
+        myHolder.kode.setText(current.kode);
+        myHolder.harga.setText(current.harga);*/
+    }
+
+    @Override
+    public int getItemCount() {
+        return data.size();
+    }
+
+    class MyHolder extends RecyclerView.ViewHolder {
+
+        TextView dateDetail, nomorDetail, hargaDetail, kodeDetail;
+        public MyHolder(View itemView) {
+            super(itemView);
+
+            dateDetail = (TextView) itemView.findViewById(R.id.dateDetail);
+            nomorDetail = (TextView) itemView.findViewById(R.id.nomorDetail);
+            hargaDetail = (TextView) itemView.findViewById(R.id.hargaDetail);
+            kodeDetail = (TextView) itemView.findViewById(R.id.kodeDetail);
+        }
+
+    }
+}

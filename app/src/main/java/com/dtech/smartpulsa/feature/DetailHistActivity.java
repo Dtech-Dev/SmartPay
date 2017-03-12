@@ -22,9 +22,13 @@ import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.custom.CustomGridVoucher;
+import com.dtech.smartpulsa.data.AdapterDetailHist;
 import com.dtech.smartpulsa.data.AdapterPaket;
 import com.dtech.smartpulsa.data.DataPaket;
 import com.dtech.smartpulsa.data.DataPul;
+import com.dtech.smartpulsa.data.DataTa;
+import com.dtech.smartpulsa.data.DataTo;
+import com.dtech.smartpulsa.data.DataVo;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
@@ -44,9 +48,13 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
     ImageView imgjnspaket;
     TextView txtjnspaket;
     Button btnmainpaket;
-    RecyclerView recyclerPaket;
-    AdapterPaket madapter;
+    RecyclerView recyclerHist;
+    AdapterDetailHist madapter;
+    String jenis;
 
+    List<DataPul> datadetail = new ArrayList<>();
+
+    JSONArray pulsa, token, tagihan, voucher;
 
     private String json_string;
 
@@ -63,12 +71,58 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        initUi();
+        jenis = getIntent().getStringExtra("jenis");
         response = getIntent().getStringExtra("response");
-        Toast.makeText(this, response, Toast.LENGTH_LONG).show();
+        prepareJson();
+        if (jenis.matches("pulsa")) {
+            setDetailPulsa();
+        } else if (jenis.matches("token")) {
+            setDetailToken();
+        }
+        //Toast.makeText(this, response, Toast.LENGTH_LONG).show();
+        initUi();
+    }
+
+    private void prepareJson() {
+
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_ARRAY);
+            JSONObject data = result.getJSONObject(0);
+            JSONArray detail = data.getJSONArray(Config.ARRAY_HIST_DETAIL);
+            JSONObject detaildata = detail.getJSONObject(0);
+
+            /*jsaon array Pulsa*/
+            pulsa = detaildata.getJSONArray(Config.ARRAY_HIST_DETAIL_PULSA);
+            token = detaildata.getJSONArray(Config.ARRAY_HIST_DETAIL_TOKEN);
+            tagihan = detaildata.getJSONArray(Config.ARRAY_HIST_DETAIL_TAGIHAN);
+            voucher = detaildata.getJSONArray(Config.ARRAY_HIST_DETAIL_VOUCHER);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setDetailToken() {
 
     }
 
+    private void setDetailPulsa() {
+        for (int i = 0; i<pulsa.length(); i++) {
+            JSONObject jopulsa = null;
+            try {
+                jopulsa = pulsa.getJSONObject(i);
+                DataPul datapulsa = new DataPul();
+                datapulsa.dateP = jopulsa.getString("date");
+                datapulsa.kodeP = jopulsa.getString("kode");
+                datapulsa.hargaP = jopulsa.getString("harga");
+                datapulsa.nomorP = jopulsa.getString("nomor_tujuan");
+                datadetail.add(datapulsa);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("array Pulsa", String.valueOf(datadetail));
+        }
+    }
 
 
     private void initUi() {
@@ -76,6 +130,10 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
         eded = (EditText) findViewById(R.id.eded);
         bb = (Button) findViewById(R.id.bb);
         bb.setOnClickListener(this);
+        recyclerHist = (RecyclerView) findViewById(R.id.rechisto);
+        madapter = new AdapterDetailHist(DetailHistActivity.this, datadetail);
+        recyclerHist.setAdapter(madapter);
+        recyclerHist.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override

@@ -301,6 +301,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         */
         Intent detailhist = new Intent(HistoryActivity.this, DetailHistActivity.class);
         detailhist.putExtra("response", sharedResponse);
+        detailhist.putExtra("jenis", "pulsa");
 
 
 
