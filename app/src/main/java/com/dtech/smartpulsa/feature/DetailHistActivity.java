@@ -54,6 +54,7 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
     private TextView titlehist;
     EditText eded;
     Button bb;
+    String response;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +64,8 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
         setSupportActionBar(toolbar);
 
         initUi();
-
-
-
+        response = getIntent().getStringExtra("response");
+        Toast.makeText(this, response, Toast.LENGTH_LONG).show();
 
     }
 

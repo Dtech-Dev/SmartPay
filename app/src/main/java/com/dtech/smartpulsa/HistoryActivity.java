@@ -57,6 +57,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
 
     PrefManager prefManager;
     SharedPreferences sharedPreferences;
+    String sharedResponse;
     String idUsr;
 
     PieChart mChart;
@@ -97,6 +98,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
             public void onResponse(String response) {
                 loading.dismiss();
                 showJSON(response);
+                sharedResponse = response;
             }
         },
                 new Response.ErrorListener() {
@@ -298,6 +300,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
 
         */
         Intent detailhist = new Intent(HistoryActivity.this, DetailHistActivity.class);
+        detailhist.putExtra("response", sharedResponse);
 
 
 
