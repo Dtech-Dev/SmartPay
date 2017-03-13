@@ -48,11 +48,8 @@ import java.util.List;
 public class DetailHistActivity extends AppCompatActivity implements View.OnClickListener {
 
     GridView gridPaket;
-    RelativeLayout layMain, layDetail;
-    ImageView imgjnspaket;
-    TextView txtjnspaket;
-    Button btnmainpaket;
-    RecyclerView recyclerHist,recyclerHist3, recyclerHist7, recyclerHist30;
+    RelativeLayout zerotrx;
+    RecyclerView recyclerHist;
     AdapterDetailHist madapter;
     RadioButton fall, f3, f7, f30;
     RadioGroup rfilter;
@@ -70,7 +67,7 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
     EditText eded;
     Button bb;
     String response;
-    LinearLayoutManager mlay = new LinearLayoutManager(this);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +135,13 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
 
     private void setDetailToken() {
         List<DataPul> datadetail = new ArrayList<>();
+        if (token.length() == 0) {
+            recyclerHist.setVisibility(View.GONE);
+            zerotrx.setVisibility(View.VISIBLE);
+        } else {
+            recyclerHist.setVisibility(View.VISIBLE);
+            zerotrx.setVisibility(View.GONE);
+        }
         for (int i = 0; i<token.length(); i++) {
             JSONObject jopulsa = null;
             try {
@@ -162,6 +166,13 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
 
     private void setDetailPulsa() {
         List<DataPul> datadetail = new ArrayList<>();
+        if (pulsa.length() == 0) {
+            recyclerHist.setVisibility(View.GONE);
+            zerotrx.setVisibility(View.VISIBLE);
+        } else {
+            recyclerHist.setVisibility(View.VISIBLE);
+            zerotrx.setVisibility(View.GONE);
+        }
         for (int i = 0; i<pulsa.length(); i++) {
             JSONObject jopulsa = null;
             try {
@@ -180,10 +191,6 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
         madapter = new AdapterDetailHist(DetailHistActivity.this, datadetail);
         //madapter.notifyDataSetChanged();
 
-        /*recyclerHist.setVisibility(View.VISIBLE);
-        recyclerHist3.setVisibility(View.GONE);
-        recyclerHist7.setVisibility(View.GONE);
-        recyclerHist30.setVisibility(View.GONE);*/
         recyclerHist.setAdapter(madapter);
 
         recyclerHist.setLayoutManager(new LinearLayoutManager(this));
@@ -192,14 +199,14 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
 
 
     private void initUi() {
-        titlehist = (TextView) findViewById(R.id.titlehist);
+        titlehist = (TextView) findViewById(R.id.titlejns);
+        String cap = "Detail " + jenis.substring(0, 1).toUpperCase() + jenis.substring(1);
+        titlehist.setText(cap);
         eded = (EditText) findViewById(R.id.eded);
         bb = (Button) findViewById(R.id.bb);
         bb.setOnClickListener(this);
         recyclerHist = (RecyclerView) findViewById(R.id.rechisto);
-        recyclerHist3 = (RecyclerView) findViewById(R.id.rechisto3);
-        recyclerHist7 = (RecyclerView) findViewById(R.id.rechisto7);
-        recyclerHist30 = (RecyclerView) findViewById(R.id.rechisto30);
+        zerotrx = (RelativeLayout) findViewById(R.id.zerotrx);
 
         fall = (RadioButton) findViewById(R.id.fall);
         f3 = (RadioButton) findViewById(R.id.f3);
@@ -219,10 +226,7 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
                         } else if (jenis.matches("voucher")) {
                             setDetailVoucher();
                         }
-                        /*recyclerHist.removeAllViews();
-                        recyclerHist.setAdapter(madapter);
-                        recyclerHist.setLayoutManager(new LinearLayoutManager(DetailHistActivity.this));
-                        recyclerHist.invalidate();*/
+
                         break;
                     case R.id.f3:
                         //recyclerHist.setAdapter(null);
@@ -271,8 +275,6 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
                 }
             }
         });
-        /*recyclerHist.setLayoutManager(mlay);
-        recyclerHist.invalidate();*/
     }
 
     private void setDetailTagihanThirty() {
@@ -328,6 +330,13 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
 
     private void setDetailPulsaThitry() {
         List<DataPul> datadetail = new ArrayList<>();
+        if (pulsa30d.length() == 0) {
+            recyclerHist.setVisibility(View.GONE);
+            zerotrx.setVisibility(View.VISIBLE);
+        } else {
+            recyclerHist.setVisibility(View.VISIBLE);
+            zerotrx.setVisibility(View.GONE);
+        }
         for (int i = 0; i<pulsa30d.length(); i++) {
             JSONObject jopulsa = null;
             try {
@@ -354,8 +363,11 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
     private void setDetailTokenThirty() {
         List<DataPul> datadetail = new ArrayList<>();
         if (token30d.length() == 0) {
-
+            recyclerHist.setVisibility(View.GONE);
+            zerotrx.setVisibility(View.VISIBLE);
         } else {
+            recyclerHist.setVisibility(View.VISIBLE);
+            zerotrx.setVisibility(View.GONE);
             for (int i = 0; i<token30d.length(); i++) {
                 JSONObject jopulsa = null;
                 try {
@@ -382,9 +394,13 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
     private void setDetailTokenSeven() {
         List<DataPul> datadetail = new ArrayList<>();
         if (token7d.length() == 0) {
-
+            recyclerHist.setVisibility(View.GONE);
+            zerotrx.setVisibility(View.VISIBLE);
         } else {
-            for (int i = 0; i<token7d.length(); i++) {
+            recyclerHist.setVisibility(View.VISIBLE);
+            zerotrx.setVisibility(View.GONE);
+        }
+            for (int i = 0; i < token7d.length(); i++) {
                 JSONObject jopulsa = null;
                 try {
                     jopulsa = token7d.getJSONObject(i);
@@ -401,7 +417,6 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
             }
             madapter = new AdapterDetailHist(DetailHistActivity.this, datadetail);
             madapter.notifyDataSetChanged();
-        }
 
         recyclerHist.setAdapter(madapter);
         recyclerHist.setLayoutManager(new LinearLayoutManager(this));
@@ -409,6 +424,13 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
 
     private void setDetailPulsaSeven() {
         List<DataPul> datadetail = new ArrayList<>();
+        if (pulsa7d.length() == 0) {
+            recyclerHist.setVisibility(View.GONE);
+            zerotrx.setVisibility(View.VISIBLE);
+        } else {
+            recyclerHist.setVisibility(View.VISIBLE);
+            zerotrx.setVisibility(View.GONE);
+        }
         for (int i = 0; i<pulsa7d.length(); i++) {
             JSONObject jopulsa = null;
             try {
@@ -439,8 +461,11 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
     private void setDetailTokenThree() {
         List<DataPul> datadetail = new ArrayList<>();
         if (token3d.length() == 0) {
-
+            recyclerHist.setVisibility(View.GONE);
+            zerotrx.setVisibility(View.VISIBLE);
         } else {
+            recyclerHist.setVisibility(View.VISIBLE);
+            zerotrx.setVisibility(View.GONE);
             for (int i = 0; i<token3d.length(); i++) {
                 JSONObject jopulsa = null;
                 try {
@@ -466,6 +491,13 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
 
     private void setDetailPulsaThree() {
         List<DataPul> datadetail = new ArrayList<>();
+        if (pulsa3d.length() == 0) {
+            recyclerHist.setVisibility(View.GONE);
+            zerotrx.setVisibility(View.VISIBLE);
+        } else {
+            recyclerHist.setVisibility(View.VISIBLE);
+            zerotrx.setVisibility(View.GONE);
+        }
         for (int i = 0; i<pulsa3d.length(); i++) {
             JSONObject jopulsa = null;
             try {

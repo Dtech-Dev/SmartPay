@@ -185,27 +185,6 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
             jmltrx = Integer.toString(pulsa.length() + token.length() + tagihan.length() + voucher.length());
             ttotaltransaksi.setText(jmltrx);
 
-            /*for (int i = 0; i<pulsa.length(); i++) {
-                JSONObject jopulsa = pulsa.getJSONObject(i);
-                DataPul datapulsa = new DataPul();
-                datapulsa.dateP = jopulsa.getString("date");
-                datapulsa.kodeP = jopulsa.getString("kode");
-                datapulsa.hargaP = jopulsa.getString("harga");
-                datapulsa.nomorP = jopulsa.getString("nomor_tujuan");
-                datapul.add(datapulsa);
-
-            }*/
-            /*jsaon array token*/
-            /*for (int j = 0; j < token.length(); j++) {
-                JSONObject jotoken = token.getJSONObject(j);
-                DataTo datatoken = new DataTo();
-                datatoken.dateTo = jotoken.getString("date");
-                datatoken.kodeTo = jotoken.getString("kode");
-                datatoken.hargaTo = jotoken.getString("harga");
-                datatoken.nomorTo= jotoken.getString("nomor_tujuan");
-                datato.add(datatoken);
-
-            }*/
             /*json array tagihan*/
             for (int k = 0; k < tagihan.length(); k++) {
                 JSONObject jotagih = tagihan.getJSONObject(k);
