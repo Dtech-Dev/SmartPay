@@ -3,6 +3,7 @@ package com.dtech.smartpulsa.feature;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +53,8 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
     Button btnmainpaket;
     RecyclerView recyclerHist;
     AdapterDetailHist madapter;
+    RadioButton fall, f3, f7, f30;
+    RadioGroup rfilter;
     String jenis;
 
     List<DataPul> datadetail = new ArrayList<>();
@@ -74,13 +79,14 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
         jenis = getIntent().getStringExtra("jenis");
         response = getIntent().getStringExtra("response");
         prepareJson();
+        initUi();
         if (jenis.matches("pulsa")) {
             setDetailPulsa();
         } else if (jenis.matches("token")) {
             setDetailToken();
         }
         //Toast.makeText(this, response, Toast.LENGTH_LONG).show();
-        initUi();
+
     }
 
     private void prepareJson() {
@@ -122,6 +128,9 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
             }
             Log.d("array Pulsa", String.valueOf(datadetail));
         }
+        madapter = new AdapterDetailHist(DetailHistActivity.this, datadetail);
+        recyclerHist.setAdapter(madapter);
+        recyclerHist.setLayoutManager(new LinearLayoutManager(this));
     }
 
 
@@ -131,9 +140,118 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
         bb = (Button) findViewById(R.id.bb);
         bb.setOnClickListener(this);
         recyclerHist = (RecyclerView) findViewById(R.id.rechisto);
-        madapter = new AdapterDetailHist(DetailHistActivity.this, datadetail);
-        recyclerHist.setAdapter(madapter);
-        recyclerHist.setLayoutManager(new LinearLayoutManager(this));
+
+        fall = (RadioButton) findViewById(R.id.fall);
+        f3 = (RadioButton) findViewById(R.id.f3);
+        f30 = (RadioButton) findViewById(R.id.f30);
+        f7 = (RadioButton) findViewById(R.id.f7);
+        rfilter = (RadioGroup) findViewById(R.id.rfilter);
+        rfilter.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+                switch (i) {
+                    case R.id.fall:
+                        if (jenis.matches("pulsa")) {
+                            setDetailPulsa();
+                        } else if (jenis.matches("token")) {
+                            setDetailToken();
+                        } else if (jenis.matches("tagihan")) {
+                            setDetailTagihan();
+                        } else if (jenis.matches("voucher")) {
+                            setDetailVoucher();
+                        }
+                        break;
+                    case R.id.f3:
+                        if (jenis.matches("pulsa")) {
+                            setDetailPulsaThree();
+                        } else if (jenis.matches("token")) {
+                            setDetailTokenThree();
+                        } else if (jenis.matches("tagihan")) {
+                            setDetailTagihanThree();
+                        } else if (jenis.matches("voucher")) {
+                            setDetailVoucherThree();
+                        }
+                        break;
+                    case R.id.f7:
+                        if (jenis.matches("pulsa")) {
+                            setDetailPulsaSeven();
+                        } else if (jenis.matches("token")) {
+                            setDetailTokenSeven();
+                        } else if (jenis.matches("tagihan")) {
+                            setDetailTagihanSeven();
+                        } else if (jenis.matches("voucher")) {
+                            setDetailVoucherSeven();
+                        }
+                        break;
+                    case R.id.f30:
+                        if (jenis.matches("pulsa")) {
+                            setDetailPulsaThitry();
+                        } else if (jenis.matches("token")) {
+                            setDetailTokenThirty();
+                        } else if (jenis.matches("tagihan")) {
+                            setDetailTagihanThirty();
+                        } else if (jenis.matches("voucher")) {
+                            setDetailVoucherThirty();
+                        }
+                        break;
+                }
+            }
+        });
+    }
+
+    private void setDetailTagihanThirty() {
+
+    }
+
+    private void setDetailVoucherThirty() {
+
+    }
+
+    private void setDetailTagihanSeven() {
+
+    }
+
+    private void setDetailVoucherSeven() {
+
+    }
+
+    private void setDetailTagihanThree() {
+
+    }
+
+    private void setDetailVoucherThree() {
+
+    }
+
+    private void setDetailTagihan() {
+    }
+
+    private void setDetailVoucher() {
+
+    }
+
+    private void setDetailPulsaThitry() {
+
+    }
+
+    private void setDetailTokenThirty() {
+
+    }
+
+    private void setDetailTokenSeven() {
+
+    }
+
+    private void setDetailPulsaSeven() {
+
+    }
+
+    private void setDetailTokenThree() {
+
+    }
+
+    private void setDetailPulsaThree() {
+
     }
 
     @Override
