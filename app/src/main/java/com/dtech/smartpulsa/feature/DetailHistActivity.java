@@ -1,6 +1,7 @@
 package com.dtech.smartpulsa.feature;
 
 import android.app.ProgressDialog;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -51,15 +52,16 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
     ImageView imgjnspaket;
     TextView txtjnspaket;
     Button btnmainpaket;
-    RecyclerView recyclerHist;
+    RecyclerView recyclerHist,recyclerHist3, recyclerHist7, recyclerHist30;
     AdapterDetailHist madapter;
     RadioButton fall, f3, f7, f30;
     RadioGroup rfilter;
     String jenis;
 
-    List<DataPul> datadetail = new ArrayList<>();
 
-    JSONArray pulsa, token, tagihan, voucher;
+
+    JSONArray pulsa, pulsa3d, pulsa7d, pulsa30d, token, token3d, token7d, token30d, tagihan, tagihan3d, tagihan7d, tagihan30d,
+            voucher, voucher3d, voucher7d, voucher30;
 
     private String json_string;
 
@@ -68,6 +70,7 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
     EditText eded;
     Button bb;
     String response;
+    LinearLayoutManager mlay = new LinearLayoutManager(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,11 +83,14 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
         response = getIntent().getStringExtra("response");
         prepareJson();
         initUi();
-        if (jenis.matches("pulsa")) {
-            setDetailPulsa();
-        } else if (jenis.matches("token")) {
+        if (jenis.matches("tagihan")) {
+            setDetailTagihan();
+            rfilter.setVisibility(View.GONE);
+        } else {
+            rfilter.setVisibility(View.VISIBLE);
+        }  /*else if (jenis.matches("token")) {
             setDetailToken();
-        }
+        }*/
         //Toast.makeText(this, response, Toast.LENGTH_LONG).show();
 
     }
@@ -97,22 +103,65 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
             JSONObject data = result.getJSONObject(0);
             JSONArray detail = data.getJSONArray(Config.ARRAY_HIST_DETAIL);
             JSONObject detaildata = detail.getJSONObject(0);
+            JSONArray last3 = data.getJSONArray(Config.ARRAY_HIST_LAST_THREE);
+            JSONObject last3data = last3.getJSONObject(0);
+            JSONArray last7 = data.getJSONArray(Config.ARRAY_HIST_LAST_SEVEN);
+            JSONObject last7data = last7.getJSONObject(0);
+            JSONArray last30 = data.getJSONArray(Config.ARRAY_HIST_LAST_THREET);
+            JSONObject last30data = last30.getJSONObject(0);
 
             /*jsaon array Pulsa*/
             pulsa = detaildata.getJSONArray(Config.ARRAY_HIST_DETAIL_PULSA);
             token = detaildata.getJSONArray(Config.ARRAY_HIST_DETAIL_TOKEN);
             tagihan = detaildata.getJSONArray(Config.ARRAY_HIST_DETAIL_TAGIHAN);
             voucher = detaildata.getJSONArray(Config.ARRAY_HIST_DETAIL_VOUCHER);
+
+            pulsa3d = last3data.getJSONArray(Config.ARRAY_HIST_DETAIL_PULSA);
+            token3d = last3data.getJSONArray(Config.ARRAY_HIST_DETAIL_TOKEN);
+            tagihan3d = last3data.getJSONArray(Config.ARRAY_HIST_DETAIL_TAGIHAN);
+            voucher3d = last3data.getJSONArray(Config.ARRAY_HIST_DETAIL_VOUCHER);
+
+            pulsa7d = last7data.getJSONArray(Config.ARRAY_HIST_DETAIL_PULSA);
+            token7d = last7data.getJSONArray(Config.ARRAY_HIST_DETAIL_TOKEN);
+            tagihan7d = last7data.getJSONArray(Config.ARRAY_HIST_DETAIL_TAGIHAN);
+            voucher7d = last7data.getJSONArray(Config.ARRAY_HIST_DETAIL_VOUCHER);
+
+            pulsa30d = last30data.getJSONArray(Config.ARRAY_HIST_DETAIL_PULSA);
+            token30d = last30data.getJSONArray(Config.ARRAY_HIST_DETAIL_TOKEN);
+            tagihan30d = last30data.getJSONArray(Config.ARRAY_HIST_DETAIL_TAGIHAN);
+            voucher30 = last30data.getJSONArray(Config.ARRAY_HIST_DETAIL_VOUCHER);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     private void setDetailToken() {
+        List<DataPul> datadetail = new ArrayList<>();
+        for (int i = 0; i<token.length(); i++) {
+            JSONObject jopulsa = null;
+            try {
+                jopulsa = token.getJSONObject(i);
+                DataPul datapulsa = new DataPul();
+                datapulsa.dateP = jopulsa.getString("date");
+                datapulsa.kodeP = jopulsa.getString("kode");
+                datapulsa.hargaP = jopulsa.getString("harga");
+                datapulsa.nomorP = jopulsa.getString("nomor_tujuan");
+                datadetail.add(datapulsa);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //Log.d("array Pulsa", String.valueOf(datadetail));
+        }
+        madapter = new AdapterDetailHist(DetailHistActivity.this, datadetail);
+        madapter.notifyDataSetChanged();
 
+        recyclerHist.setAdapter(madapter);
+        recyclerHist.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void setDetailPulsa() {
+        List<DataPul> datadetail = new ArrayList<>();
         for (int i = 0; i<pulsa.length(); i++) {
             JSONObject jopulsa = null;
             try {
@@ -126,11 +175,19 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Log.d("array Pulsa", String.valueOf(datadetail));
+            //Log.d("array Pulsa", String.valueOf(datadetail));
         }
         madapter = new AdapterDetailHist(DetailHistActivity.this, datadetail);
+        //madapter.notifyDataSetChanged();
+
+        /*recyclerHist.setVisibility(View.VISIBLE);
+        recyclerHist3.setVisibility(View.GONE);
+        recyclerHist7.setVisibility(View.GONE);
+        recyclerHist30.setVisibility(View.GONE);*/
         recyclerHist.setAdapter(madapter);
+
         recyclerHist.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
 
@@ -140,6 +197,9 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
         bb = (Button) findViewById(R.id.bb);
         bb.setOnClickListener(this);
         recyclerHist = (RecyclerView) findViewById(R.id.rechisto);
+        recyclerHist3 = (RecyclerView) findViewById(R.id.rechisto3);
+        recyclerHist7 = (RecyclerView) findViewById(R.id.rechisto7);
+        recyclerHist30 = (RecyclerView) findViewById(R.id.rechisto30);
 
         fall = (RadioButton) findViewById(R.id.fall);
         f3 = (RadioButton) findViewById(R.id.f3);
@@ -151,52 +211,68 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
                 switch (i) {
                     case R.id.fall:
+                        //recyclerHist.setAdapter(null);
                         if (jenis.matches("pulsa")) {
                             setDetailPulsa();
                         } else if (jenis.matches("token")) {
                             setDetailToken();
-                        } else if (jenis.matches("tagihan")) {
-                            setDetailTagihan();
                         } else if (jenis.matches("voucher")) {
                             setDetailVoucher();
                         }
+                        /*recyclerHist.removeAllViews();
+                        recyclerHist.setAdapter(madapter);
+                        recyclerHist.setLayoutManager(new LinearLayoutManager(DetailHistActivity.this));
+                        recyclerHist.invalidate();*/
                         break;
                     case R.id.f3:
+                        //recyclerHist.setAdapter(null);
+
                         if (jenis.matches("pulsa")) {
                             setDetailPulsaThree();
                         } else if (jenis.matches("token")) {
                             setDetailTokenThree();
-                        } else if (jenis.matches("tagihan")) {
-                            setDetailTagihanThree();
-                        } else if (jenis.matches("voucher")) {
+                        }  else if (jenis.matches("voucher")) {
                             setDetailVoucherThree();
                         }
+                        /*recyclerHist.removeAllViews();
+                        recyclerHist.setAdapter(madapter);
+                        recyclerHist.setLayoutManager(new LinearLayoutManager(DetailHistActivity.this));
+                        recyclerHist.invalidate();*/
                         break;
                     case R.id.f7:
+
                         if (jenis.matches("pulsa")) {
                             setDetailPulsaSeven();
                         } else if (jenis.matches("token")) {
                             setDetailTokenSeven();
-                        } else if (jenis.matches("tagihan")) {
-                            setDetailTagihanSeven();
+
                         } else if (jenis.matches("voucher")) {
                             setDetailVoucherSeven();
                         }
+                        /*recyclerHist.removeAllViews();
+                        recyclerHist.setAdapter(madapter);
+                        recyclerHist.setLayoutManager(new LinearLayoutManager(DetailHistActivity.this));
+                        recyclerHist.invalidate();*/
                         break;
                     case R.id.f30:
+
                         if (jenis.matches("pulsa")) {
                             setDetailPulsaThitry();
                         } else if (jenis.matches("token")) {
                             setDetailTokenThirty();
-                        } else if (jenis.matches("tagihan")) {
-                            setDetailTagihanThirty();
-                        } else if (jenis.matches("voucher")) {
+                        }  else if (jenis.matches("voucher")) {
                             setDetailVoucherThirty();
                         }
+                        /*recyclerHist.removeAllViews();
+                        recyclerHist.setAdapter(madapter);
+                        recyclerHist.setLayoutManager(new LinearLayoutManager(DetailHistActivity.this));
+                        recyclerHist.invalidate();*/
                         break;
                 }
             }
         });
+        /*recyclerHist.setLayoutManager(mlay);
+        recyclerHist.invalidate();*/
     }
 
     private void setDetailTagihanThirty() {
@@ -224,6 +300,26 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void setDetailTagihan() {
+        List<DataPul> datadetail = new ArrayList<>();
+        for (int k = 0; k < tagihan.length(); k++) {
+            try {
+                JSONObject jotagih = tagihan.getJSONObject(k);
+                DataPul datatagihan = new DataPul();
+                datatagihan.dateP = jotagih.getString("date");
+                datatagihan.kodeP = jotagih.getString("jenis_tagihan");
+                datatagihan.hargaP = jotagih.getString("jumlah_tagihan");
+                datatagihan.nomorP= jotagih.getString("nomor_tujuan");
+                datadetail.add(datatagihan);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        madapter = new AdapterDetailHist(DetailHistActivity.this, datadetail);
+
+        madapter.notifyDataSetChanged();
+        recyclerHist.setAdapter(madapter);
+
+        recyclerHist.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void setDetailVoucher() {
@@ -231,27 +327,170 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void setDetailPulsaThitry() {
+        List<DataPul> datadetail = new ArrayList<>();
+        for (int i = 0; i<pulsa30d.length(); i++) {
+            JSONObject jopulsa = null;
+            try {
+                jopulsa = pulsa30d.getJSONObject(i);
+                DataPul datapulsa = new DataPul();
+                datapulsa.dateP = jopulsa.getString("date");
+                datapulsa.kodeP = jopulsa.getString("kode");
+                datapulsa.hargaP = jopulsa.getString("harga");
+                datapulsa.nomorP = jopulsa.getString("nomor_tujuan");
+                datadetail.add(datapulsa);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("array Pulsa", String.valueOf(datadetail));
+        }
+        madapter = new AdapterDetailHist(DetailHistActivity.this, datadetail);
 
+        madapter.notifyDataSetChanged();
+        recyclerHist.setAdapter(madapter);
+
+        recyclerHist.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void setDetailTokenThirty() {
+        List<DataPul> datadetail = new ArrayList<>();
+        if (token30d.length() == 0) {
 
+        } else {
+            for (int i = 0; i<token30d.length(); i++) {
+                JSONObject jopulsa = null;
+                try {
+                    jopulsa = token30d.getJSONObject(i);
+                    DataPul datapulsa = new DataPul();
+                    datapulsa.dateP = jopulsa.getString("date");
+                    datapulsa.kodeP = jopulsa.getString("kode");
+                    datapulsa.hargaP = jopulsa.getString("harga");
+                    datapulsa.nomorP = jopulsa.getString("nomor_tujuan");
+                    datadetail.add(datapulsa);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.d("array Pulsa", String.valueOf(datadetail));
+            }
+            madapter = new AdapterDetailHist(DetailHistActivity.this, datadetail);
+            madapter.notifyDataSetChanged();
+        }
+
+        recyclerHist.setAdapter(madapter);
+        recyclerHist.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void setDetailTokenSeven() {
+        List<DataPul> datadetail = new ArrayList<>();
+        if (token7d.length() == 0) {
 
+        } else {
+            for (int i = 0; i<token7d.length(); i++) {
+                JSONObject jopulsa = null;
+                try {
+                    jopulsa = token7d.getJSONObject(i);
+                    DataPul datapulsa = new DataPul();
+                    datapulsa.dateP = jopulsa.getString("date");
+                    datapulsa.kodeP = jopulsa.getString("kode");
+                    datapulsa.hargaP = jopulsa.getString("harga");
+                    datapulsa.nomorP = jopulsa.getString("nomor_tujuan");
+                    datadetail.add(datapulsa);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.d("array Pulsa", String.valueOf(datadetail));
+            }
+            madapter = new AdapterDetailHist(DetailHistActivity.this, datadetail);
+            madapter.notifyDataSetChanged();
+        }
+
+        recyclerHist.setAdapter(madapter);
+        recyclerHist.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void setDetailPulsaSeven() {
+        List<DataPul> datadetail = new ArrayList<>();
+        for (int i = 0; i<pulsa7d.length(); i++) {
+            JSONObject jopulsa = null;
+            try {
+                jopulsa = pulsa7d.getJSONObject(i);
+                DataPul datapulsa = new DataPul();
+                datapulsa.dateP = jopulsa.getString("date");
+                datapulsa.kodeP = jopulsa.getString("kode");
+                datapulsa.hargaP = jopulsa.getString("harga");
+                datapulsa.nomorP = jopulsa.getString("nomor_tujuan");
+                datadetail.add(datapulsa);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("array Pulsa", String.valueOf(datadetail));
+        }
+        madapter = new AdapterDetailHist(DetailHistActivity.this, datadetail);
+        //madapter.swap(datadetail);
+        madapter.notifyDataSetChanged();
+       /* recyclerHist7.setVisibility(View.VISIBLE);
+        recyclerHist3.setVisibility(View.GONE);
+        recyclerHist.setVisibility(View.GONE);
+        recyclerHist30.setVisibility(View.GONE);*/
+        recyclerHist.setAdapter(madapter);
 
+        recyclerHist.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void setDetailTokenThree() {
+        List<DataPul> datadetail = new ArrayList<>();
+        if (token3d.length() == 0) {
 
+        } else {
+            for (int i = 0; i<token3d.length(); i++) {
+                JSONObject jopulsa = null;
+                try {
+                    jopulsa = token3d.getJSONObject(i);
+                    DataPul datapulsa = new DataPul();
+                    datapulsa.dateP = jopulsa.getString("date");
+                    datapulsa.kodeP = jopulsa.getString("kode");
+                    datapulsa.hargaP = jopulsa.getString("harga");
+                    datapulsa.nomorP = jopulsa.getString("nomor_tujuan");
+                    datadetail.add(datapulsa);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.d("array Pulsa", String.valueOf(datadetail));
+            }
+            madapter = new AdapterDetailHist(DetailHistActivity.this, datadetail);
+            madapter.notifyDataSetChanged();
+        }
+
+        recyclerHist.setAdapter(madapter);
+        recyclerHist.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void setDetailPulsaThree() {
+        List<DataPul> datadetail = new ArrayList<>();
+        for (int i = 0; i<pulsa3d.length(); i++) {
+            JSONObject jopulsa = null;
+            try {
+                jopulsa = pulsa3d.getJSONObject(i);
+                DataPul datapulsa = new DataPul();
+                datapulsa.dateP = jopulsa.getString("date");
+                datapulsa.kodeP = jopulsa.getString("kode");
+                datapulsa.hargaP = jopulsa.getString("harga");
+                datapulsa.nomorP = jopulsa.getString("nomor_tujuan");
+                datadetail.add(datapulsa);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("array Pulsa", String.valueOf(datadetail));
+        }
+        madapter = new AdapterDetailHist(DetailHistActivity.this, datadetail);
+        //madapter.swap(datadetail);
+        madapter.notifyDataSetChanged();
+        /*recyclerHist3.setVisibility(View.VISIBLE);
+        recyclerHist.setVisibility(View.GONE);
+        recyclerHist7.setVisibility(View.GONE);
+        recyclerHist30.setVisibility(View.GONE);*/
+        recyclerHist.setAdapter(madapter);
 
+        recyclerHist.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override

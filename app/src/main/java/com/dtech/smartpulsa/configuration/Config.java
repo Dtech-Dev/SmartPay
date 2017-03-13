@@ -164,5 +164,8 @@ public class Config {
     public static final String HIST_DATA_TOTALTAGIHAN = "total_tagihan";
     public static final String HIST_DATA_TOTALTOKEN = "total_token";
     public static final String HIST_DATA_TOTALVOUCHER = "total_voucher";
+    public static final String ARRAY_HIST_LAST_THREE = "last_three";
+    public static final String ARRAY_HIST_LAST_SEVEN = "last_seven";
+    public static final String ARRAY_HIST_LAST_THREET = "last_threet";
 }
 

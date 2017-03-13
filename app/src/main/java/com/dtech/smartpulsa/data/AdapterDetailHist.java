@@ -38,6 +38,15 @@ public class AdapterDetailHist extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.data = data;
+        /*if (this.data != null) {
+            this.data.clear();
+            //this.data.addAll(data);
+            this.data = data;
+        }
+        else {
+            this.data = data;
+        }
+        notifyDataSetChanged();*/
     }
 
     @Override
@@ -64,6 +73,17 @@ public class AdapterDetailHist extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    public void swap(List<DataPul> list){
+        if (data != null) {
+            data.clear();
+            data.addAll(list);
+        }
+        else {
+            data = list;
+        }
+        notifyDataSetChanged();
     }
 
     class MyHolder extends RecyclerView.ViewHolder {

@@ -297,7 +297,7 @@
                             android:background="?android:attr/selectableItemBackground"
                             android:textColor="@color/CadetBlue"
                             android:textStyle="bold"
-                            android:visibility="gone"/>
+                            android:visibility="visible"/>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -349,7 +349,7 @@
                             android:background="?android:attr/selectableItemBackground"
                             android:textColor="@color/CadetBlue"
                             android:textStyle="bold"
-                            android:visibility="gone"/>
+                            android:visibility="visible"/>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"

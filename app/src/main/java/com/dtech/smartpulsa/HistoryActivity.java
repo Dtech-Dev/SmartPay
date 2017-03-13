@@ -77,7 +77,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     TextView tlastdatesaldo, tcurrentsaldo, ttotaltransaksi, totalspend, ttotaltrxpulsa, ttotaltrxtoken,
             ttotaltrxtagihan, ttotaltrxvoucher, tdetailpulsa, tdetailtoken, tdetailtagihan, tdetailvoucher;
 
-    Button btndetailpulsa;
+    Button btndetailpulsa, btnDetailToken;
     //String[] kodeP;
 
     ProgressDialog loading;
@@ -185,7 +185,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
             jmltrx = Integer.toString(pulsa.length() + token.length() + tagihan.length() + voucher.length());
             ttotaltransaksi.setText(jmltrx);
 
-            for (int i = 0; i<pulsa.length(); i++) {
+            /*for (int i = 0; i<pulsa.length(); i++) {
                 JSONObject jopulsa = pulsa.getJSONObject(i);
                 DataPul datapulsa = new DataPul();
                 datapulsa.dateP = jopulsa.getString("date");
@@ -194,9 +194,9 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                 datapulsa.nomorP = jopulsa.getString("nomor_tujuan");
                 datapul.add(datapulsa);
 
-            }
+            }*/
             /*jsaon array token*/
-            for (int j = 0; j < token.length(); j++) {
+            /*for (int j = 0; j < token.length(); j++) {
                 JSONObject jotoken = token.getJSONObject(j);
                 DataTo datatoken = new DataTo();
                 datatoken.dateTo = jotoken.getString("date");
@@ -205,7 +205,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                 datatoken.nomorTo= jotoken.getString("nomor_tujuan");
                 datato.add(datatoken);
 
-            }
+            }*/
             /*json array tagihan*/
             for (int k = 0; k < tagihan.length(); k++) {
                 JSONObject jotagih = tagihan.getJSONObject(k);
@@ -262,8 +262,10 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         tdetailvoucher = (TextView) findViewById(R.id.tdetailvoucher);
 
         btndetailpulsa = (Button) findViewById(R.id.btndetailpulsa);
+        btnDetailToken = (Button) findViewById(R.id.btndetailtoken);
 
         btndetailpulsa.setOnClickListener(this);
+        btnDetailToken.setOnClickListener(this);
         mChart = (PieChart) findViewById(R.id.piechart);
         //mChart.setDescription(new Description().setText("Analisa Transaksi"));
 
@@ -290,8 +292,39 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                 } else {
                     showDetail();
                 }
+                break;
+            case R.id.btndetailtoken:
+                if (b == 0) {
+                    Toast.makeText(HistoryActivity.this, "Tidak Ada Transaksi", Toast.LENGTH_SHORT).show();
+                } else {
+                    showDetailToken();
+                }
+                break;
+            case R.id.btndetailtagihan:
+                if (c == 0) {
+                    Toast.makeText(HistoryActivity.this, "Tidak Ada Transaksi", Toast.LENGTH_SHORT).show();
+                } else {
+                    showDetailTagihan();
+                }
+                break;
         }
 
+    }
+
+    private void showDetailTagihan() {
+        Intent detailhist = new Intent(HistoryActivity.this, DetailHistActivity.class);
+        detailhist.putExtra("response", sharedResponse);
+        detailhist.putExtra("jenis", "tagihan");
+
+        startActivity(detailhist);
+    }
+
+    private void showDetailToken() {
+        Intent detailhist = new Intent(HistoryActivity.this, DetailHistActivity.class);
+        detailhist.putExtra("response", sharedResponse);
+        detailhist.putExtra("jenis", "token");
+
+        startActivity(detailhist);
     }
 
     private void showDetail() {

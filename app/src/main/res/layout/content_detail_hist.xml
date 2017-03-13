@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/fall"
                 android:text="Semua History"
-                android:checked="true"/>
+                />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -101,6 +101,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/rechisto"
+        android:layout_marginTop="20dp">
+
+    </android.support.v7.widget.RecyclerView>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rechisto3"
+        android:visibility="gone"
+        android:layout_marginTop="20dp">
+
+    </android.support.v7.widget.RecyclerView>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rechisto7"
+        android:visibility="gone"
+        android:layout_marginTop="20dp">
+
+    </android.support.v7.widget.RecyclerView>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rechisto30"
+        android:visibility="gone"
         android:layout_marginTop="20dp">
 
     </android.support.v7.widget.RecyclerView>
