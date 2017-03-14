@@ -65,8 +65,10 @@ public class TagihanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         myHolder.idtagih.setText(current.idTagihan);
 
         //tagihan =
-        if (current.jenis.contains("Tagihan")) {
+        if (current.jenis.matches("Tagihan")) {
             myHolder.bayar.setVisibility(View.VISIBLE);
+        } else {
+            myHolder.bayar.setVisibility(View.INVISIBLE);
         }
 
         if (current.ket.contains("Paid")) {
