@@ -14,6 +14,7 @@ import com.dtech.smartpulsa.AddSaldoActivity;
 import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
+import com.dtech.smartpulsa.custom.CustomDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -148,7 +149,8 @@ public class Transaksi extends AsyncTask<Void, Void, String> {
 
             if (keterangan.contains("saldo")) {
                 progress.dismiss();
-                final Dialog dialog = new Dialog(context);
+                new CustomDialog().makeDialog(context, "Saldo", context.getString(R.string.dialog_title_saldo)+" ("+saldo+")" , "saldo");
+                /*final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.custom_dialog_keterangan);
                 dialog.setTitle("Saldo");
                 TextView tv = (TextView) dialog.findViewById(R.id.msgDialogKet);
@@ -161,7 +163,7 @@ public class Transaksi extends AsyncTask<Void, Void, String> {
                         dialog.dismiss();
                     }
                 });
-                dialog.show();
+                dialog.show();*/
             } else if (keterangan.matches("sukses")){
                 Toast.makeText(context, "Transaksi anda sedang diproses", Toast.LENGTH_SHORT).show();
             }

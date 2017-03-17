@@ -48,23 +48,20 @@ public class CustomGridVoucher extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View grid;
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         if (convertView == null) {
-            grid = new View(context);
-            grid = inflater.inflate(R.layout.custom_grid_voucher, null);
-            TextView textView = (TextView) grid.findViewById(R.id.gridvoucher_text);
-            ImageView imageView = (ImageView)grid.findViewById(R.id.gridvocher_image);
-            textView.setText(textTagihan[position]);
-            imageView.setImageResource(imageId[position]);
-            imageView.setTag(tagImage[position]);
-            TextView txtidItem = (TextView) grid.findViewById(R.id.txtid);
-            txtidItem.setText(textid[position]);
-
+            //grid = new View(context);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            grid = inflater.inflate(R.layout.custom_grid_voucher, parent, false);
         } else {
-            grid = (View) convertView;
+            grid = convertView;
         }
-
+        TextView textView = (TextView) grid.findViewById(R.id.gridvoucher_text);
+        ImageView imageView = (ImageView)grid.findViewById(R.id.gridvocher_image);
+        textView.setText(textTagihan[position]);
+        imageView.setImageResource(imageId[position]);
+        imageView.setTag(tagImage[position]);
+        TextView txtidItem = (TextView) grid.findViewById(R.id.txtid);
+        txtidItem.setText(textid[position]);
         return grid;
     }
 }

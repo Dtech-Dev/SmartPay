@@ -28,6 +28,7 @@ import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.configuration.ItemClickListener;
 import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
+import com.dtech.smartpulsa.custom.CustomDialog;
 import com.dtech.smartpulsa.custom.CustomGridVoucher;
 import com.dtech.smartpulsa.data.AdapterKota;
 import com.dtech.smartpulsa.data.KotaAdapter;
@@ -318,7 +319,8 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
                 super.onPostExecute(s);
                 if (reqHandler.getStatus() == 0) {
                     //Toast.makeText(context, "failed", Toast.LENGTH_LONG).show();
-                    final Dialog dialogStatus = new Dialog(getActivity());
+                    new CustomDialog().makeDialog(getActivity(), "Ooopss", getString(R.string.dialog_title_connection_trouble) , "koneksi");
+                    /*final Dialog dialogStatus = new Dialog(getActivity());
                     dialogStatus.setTitle("Oops!");
                     dialogStatus.setContentView(R.layout.custom_dialog_keterangan);
                     TextView tv = (TextView) dialogStatus.findViewById(R.id.msgDialogKet);
@@ -332,7 +334,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
                             dialogStatus.dismiss();
                         }
                     });
-                    dialogStatus.show();
+                    dialogStatus.show();*/
                 }
                 Toast.makeText(getActivity(), "Processing...", Toast.LENGTH_SHORT).show();
                 loading.dismiss();
