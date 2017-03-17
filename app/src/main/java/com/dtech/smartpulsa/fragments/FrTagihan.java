@@ -314,6 +314,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
         final String formatTrx = jnsTagihan+" "+trx+" cek 3003";
         class InsCekTagihan extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;
+            RequestHandler reqHandler;
             @Override
             protected String doInBackground(Void... params) {
                 HashMap<String, String> paramsCekTagihan = new HashMap<>();
@@ -324,7 +325,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
                 paramsCekTagihan.put(Config.TAG_EMAIL_USER, email);
                 paramsCekTagihan.put(Config.FORMAT, formatTrx);
 
-                RequestHandler reqHandler = new RequestHandler();
+                reqHandler = new RequestHandler();
                 String res = reqHandler.sendPostRequest(Config.URL_INSERT_TAGIHAN, paramsCekTagihan);
 
                 return res;
@@ -339,9 +340,28 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                Toast.makeText(getActivity(), "Processing...", Toast.LENGTH_SHORT).show();
-                loading.dismiss();
-                dialogtagihan.dismiss();
+                if (reqHandler.getStatus() == 0) {
+                    //Toast.makeText(context, "failed", Toast.LENGTH_LONG).show();
+                    final Dialog dialogStatus = new Dialog(getActivity());
+                    dialogStatus.setTitle("Oops!");
+                    dialogStatus.setContentView(R.layout.custom_dialog_keterangan);
+                    TextView tv = (TextView) dialogStatus.findViewById(R.id.msgDialogKet);
+                    tv.setText("Gagal komunikasi dengan server\nPastikan koneksi internet anda stabil kemudian silahkan ulangi transaksi anda");
+                    Button btnadd = (Button) dialogStatus.findViewById(R.id.addBtn);
+                    btnadd.setText("Close");
+                    btnadd.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //context.startActivity(new Intent(context, AddSaldoActivity.class));
+                            dialogStatus.dismiss();
+                        }
+                    });
+                    dialogStatus.show();
+                } else {
+                    Toast.makeText(getActivity(), "Processing...", Toast.LENGTH_SHORT).show();
+                    loading.dismiss();
+                    dialogtagihan.dismiss();
+                }
             }
         }
 
