@@ -1,5 +1,6 @@
 package com.dtech.smartpulsa.fragments;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -104,8 +105,25 @@ public class FrPaket extends Fragment implements View.OnClickListener {
                 String jenisPaket = textView.getText().toString();
                 TextView textView1 = (TextView) view.findViewById(R.id.txtid);
                 String idItem = textView1.getText().toString();
-
-                updateUi(idItem, tag, jenisPaket);
+                if (jenisPaket.matches("paket data Telkomsel")) {
+                    final Dialog dialogStatus = new Dialog(getActivity());
+                    dialogStatus.setTitle("Paket Data");
+                    dialogStatus.setContentView(R.layout.custom_dialog_keterangan);
+                    TextView tv = (TextView) dialogStatus.findViewById(R.id.msgDialogKet);
+                    tv.setText("Untuk sementara Paket Data Telkomsel Tidak Tersedia");
+                    Button btnadd = (Button) dialogStatus.findViewById(R.id.addBtn);
+                    btnadd.setText("Close");
+                    btnadd.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //context.startActivity(new Intent(context, AddSaldoActivity.class));
+                            dialogStatus.dismiss();
+                        }
+                    });
+                    dialogStatus.show();
+                } else {
+                    updateUi(idItem, tag, jenisPaket);
+                }
             }
         });
         return view;
@@ -180,6 +198,7 @@ public class FrPaket extends Fragment implements View.OnClickListener {
         madapter = new AdapterPaket(getActivity(), data);
         recyclerPaket.setAdapter(madapter);
         recyclerPaket.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerPaket.setVisibility(View.VISIBLE);
     }
 
     private void initUi() {
@@ -207,5 +226,6 @@ public class FrPaket extends Fragment implements View.OnClickListener {
 
         layMain.setVisibility(View.VISIBLE);
         layDetail.setVisibility(View.GONE);
+        recyclerPaket.setVisibility(View.INVISIBLE);
     }
 }

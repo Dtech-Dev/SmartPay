@@ -36,11 +36,6 @@ import com.dtech.smartpulsa.preference.PrefManager;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.HashMap;
 
 /**
@@ -55,35 +50,22 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
     ProgressBar prgBar;
     public RelativeLayout laymainTagihan, laydetailTagihan;
     GridView gridView;
-
     View view;
     PrefManager prefManager;
     Dialog kotaDialog;
-
     String userId;
     String email;
     String name;
     String trx;
-    String tagihanTampil;
-
     public String getJnsTagihan() {
         return jnsTagihan;
     }
-
     public void setJnsTagihan(String jnsTagihan) {
         this.jnsTagihan = jnsTagihan;
     }
-
     String jnsTagihan;
-
     AdapterKota mAdapter;
-    private DatabaseReference mFirebaseDatabase;
-    private FirebaseDatabase mFirebaseInstance;
-    FirebaseAuth firebaseAuth;
-    FirebaseUser userF;
     Dialog dialogtagihan;
-
-    ProgressDialog loading;
 
     public static String[] gridViewStrings = {
             "PLN",
@@ -134,33 +116,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
         userId = (sharedPreferences).getString(Config.DISPLAY_FIREBASE_ID, "");
 
         initUI();
-        gridView.setAdapter(new CustomGridVoucher(getActivity(), gridViewStrings, gridViewImages, gridViewStrings, gridid));
 
-
-        /*firebaseAuth = FirebaseAuth.getInstance();
-        userF = firebaseAuth.getCurrentUser();*/
-        //userId = userF.getUid();
-        /*mFirebaseInstance = FirebaseDatabase.getInstance();
-        mFirebaseDatabase = mFirebaseInstance.getReference("users");
-        mFirebaseInstance.getReference("app_title").setValue("Cek Tagihan");*/
-
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                TextView textView = (TextView) view.findViewById(R.id.txtid);
-                String pilihan = textView.getText().toString();
-
-                if (pilihan.contains("PDAM")) {
-                    //jnsTagihan = pilihan + " kota";
-                    pilihKota();
-                } else {
-                    setJnsTagihan(pilihan);
-                    updateUi(pilihan);
-                }
-
-
-            }
-        });
 
         return view;
     }
@@ -249,6 +205,26 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
                     prgBar.setVisibility(View.INVISIBLE);
                 }*/
 
+        CustomGridVoucher adapter = new CustomGridVoucher(getActivity(), gridViewStrings, gridViewImages, gridViewStrings, gridid);
+        gridView.setAdapter(adapter);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                TextView textView = (TextView) view.findViewById(R.id.txtid);
+                String pilihan = textView.getText().toString();
+
+                if (pilihan.contains("PDAM")) {
+                    //jnsTagihan = pilihan + " kota";
+                    pilihKota();
+                } else {
+                    setJnsTagihan(pilihan);
+                    updateUi(pilihan);
+                }
+
+
+            }
+        });
         btnPay.setOnClickListener(this);
         btnCek.setOnClickListener(this);
         btnMain.setOnClickListener(this);
@@ -357,11 +333,10 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
                         }
                     });
                     dialogStatus.show();
-                } else {
-                    Toast.makeText(getActivity(), "Processing...", Toast.LENGTH_SHORT).show();
-                    loading.dismiss();
-                    dialogtagihan.dismiss();
                 }
+                Toast.makeText(getActivity(), "Processing...", Toast.LENGTH_SHORT).show();
+                loading.dismiss();
+                dialogtagihan.dismiss();
             }
         }
 
