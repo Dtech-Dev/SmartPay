@@ -81,6 +81,7 @@ public class Transaksi extends AsyncTask<Void, Void, String> {
     public void setKode(String kode) {
         this.kode = kode;
     }
+    RequestHandler reqHandler;
 
     @Override
     protected String doInBackground(Void... params) {
@@ -91,7 +92,7 @@ public class Transaksi extends AsyncTask<Void, Void, String> {
         paramsTransaksi.put(Config.TRX_PULSA_KODE, jenisTransaksi);
         paramsTransaksi.put(Config.TRX_PULSA_NOMORTUJ, NomorTuj);
 
-        RequestHandler reqHandler = new RequestHandler();
+        reqHandler = new RequestHandler();
         String res = reqHandler.sendPostRequest(Config.TRX_URL, paramsTransaksi);
 
         return res;
@@ -104,8 +105,32 @@ public class Transaksi extends AsyncTask<Void, Void, String> {
     }
 
     @Override
+    protected void onCancelled() {
+        super.onCancelled();
+
+    }
+
+    @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
+        if (reqHandler.getStatus() == 0) {
+            //Toast.makeText(context, "failed", Toast.LENGTH_LONG).show();
+            final Dialog dialogStatus = new Dialog(context);
+            dialogStatus.setTitle("Oops!");
+            dialogStatus.setContentView(R.layout.custom_dialog_keterangan);
+            TextView tv = (TextView) dialogStatus.findViewById(R.id.msgDialogKet);
+            tv.setText("Gagal komunikasi dengan server\nPastikan koneksi internet anda stabil kemudian silahkan ulangi transaksi anda");
+            Button btnadd = (Button) dialogStatus.findViewById(R.id.addBtn);
+            btnadd.setText("Close");
+            btnadd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //context.startActivity(new Intent(context, AddSaldoActivity.class));
+                    dialogStatus.dismiss();
+                }
+            });
+            dialogStatus.show();
+        }
         //progress.dismiss();
         JSONObject jsonObject = null;
         //String keterangan="";

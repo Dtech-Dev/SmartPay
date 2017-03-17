@@ -1,5 +1,8 @@
 package com.dtech.smartpulsa.configuration;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -7,6 +10,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -17,6 +21,24 @@ import java.util.Map;
  */
 
 public class RequestHandler {
+
+    int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    /*Context context;
+
+        public RequestHandler(Context context) {
+            this.context = context;
+        }*/
+
+
     public String sendPostRequest(String requestURL, HashMap<String, String> postDataParams) {
         URL url;
         StringBuilder sb = new StringBuilder();
@@ -39,6 +61,7 @@ public class RequestHandler {
             os.close();
             int responseCode = conn.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
+                setStatus(1);
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 sb = new StringBuilder();
                 String response;
@@ -46,11 +69,18 @@ public class RequestHandler {
                     sb.append(response);
                 }
             }
+        } catch (SocketTimeoutException timeOut) {
+            //Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+            timeOut.printStackTrace();
+            setStatus(0);
+            //MyApplication.showToast("Failed");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return sb.toString();
     }
+
 
     public String sendGetRequest(String requestURL){
         StringBuilder sb =new StringBuilder();
