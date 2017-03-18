@@ -122,15 +122,6 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
         return view;
     }
 
-    /*public interface RecyclerViewClickListener{
-        public void recyclerViewListClicked(View v, int position);
-    }*/
-
-    /*@Override
-    public void recyclerViewListClicked(View v, int position){
-        String kodeKota = KotaAdapter.kodeKota[position];
-    }*/
-
     @Override
     public void onClick(View view, String data) {
         //String kodeKota = KotaAdapter.kodeKota[position];
@@ -149,21 +140,14 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
         mAdapter.setClickListener(this);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //recyclerView.setOnClickListener(this);
-        //recyclerView.setAdapter();
+
         kotaDialog.show();
 
-        //recyclerView.addOnItemTouchListener(this);
     }
 
 
 
     public void updateUi(String jnsTagihan) {
-        /*laymainTagihan.setVisibility(View.GONE);
-        laydetailTagihan.setVisibility(View.VISIBLE);*/
-
-        //txtjnsTagihan.setText("Masukkan Id pelanggan "+jnsTagihan+" anda");
-
         dialogtagihan = new Dialog(getActivity());
         dialogtagihan.setContentView(R.layout.custom_dialog_paket);
         dialogtagihan.setTitle("Konfirmasi");
@@ -200,11 +184,6 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
         btnMain = (Button) view.findViewById(R.id.btnMainTagihan);
         prgBar = (ProgressBar) view.findViewById(R.id.prgBar);
         prgBar.setVisibility(View.INVISIBLE);
-        /*if (txtTagihan.getText() == "") {
-                    prgBar.setVisibility(View.VISIBLE);
-                } else {
-                    prgBar.setVisibility(View.INVISIBLE);
-                }*/
 
         CustomGridVoucher adapter = new CustomGridVoucher(getActivity(), gridViewStrings, gridViewImages, gridViewStrings, gridid);
         gridView.setAdapter(adapter);
@@ -320,21 +299,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
                 if (reqHandler.getStatus() == 0) {
                     //Toast.makeText(context, "failed", Toast.LENGTH_LONG).show();
                     new CustomDialog().makeDialog(getActivity(), "Ooopss", getString(R.string.dialog_title_connection_trouble) , "koneksi");
-                    /*final Dialog dialogStatus = new Dialog(getActivity());
-                    dialogStatus.setTitle("Oops!");
-                    dialogStatus.setContentView(R.layout.custom_dialog_keterangan);
-                    TextView tv = (TextView) dialogStatus.findViewById(R.id.msgDialogKet);
-                    tv.setText("Gagal komunikasi dengan server\nPastikan koneksi internet anda stabil kemudian silahkan ulangi transaksi anda");
-                    Button btnadd = (Button) dialogStatus.findViewById(R.id.addBtn);
-                    btnadd.setText("Close");
-                    btnadd.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            //context.startActivity(new Intent(context, AddSaldoActivity.class));
-                            dialogStatus.dismiss();
-                        }
-                    });
-                    dialogStatus.show();*/
+
                 }
                 Toast.makeText(getActivity(), "Processing...", Toast.LENGTH_SHORT).show();
                 loading.dismiss();

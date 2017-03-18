@@ -17,6 +17,7 @@ import android.view.View;
 import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
+import com.dtech.smartpulsa.custom.CustomDialog;
 import com.dtech.smartpulsa.data.DataInbox;
 import com.dtech.smartpulsa.data.TagihanAdapter;
 import com.dtech.smartpulsa.preference.PrefManager;
@@ -97,6 +98,7 @@ public class InboxActivity extends AppCompatActivity {
     private void getDataTagihan() {
         class DataTagihanAsync extends AsyncTask<Void,Void,String> {
             ProgressDialog loading;
+            RequestHandler rh;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -107,6 +109,9 @@ public class InboxActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 //loading.dismiss();
+                if (rh.getStatus() == 0) {
+                    new CustomDialog().makeDialog(InboxActivity.this, "Ooopss", getString(R.string.dialog_title_connection_trouble1) , "koneksi");
+                }
                 json = s;
                 showTagihan();
             }
@@ -116,7 +121,7 @@ public class InboxActivity extends AppCompatActivity {
                 HashMap<String, String> paramsTagihan = new HashMap<>();
                 paramsTagihan.put(Config.TAG_EMAIL_USER, email);
 
-                RequestHandler rh = new RequestHandler();
+                rh = new RequestHandler();
                 String s = rh.sendPostRequest(Config.URL_SHOW_TAGIHAN,paramsTagihan);
                 return s;
             }

@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
+import com.dtech.smartpulsa.custom.CustomDialog;
 import com.dtech.smartpulsa.custom.CustomGridVoucher;
 import com.dtech.smartpulsa.data.AdapterPaket;
 import com.dtech.smartpulsa.data.DataPaket;
@@ -106,21 +107,7 @@ public class FrPaket extends Fragment implements View.OnClickListener {
                 TextView textView1 = (TextView) view.findViewById(R.id.txtid);
                 String idItem = textView1.getText().toString();
                 if (jenisPaket.matches("paket data Telkomsel")) {
-                    final Dialog dialogStatus = new Dialog(getActivity());
-                    dialogStatus.setTitle("Paket Data");
-                    dialogStatus.setContentView(R.layout.custom_dialog_keterangan);
-                    TextView tv = (TextView) dialogStatus.findViewById(R.id.msgDialogKet);
-                    tv.setText("Untuk sementara Paket Data Telkomsel Tidak Tersedia");
-                    Button btnadd = (Button) dialogStatus.findViewById(R.id.addBtn);
-                    btnadd.setText("Close");
-                    btnadd.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            //context.startActivity(new Intent(context, AddSaldoActivity.class));
-                            dialogStatus.dismiss();
-                        }
-                    });
-                    dialogStatus.show();
+                    new CustomDialog().makeDialog(getActivity(), "Paket Data", getString(R.string.dialog_title_telkomsel_data) , "paket");
                 } else {
                     updateUi(idItem, tag, jenisPaket);
                 }
@@ -141,6 +128,7 @@ public class FrPaket extends Fragment implements View.OnClickListener {
         class FDetailPaket extends AsyncTask<Void, Void, String> {
 
             ProgressDialog loading;
+            RequestHandler reqHandler;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -151,6 +139,9 @@ public class FrPaket extends Fragment implements View.OnClickListener {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
 
+                if (reqHandler.getStatus() == 0) {
+                    new CustomDialog().makeDialog(getActivity(), "Ooopss", getString(R.string.dialog_title_connection_trouble1) , "koneksi");
+                }
                 loading.dismiss();
                 json_string = s;
                 showHargaPaket();
@@ -163,7 +154,7 @@ public class FrPaket extends Fragment implements View.OnClickListener {
 
 
 
-                RequestHandler reqHandler = new RequestHandler();
+                reqHandler = new RequestHandler();
                 String res = reqHandler.sendPostRequest(Config.URL_VOUCHER_GAME, paramvocher);
 
                 return res;

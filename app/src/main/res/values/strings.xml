@@ -42,4 +42,6 @@
     <string name="tket2">Isi Dompet Saat ini</string>
     <string name="dialog_title_connection_trouble">Gagal komunikasi dengan server Pastikan koneksi internet anda stabil kemudian silahkan ulangi transaksi anda</string>
     <string name="dialog_title_saldo">Saldo tidak mencukupi</string>
+    <string name="dialog_title_telkomsel_data">Untuk sementara paket data Telkomsel Tidak Tersedia</string>
+    <string name="dialog_title_connection_trouble1">Data tidak bisa ditampilkan.\nPastikan Koneksi Internet Stabil</string>
 </resources>
