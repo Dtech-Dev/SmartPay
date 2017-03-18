@@ -115,22 +115,7 @@ public class Transaksi extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         if (reqHandler.getStatus() == 0) {
-            //Toast.makeText(context, "failed", Toast.LENGTH_LONG).show();
-            final Dialog dialogStatus = new Dialog(context);
-            dialogStatus.setTitle("Oops!");
-            dialogStatus.setContentView(R.layout.custom_dialog_keterangan);
-            TextView tv = (TextView) dialogStatus.findViewById(R.id.msgDialogKet);
-            tv.setText("Gagal komunikasi dengan server\nPastikan koneksi internet anda stabil kemudian silahkan ulangi transaksi anda");
-            Button btnadd = (Button) dialogStatus.findViewById(R.id.addBtn);
-            btnadd.setText("Close");
-            btnadd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //context.startActivity(new Intent(context, AddSaldoActivity.class));
-                    dialogStatus.dismiss();
-                }
-            });
-            dialogStatus.show();
+            new CustomDialog().makeDialog(context, "Ooopss", context.getString(R.string.dialog_title_connection_trouble) , "koneksi");
         }
         //progress.dismiss();
         JSONObject jsonObject = null;
@@ -144,26 +129,11 @@ public class Transaksi extends AsyncTask<Void, Void, String> {
                 JSONObject jo = result.getJSONObject(i);
                 keterangan = jo.getString(Config.TAG_KETERANGAN);
                 saldo = jo.getString(Config.TAG_KETERANGAN_SALDO);
-
             }
 
             if (keterangan.contains("saldo")) {
                 progress.dismiss();
                 new CustomDialog().makeDialog(context, "Saldo", context.getString(R.string.dialog_title_saldo)+" ("+saldo+")" , "saldo");
-                /*final Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.custom_dialog_keterangan);
-                dialog.setTitle("Saldo");
-                TextView tv = (TextView) dialog.findViewById(R.id.msgDialogKet);
-                tv.setText("Saldo anda tidak mencukupi -> "+saldo);
-                Button btnadd = (Button) dialog.findViewById(R.id.addBtn);
-                btnadd.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        context.startActivity(new Intent(context, AddSaldoActivity.class));
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();*/
             } else if (keterangan.matches("sukses")){
                 Toast.makeText(context, "Transaksi anda sedang diproses", Toast.LENGTH_SHORT).show();
             }

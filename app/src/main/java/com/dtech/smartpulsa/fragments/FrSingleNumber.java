@@ -28,6 +28,7 @@ import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.PredictNumber;
 import com.dtech.smartpulsa.R;
+import com.dtech.smartpulsa.custom.CustomDialog;
 import com.dtech.smartpulsa.custom.CustomGridToken;
 import com.dtech.smartpulsa.feature.Transaksi;
 import com.dtech.smartpulsa.preference.PrefManager;
@@ -248,14 +249,13 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
 
         gridView.setVisibility(View.VISIBLE);
         class QueryKodeAsync extends AsyncTask<Void, Void, String> {
+            RequestHandler reqHandler;
             @Override
             protected String doInBackground(Void... params) {
                 HashMap<String, String> paramsProvider = new HashMap<>();
                 paramsProvider.put(Config.TAG_PROVIDER, providerCode);
 
-
-
-                RequestHandler reqHandler = new RequestHandler();
+                reqHandler = new RequestHandler();
                 String res = reqHandler.sendPostRequest(Config.URL_QUERY_KODE, paramsProvider);
 
                 return res;
@@ -269,6 +269,9 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+                if (reqHandler.getStatus() == 0) {
+                    new CustomDialog().makeDialog(getActivity(), "Ooopss", getString(R.string.dialog_title_connection_trouble1) , "koneksi");
+                }
                 json_string = s;
                 prosesTransaksi();
             }

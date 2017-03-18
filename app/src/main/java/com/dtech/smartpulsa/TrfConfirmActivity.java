@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.configuration.RequestHandler;
+import com.dtech.smartpulsa.custom.CustomDialog;
 import com.dtech.smartpulsa.preference.PrefManager;
 
 import java.util.HashMap;
@@ -66,6 +67,7 @@ public class TrfConfirmActivity extends AppCompatActivity {
         class AddSaldo extends AsyncTask<Void, Void, String> {
 
             ProgressDialog loading;
+            RequestHandler reqHandler;
             @Override
             protected String doInBackground(Void... params) {
                 HashMap<String, String> paramsAddSaldo = new HashMap<>();
@@ -75,7 +77,7 @@ public class TrfConfirmActivity extends AppCompatActivity {
                 paramsAddSaldo.put(Config.TAG_REK_TUJ, rekTujuan);
                 paramsAddSaldo.put(Config.TAG_JML_TRF, jmlTrf);
 
-                RequestHandler reqHandler = new RequestHandler();
+                reqHandler = new RequestHandler();
                 String res = reqHandler.sendPostRequest(Config.URL_ADD_SALDO, paramsAddSaldo);
 
                 return res;
@@ -84,6 +86,9 @@ public class TrfConfirmActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                if (reqHandler.getStatus() == 0) {
+                    new CustomDialog().makeDialog(TrfConfirmActivity.this, "Ooopss", getString(R.string.dialog_title_connection_trouble) , "koneksi");
+                }
                 loading = ProgressDialog.show(TrfConfirmActivity.this, "Processing...", "Wait....", false, false);
             }
 

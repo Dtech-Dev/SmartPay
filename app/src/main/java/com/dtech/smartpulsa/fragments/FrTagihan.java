@@ -297,9 +297,7 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 if (reqHandler.getStatus() == 0) {
-                    //Toast.makeText(context, "failed", Toast.LENGTH_LONG).show();
                     new CustomDialog().makeDialog(getActivity(), "Ooopss", getString(R.string.dialog_title_connection_trouble) , "koneksi");
-
                 }
                 Toast.makeText(getActivity(), "Processing...", Toast.LENGTH_SHORT).show();
                 loading.dismiss();

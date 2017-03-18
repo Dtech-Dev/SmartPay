@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
+import com.dtech.smartpulsa.custom.CustomDialog;
 import com.dtech.smartpulsa.custom.CustomGridToken;
 import com.dtech.smartpulsa.feature.Transaksi;
 import com.dtech.smartpulsa.preference.PrefManager;
@@ -65,10 +66,10 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
 
     private void getHargaToken() {
         class HargaToken extends AsyncTask<Void, Void, String> {
-
+            RequestHandler rh;
             @Override
             protected String doInBackground(Void... voids) {
-                RequestHandler rh = new RequestHandler();
+                rh = new RequestHandler();
                 String s = rh.sendGetRequest(Config.URL_HARGA_TOKEN);
                 return s;
             }
@@ -81,6 +82,9 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+                if (rh.getStatus() == 0) {
+                    new CustomDialog().makeDialog(getActivity(), "Ooopss", getString(R.string.dialog_title_connection_trouble1) , "koneksi");
+                }
                 json_string = s;
                 showHarga();
             }

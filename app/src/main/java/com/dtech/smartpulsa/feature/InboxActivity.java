@@ -158,7 +158,6 @@ public class InboxActivity extends AppCompatActivity {
 
         } catch (JSONException e) {
             e.printStackTrace();
-            //Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_LONG).show();
         }
         mAdapter = new TagihanAdapter(InboxActivity.this, data);
         recyclerTagihan.setAdapter(mAdapter);

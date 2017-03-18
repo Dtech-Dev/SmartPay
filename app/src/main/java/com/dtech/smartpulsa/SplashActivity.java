@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 
 import com.dtech.smartpulsa.configuration.Config;
+import com.dtech.smartpulsa.custom.CustomDialog;
 import com.dtech.smartpulsa.preference.PrefManager;
 import com.race604.drawable.wave.WaveDrawable;
 
@@ -43,21 +44,7 @@ public class SplashActivity extends AppCompatActivity {
         mWaveDrawable.setLevel(5000);
 
         mWaveDrawable.setIndeterminate(true);
-        //mWaveDrawable.setLevel(30);
-        /*particleView = (ParticleView) findViewById(R.id.particle);
-        particleView.startAnim();
-        particleView.setOnParticleAnimListener(new ParticleView.ParticleAnimListener() {
-            @Override
-            public void onAnimationEnd() {
 
-            }
-        });*/
-
-        /*if (prefManager.isFirstTimeLaunch()) {
-            launchWelcome();
-        } else {
-            new Loading().execute();
-        }*/
         if (!fileExistance(Config.FIRST_TIME)) {
             launchWelcome();
         } else {

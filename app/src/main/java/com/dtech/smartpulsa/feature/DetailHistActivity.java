@@ -238,10 +238,6 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
                         }  else if (jenis.matches("voucher")) {
                             setDetailVoucherThree();
                         }
-                        /*recyclerHist.removeAllViews();
-                        recyclerHist.setAdapter(madapter);
-                        recyclerHist.setLayoutManager(new LinearLayoutManager(DetailHistActivity.this));
-                        recyclerHist.invalidate();*/
                         break;
                     case R.id.f7:
 
@@ -253,10 +249,6 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
                         } else if (jenis.matches("voucher")) {
                             setDetailVoucherSeven();
                         }
-                        /*recyclerHist.removeAllViews();
-                        recyclerHist.setAdapter(madapter);
-                        recyclerHist.setLayoutManager(new LinearLayoutManager(DetailHistActivity.this));
-                        recyclerHist.invalidate();*/
                         break;
                     case R.id.f30:
 
@@ -267,10 +259,6 @@ public class DetailHistActivity extends AppCompatActivity implements View.OnClic
                         }  else if (jenis.matches("voucher")) {
                             setDetailVoucherThirty();
                         }
-                        /*recyclerHist.removeAllViews();
-                        recyclerHist.setAdapter(madapter);
-                        recyclerHist.setLayoutManager(new LinearLayoutManager(DetailHistActivity.this));
-                        recyclerHist.invalidate();*/
                         break;
                 }
             }

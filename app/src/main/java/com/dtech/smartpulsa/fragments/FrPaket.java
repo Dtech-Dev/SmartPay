@@ -152,8 +152,6 @@ public class FrPaket extends Fragment implements View.OnClickListener {
                 HashMap<String, String> paramvocher = new HashMap<>();
                 paramvocher.put(Config.TAG_POST_KETERANGAN, idItem);
 
-
-
                 reqHandler = new RequestHandler();
                 String res = reqHandler.sendPostRequest(Config.URL_VOUCHER_GAME, paramvocher);
 

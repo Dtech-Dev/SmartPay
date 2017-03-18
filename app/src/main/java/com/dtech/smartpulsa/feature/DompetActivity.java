@@ -26,6 +26,7 @@ import com.dtech.smartpulsa.AddSaldoActivity;
 import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
+import com.dtech.smartpulsa.custom.CustomDialog;
 import com.dtech.smartpulsa.preference.PrefManager;
 import com.race604.drawable.wave.WaveDrawable;
 
@@ -112,6 +113,7 @@ public class DompetActivity extends AppCompatActivity implements View.OnClickLis
         class GetJSON extends AsyncTask<Void,Void,String> {
 
             ProgressDialog loading;
+            RequestHandler rh;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -122,13 +124,17 @@ public class DompetActivity extends AppCompatActivity implements View.OnClickLis
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
+                if (rh.getStatus() == 0) {
+                    new CustomDialog().makeDialog(DompetActivity.this, "Ooopss", getString(R.string.dialog_title_connection_trouble1) , "koneksi");
+                }
+
                 JSON_STRING = s;
                 showCustomer(s);
             }
 
             @Override
             protected String doInBackground(Void... params) {
-                RequestHandler rh = new RequestHandler();
+                rh = new RequestHandler();
                 String s = rh.sendGetRequestParam(Config.URL_SELECT_ALL, txtEmail);
                 return s;
             }
@@ -269,6 +275,7 @@ public class DompetActivity extends AppCompatActivity implements View.OnClickLis
             class CheckpCustomer extends AsyncTask<Void, Void, String> {
 
                 ProgressDialog loading;
+                RequestHandler requestHandler;
 
                 @Override
                 protected void onPreExecute() {
@@ -280,6 +287,9 @@ public class DompetActivity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
+                    /*if (requestHandler.getStatus() == 0) {
+                        new CustomDialog().makeDialog(DompetActivity.this, "Ooopss", getString(R.string.dialog_title_connection_trouble1) , "koneksi");
+                    }*/
                     //loading.dismiss();
                 }
 
@@ -291,7 +301,7 @@ public class DompetActivity extends AppCompatActivity implements View.OnClickLis
                     params.put(Config.TRX_PULSA_EMAIL, txtEmail);
 
 
-                    RequestHandler requestHandler = new RequestHandler();
+                    requestHandler = new RequestHandler();
                     String result = requestHandler.sendPostRequest(Config.URL_UPD_POINT, params);
 
                     return result;
