@@ -52,18 +52,6 @@ public class PredictNumber {
             setNomorTujuan(prepredict);
         }
 
-        /*Toast.makeText(context, typeNumber,Le)*/
-
-        /**/
-        /*switch (subed) {
-            case "0895": case "0896":
-                setTypeNumber("xl");
-                setKodeTransaksi("xr");
-                break;
-            case "0811":
-                readSimpati(typeNumber);
-                break;
-        }*/
     }
 
     public void readProvider(String finalString) {
@@ -94,22 +82,6 @@ public class PredictNumber {
         } else {
             setTypeNumber("Unknown");
             setKodeTransaksi("Unknown");
-            /*final Dialog dialog = new Dialog(context);
-            dialog.setContentView(R.layout.dialog_provider);
-            dialog.setTitle("Oopss");
-            TextView txtError = (TextView) dialog.findViewById(R.id.textProviderNull);
-            txtError.setText("Nomor Tidak Dikenali");
-
-            Button btnError = (Button) dialog.findViewById(R.id.btnProviderNull);
-            btnError.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
-            */
-            //Toast.makeText(context, "")
         }
     }
 

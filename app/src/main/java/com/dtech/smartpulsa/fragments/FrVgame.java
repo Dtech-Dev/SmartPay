@@ -20,6 +20,7 @@ import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.custom.CustomDetailVgame;
+import com.dtech.smartpulsa.custom.CustomDialog;
 import com.dtech.smartpulsa.custom.CustomGridVoucher;
 import com.dtech.smartpulsa.feature.Transaksi;
 import com.dtech.smartpulsa.preference.PrefManager;
@@ -125,6 +126,7 @@ public class FrVgame extends Fragment implements View.OnClickListener {
         class FDetailVoucher extends AsyncTask<Void, Void, String> {
 
             ProgressDialog loading;
+            RequestHandler reqHandler;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -134,7 +136,9 @@ public class FrVgame extends Fragment implements View.OnClickListener {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-
+                if (reqHandler.getStatus() == 0) {
+                    new CustomDialog().makeDialog(getActivity(), "Ooopss", getString(R.string.dialog_title_connection_trouble1) , "koneksi");
+                }
                 loading.dismiss();
                 json_string = s;
                 showHargaVoucher();
@@ -145,9 +149,7 @@ public class FrVgame extends Fragment implements View.OnClickListener {
                 HashMap<String, String> paramvocher = new HashMap<>();
                 paramvocher.put(Config.TAG_POST_KETERANGAN, jenisVoucher);
 
-
-
-                RequestHandler reqHandler = new RequestHandler();
+                reqHandler = new RequestHandler();
                 String res = reqHandler.sendPostRequest(Config.URL_VOUCHER_GAME, paramvocher);
 
                 return res;

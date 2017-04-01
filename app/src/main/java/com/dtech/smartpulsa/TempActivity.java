@@ -28,6 +28,7 @@ import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.configuration.ConnectivityReceiver;
 import com.dtech.smartpulsa.configuration.MyApplication;
 import com.dtech.smartpulsa.configuration.RequestHandler;
+import com.dtech.smartpulsa.custom.CustomDialog;
 import com.dtech.smartpulsa.feature.AboutActivity;
 import com.dtech.smartpulsa.feature.DompetActivity;
 import com.dtech.smartpulsa.feature.InboxActivity;
@@ -405,7 +406,7 @@ public class TempActivity extends AppCompatActivity
         class CheckCustomer extends AsyncTask<Void, Void, String> {
 
             private ProgressDialog loading;
-
+            RequestHandler requestHandler;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -416,13 +417,10 @@ public class TempActivity extends AppCompatActivity
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+
                 loading.dismiss();
-
                 showCustomer(s);
-                //Toast.makeText(WelcomeActivity.this, "Welcome", Toast.LENGTH_LONG).show();
-
             }
-
 
             @Override
             protected String doInBackground(Void... v) {
@@ -431,7 +429,7 @@ public class TempActivity extends AppCompatActivity
                 params.put(Config.TAG_EMAIL, txtEmail);
                 params.put(Config.TAG_PHONE, txtNumber);
 
-                RequestHandler requestHandler = new RequestHandler();
+                requestHandler = new RequestHandler();
                 String result = requestHandler.sendPostRequest(Config.URL_SELECT_CUSTOMER, params);
 
                 return result;

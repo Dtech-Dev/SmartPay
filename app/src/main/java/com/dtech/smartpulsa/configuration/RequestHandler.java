@@ -88,12 +88,23 @@ public class RequestHandler {
             URL url = new URL(requestURL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-
+            con.setReadTimeout(15000);
+            con.setConnectTimeout(15000);
+            int responseCode = con.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                setStatus(1);
+            }
             String s;
             while((s=bufferedReader.readLine())!=null){
                 sb.append(s+"\n");
             }
-        }catch(Exception e){
+        }catch (SocketTimeoutException timeOut) {
+            //Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+            timeOut.printStackTrace();
+            setStatus(0);
+            //MyApplication.showToast("Failed");
+
+        } catch(Exception e){
         }
         return sb.toString();
     }
@@ -104,12 +115,24 @@ public class RequestHandler {
             URL url = new URL(requestURL+id);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-
+            con.setReadTimeout(15000);
+            con.setConnectTimeout(15000);
+            int responseCode = con.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                setStatus(1);
+            }
             String s;
             while((s=bufferedReader.readLine())!=null){
                 sb.append(s+"\n");
             }
+        }catch (SocketTimeoutException timeOut) {
+            //Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+            timeOut.printStackTrace();
+            setStatus(0);
+            //MyApplication.showToast("Failed");
+
         }catch(Exception e){
+            e.printStackTrace();
         }
         return sb.toString();
     }

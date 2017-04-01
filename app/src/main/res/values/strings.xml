@@ -40,7 +40,7 @@
     <string name="text_add_saldo">Penambahan saldo lewat Transfer akan di proses dari pukul 04.00 sampai dengan pukul 22.00 wib, jika transfer yang melewati pukul 22.00 wib, akan diproses keesokan harinya.\n\nPenambahan saldo minimal Rp. 20.000\n\nSetelah anda melakukan Transfer ke salah satu nomor rekening yang tertera di bawah, silahkan melakukan KONFIRMASI dengan klik tombol \"Confirm\" </string>
     <string name="tket1">Terakhir Dompet Di isi</string>
     <string name="tket2">Isi Dompet Saat ini</string>
-    <string name="dialog_title_connection_trouble">Gagal komunikasi dengan server Pastikan koneksi internet anda stabil kemudian silahkan ulangi transaksi anda</string>
+    <string name="dialog_title_connection_trouble">Gagal komunikasi dengan server, Pastikan koneksi internet anda stabil kemudian silahkan ulangi transaksi anda</string>
     <string name="dialog_title_saldo">Saldo tidak mencukupi</string>
     <string name="dialog_title_telkomsel_data">Untuk sementara paket data Telkomsel Tidak Tersedia</string>
     <string name="dialog_title_connection_trouble1">Data tidak bisa ditampilkan.\nPastikan Koneksi Internet Stabil</string>
