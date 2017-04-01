@@ -56,7 +56,7 @@
             android:layout_gravity="center"
             android:textAlignment="center"
             android:id="@+id/status"
-            android:text="Aktif"/>
+            android:text=""/>
     </LinearLayout>
 
     <View

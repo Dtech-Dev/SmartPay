@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.dtech.smartpulsa.configuration.Config;
+import com.dtech.smartpulsa.custom.CustomDialog;
 import com.dtech.smartpulsa.data.DataPaket;
 import com.dtech.smartpulsa.data.DataPul;
 import com.dtech.smartpulsa.data.DataTa;
@@ -27,6 +28,7 @@ import com.dtech.smartpulsa.data.DataTo;
 import com.dtech.smartpulsa.data.DataVo;
 import com.dtech.smartpulsa.data.MyPercentFormatter;
 import com.dtech.smartpulsa.feature.DetailHistActivity;
+import com.dtech.smartpulsa.feature.InboxActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -104,7 +106,9 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(HistoryActivity.this,error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(HistoryActivity.this,error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                        loading.dismiss();
+                        new CustomDialog().makeDialog(HistoryActivity.this, "Ooopss", getString(R.string.dialog_title_connection_trouble1) , "koneksi");
                     }
                 });
 
