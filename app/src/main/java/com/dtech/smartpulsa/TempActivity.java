@@ -313,7 +313,9 @@ public class TempActivity extends AppCompatActivity
                                                      }
                                                  }
         );
+
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("server").child("status");
+        myRef.keepSynced(true);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
