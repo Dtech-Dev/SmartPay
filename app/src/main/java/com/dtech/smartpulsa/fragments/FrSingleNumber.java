@@ -127,9 +127,10 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
                             //natio =  Long.toString(nationalNumber);
                             natio = ""+nationalNumber;
                             Log.i("code", "code " + countryCode);
-                            Log.i("code", "national number " + numToPred);
+                            Log.i("code", "national number " + nationalNumber);
 
                             numToPred = "0" + natio;
+                            Log.i("code", "final number " + numToPred);
 
                         } catch (NumberParseException e) {
                             e.printStackTrace();
