@@ -34,8 +34,8 @@ public class PrefManager {
     private static final String DISPLAY_ID = "id";
     private static final String DISPLAY_IDUSR = "idUsr";
     private static final String DISPLAY_STATUS = "status";
-    private static final String HARGA_TRI = "t";
-    private static final String KODE_TRI = "t";
+    private static final String HARGA_TRI = "th";
+    private static final String KODE_TRI = "tk";
 
 
     public PrefManager(Context context) {

@@ -3,9 +3,11 @@ package com.dtech.smartpulsa.fragments;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -24,14 +27,23 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dtech.smartpulsa.TempActivity;
 import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.PredictNumber;
 import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.custom.CustomDialog;
 import com.dtech.smartpulsa.custom.CustomGridToken;
+import com.dtech.smartpulsa.feature.DompetActivity;
 import com.dtech.smartpulsa.feature.Transaksi;
+import com.dtech.smartpulsa.firedatabase.DumDum;
 import com.dtech.smartpulsa.preference.PrefManager;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
@@ -41,6 +53,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -73,6 +86,7 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
     EditText edOtherNumber;
     ImageButton imgPin;
 
+    SharedPreferences sharedPreferences;
     String harga;
     GridView gridView;
      String json_string;
@@ -84,18 +98,27 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
 
         view = inflater.inflate(R.layout.fr_single_number, container, false);
         prefManager = new PrefManager(getActivity());
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences(Config.PREF_NAME, MODE_PRIVATE);
         firebaseId = (sharedPreferences.getString(Config.DISPLAY_FIREBASE_ID, ""));
         email = (sharedPreferences).getString(Config.DISPLAY_EMAIL, "");
 
          imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        /*Gson gson = new Gson();
+        String jsonHarga = (sharedPreferences.getString("th", ""));
+        String jsonKode = (sharedPreferences.getString("tk", ""));
+
+        String[] listHarga = gson.fromJson(jsonHarga, String[].class);
+        String[] listKode = gson.fromJson(jsonKode, String[].class);
+        Log.d("listharga", Arrays.toString(listHarga));*/
+
         initUI();
         return view;
     }
 
     private void initUI() {
         gridView = (GridView) view.findViewById(R.id.gridPulsa);
-        gridView.setVisibility(View.INVISIBLE);
+        gridView.setVisibility(View.GONE);
         totherNumber = (TextView) view.findViewById(R.id.txtOtherNumber);
         edOtherNumber = (EditText) view.findViewById(R.id.editOtherNumber);
         imgPin = (ImageButton) view.findViewById(R.id.imgPin);
@@ -115,7 +138,7 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
 
                     if (Character.toString(numberisi.charAt(0)).matches("0") && numberisi.contains("-")) {
 
-                        numToPred = numberisi.replaceAll("-", "");;
+                        numToPred = numberisi.replaceAll("-", "");
                     } else if (numberisi.contains("+")) {
                         // phone must begin with '+'
                         try {
@@ -167,7 +190,8 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
                     } else {
                         totherNumber.setText("Provider : "+provider+" ("+trProvider+")");
                     }
-                    queryKodeProvider(kodeProvider);
+                    //queryKodeProvider(kodeProvider);
+                    tesTransaksi(kodeProvider);
 
                 }
 
@@ -178,12 +202,11 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
     }
 
 
-    private void prosesTransaksi() {
+    /*private void prosesTransaksi() {
 
         JSONObject jsonObject;
         ArrayList<String> listharga = new ArrayList<String>();
         ArrayList<String> listkode = new ArrayList<String>();
-        //ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
         List<String> list = new ArrayList<>();
         try {
             jsonObject = new JSONObject(json_string);
@@ -198,11 +221,8 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            //Toast.makeText(PulsaActivity.this, "Nomor tidak dikenali", Toast.LENGTH_SHORT).show();
-
-            /*f*/
         }
-        //ListAdapter adapter = new SimpleAdapter(PulsaActivity.this, list, android.R.layout.simple_spinner_item, null, null);
+
         try {
             String[] kodetoken = listkode.toArray(new String[listkode.size()]);
             String[] hargaToken = listharga.toArray(new String[listharga.size()]);
@@ -213,6 +233,50 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }*/
+
+    private void tesTransaksi(String kodeProvider) {
+
+        final int SPLASH_TIME_OUT = 400;
+
+        final List<String> hargaprovider = new ArrayList<>();
+        final List<String> kodeprovider = new ArrayList<>();
+        DatabaseReference dataprovider = FirebaseDatabase.getInstance().getReference().child(kodeProvider);
+        dataprovider.keepSynced(true);
+        dataprovider.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                hargaprovider.clear();
+                kodeprovider.clear();
+                Log.d("count : ", "" + dataSnapshot.getChildrenCount());
+                for (DataSnapshot childt : dataSnapshot.getChildren()) {
+                    DumDum dummy = childt.getValue(DumDum.class);
+                    String harga = String.valueOf(dummy.getHarga());
+                    String kode = String.valueOf(dummy.getkode());
+                    hargaprovider.add("Harga: "+harga);
+                    kodeprovider.add(kode);
+                    Log.d("datas : ", String.valueOf(dummy.getHarga()));
+                }
+                String[] arraykode = kodeprovider.toArray(new String[kodeprovider.size()]);
+                String[] arrayharga = hargaprovider.toArray(new String[kodeprovider.size()]);
+
+                gridView.setAdapter(new CustomGridToken(arrayharga, arraykode, getActivity()));
+                gridView.setOnItemClickListener(FrSingleNumber.this);
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // This method will be executed once the timer is over
+                        gridView.setVisibility(View.VISIBLE);
+                    }
+                }, SPLASH_TIME_OUT);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -222,7 +286,7 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        gridView.setVisibility(View.INVISIBLE);
+        gridView.setVisibility(View.GONE);
         gridView.setAdapter(null);
         if (s.length() >= 6) {
 
@@ -246,9 +310,9 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
 
     }
 
-    private void queryKodeProvider(final String providerCode) {
+    /*private void queryKodeProvider(final String providerCode) {
 
-        gridView.setVisibility(View.VISIBLE);
+        gridView.setVisibility(View.GONE);
         class QueryKodeAsync extends AsyncTask<Void, Void, String> {
             RequestHandler reqHandler;
             @Override
@@ -283,19 +347,19 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
         QueryKodeAsync queryKode = new QueryKodeAsync();
         queryKode.execute();
 
-    }
+    }*/
 
-    public String getTrProvider() {
+    /*public String getTrProvider() {
         return trProvider;
-    }
+    }*/
 
     public void setTrProvider(String trProvider) {
         this.trProvider = trProvider;
     }
 
-    public String getTrNominal() {
+    /*public String getTrNominal() {
         return trNominal;
-    }
+    }*/
 
     public void setTrNominal(String trNominal) {
         this.trNominal = trNominal;

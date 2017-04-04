@@ -343,7 +343,7 @@ public class TempActivity extends AppCompatActivity
         });
 
         /*getting harga tri from realtime database*/
-        final List<String> hTri = new ArrayList<>();
+        /*final List<String> hTri = new ArrayList<>();
         final List<String> kTri = new ArrayList<>();
         DatabaseReference tri = FirebaseDatabase.getInstance().getReference().child("t");
         tri.keepSynced(true);
@@ -370,7 +370,7 @@ public class TempActivity extends AppCompatActivity
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
 
     }
