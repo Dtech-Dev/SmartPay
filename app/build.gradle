@@ -39,6 +39,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:design:25.0.1'
     compile 'com.mcxiaoke.volley:library-aar:1.0.0'
+    compile 'com.google.code.gson:gson:2.8.0'
     //google sign in
     //compile 'com.google.android.gms:play-services:9.6.1'
     compile 'com.google.android.gms:play-services-auth:10.0.1'

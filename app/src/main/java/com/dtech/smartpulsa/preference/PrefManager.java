@@ -34,6 +34,8 @@ public class PrefManager {
     private static final String DISPLAY_ID = "id";
     private static final String DISPLAY_IDUSR = "idUsr";
     private static final String DISPLAY_STATUS = "status";
+    private static final String HARGA_TRI = "t";
+    private static final String KODE_TRI = "t";
 
 
     public PrefManager(Context context) {
@@ -128,6 +130,16 @@ public class PrefManager {
 
     public void setIdUsr(String idUsr) {
         editor.putString(DISPLAY_IDUSR, idUsr);
+        editor.commit();
+    }
+
+    public void setHargaTri(String hargaTri) {
+        editor.putString(HARGA_TRI, hargaTri);
+        editor.commit();
+    }
+
+    public void setKodeTri(String kodeTri) {
+        editor.putString(KODE_TRI, kodeTri);
         editor.commit();
     }
 

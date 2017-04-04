@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.StringLoader;
 import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.configuration.ConnectivityReceiver;
 import com.dtech.smartpulsa.configuration.MyApplication;
@@ -32,12 +33,15 @@ import com.dtech.smartpulsa.custom.CustomDialog;
 import com.dtech.smartpulsa.feature.AboutActivity;
 import com.dtech.smartpulsa.feature.DompetActivity;
 import com.dtech.smartpulsa.feature.InboxActivity;
+import com.dtech.smartpulsa.firedatabase.DumDum;
 import com.dtech.smartpulsa.preference.PrefManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.hitomi.cmlibrary.CircleMenu;
 import com.hitomi.cmlibrary.OnMenuSelectedListener;
 import com.hitomi.cmlibrary.OnMenuStatusChangeListener;
@@ -47,7 +51,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import tourguide.tourguide.Overlay;
 import tourguide.tourguide.Pointer;
@@ -334,6 +341,38 @@ public class TempActivity extends AppCompatActivity
 
             }
         });
+
+        /*getting harga tri from realtime database*/
+        final List<String> hTri = new ArrayList<>();
+        final List<String> kTri = new ArrayList<>();
+        DatabaseReference tri = FirebaseDatabase.getInstance().getReference().child("t");
+        tri.keepSynced(true);
+        tri.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Gson gson = new Gson();
+                Log.d("count : ", "" + dataSnapshot.getChildrenCount());
+                for (DataSnapshot childt : dataSnapshot.getChildren()) {
+                    DumDum dummy = childt.getValue(DumDum.class);
+                    String harga = String.valueOf(dummy.getHarga());
+                    String kode = String.valueOf(dummy.getkode());
+                    hTri.add(harga);
+                    kTri.add(kode);
+                    Log.d("datas : ", String.valueOf(dummy.getHarga()));
+                }
+                String jsonHarga = gson.toJson(hTri);
+                String jsonKode = gson.toJson(kTri);
+                prefManager.setHargaTri(jsonHarga);
+                prefManager.setKodeTri(jsonKode);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
 
