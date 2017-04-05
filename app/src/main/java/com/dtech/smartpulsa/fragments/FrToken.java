@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,13 +27,21 @@ import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.custom.CustomDialog;
 import com.dtech.smartpulsa.custom.CustomGridToken;
 import com.dtech.smartpulsa.feature.Transaksi;
+import com.dtech.smartpulsa.firedatabase.DumDum;
+import com.dtech.smartpulsa.firedatabase.ProductToken;
 import com.dtech.smartpulsa.preference.PrefManager;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -60,11 +70,11 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
         email = (sharedPreferences).getString(Config.DISPLAY_EMAIL, "");
         inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         initUI();
-        getHargaToken();
+        //getHargaToken();
         return view;
     }
 
-    private void getHargaToken() {
+    /*private void getHargaToken() {
         class HargaToken extends AsyncTask<Void, Void, String> {
             RequestHandler rh;
             @Override
@@ -92,9 +102,9 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
 
         HargaToken hargaToken= new HargaToken();
         hargaToken.execute();
-    }
+    }*/
 
-    private void showHarga() {
+    /*private void showHarga() {
         JSONObject jsonObject = null;
         ArrayList<String> list = new ArrayList<String>();
         ArrayList<String> listkode = new ArrayList<String>();
@@ -123,7 +133,7 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
 
         gridToken.setAdapter(new CustomGridToken(hargaToken, kodetoken, getActivity()));
         gridToken.setOnItemClickListener(this);
-    }
+    }*/
 
     private void initUI() {
         gridToken = (GridView) view.findViewById(R.id.gridToken);
@@ -137,11 +147,59 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
                     Toast.makeText(getActivity(), "Isikan nomor anda terlebih dahulu", Toast.LENGTH_SHORT).show();
                 } else {
                     inputMethodManager.hideSoftInputFromWindow(getView().getWindowToken(), 0);
-                    gridToken.setVisibility(View.VISIBLE);
+                    productToken();
+
                 }
             }
         });
         //gridToken.setEnabled(false);
+    }
+
+    private void productToken() {
+
+        final int SPLASH_TIME_OUT = 400;
+
+        final List<String> hargaprovider = new ArrayList<>();
+        final List<String> kodeprovider = new ArrayList<>();
+        DatabaseReference dataprovider = FirebaseDatabase.getInstance().getReference().child("product").child("token");
+        dataprovider.keepSynced(true);
+        dataprovider.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                hargaprovider.clear();
+                kodeprovider.clear();
+                Log.d("count : ", "" + dataSnapshot.getChildrenCount());
+                for (DataSnapshot childt : dataSnapshot.getChildren()) {
+                    ProductToken dummy = childt.getValue(ProductToken.class);
+                    String harga = String.valueOf(dummy.getHarga());
+                    String kode = String.valueOf(dummy.getKode());
+                    String ket = String.valueOf(dummy.getKet());
+                    String textBtnToken = ket + "\n Harga: " + harga;
+                    hargaprovider.add(textBtnToken);
+                    kodeprovider.add(kode);
+                    Log.d("datas : ", String.valueOf(dummy.getHarga()));
+                }
+                String[] arraykode = kodeprovider.toArray(new String[kodeprovider.size()]);
+                String[] arrayharga = hargaprovider.toArray(new String[kodeprovider.size()]);
+
+                gridToken.setAdapter(new CustomGridToken(arrayharga, arraykode, getActivity()));
+                gridToken.setOnItemClickListener(FrToken.this);
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // This method will be executed once the timer is over
+                        gridToken.setVisibility(View.VISIBLE);
+                    }
+                }, SPLASH_TIME_OUT);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override
@@ -166,7 +224,7 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
             edIdPelanggan.requestFocus();
         } else {
             formatTrx = "pln " + idpel + " " + kodetoken + " 3003";
-
+            Log.d("format trx", formatTrx);
             //Toast.makeText(getActivity(), formatTrx, Toast.LENGTH_SHORT).show();
         //}
             transaksi = new Transaksi(getActivity());
