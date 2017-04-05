@@ -4,10 +4,12 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +24,17 @@ import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.custom.CustomDialog;
+import com.dtech.smartpulsa.custom.CustomGridToken;
 import com.dtech.smartpulsa.custom.CustomGridVoucher;
 import com.dtech.smartpulsa.data.AdapterPaket;
 import com.dtech.smartpulsa.data.DataPaket;
+import com.dtech.smartpulsa.firedatabase.ProductPaket;
+import com.dtech.smartpulsa.firedatabase.ProductToken;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -109,14 +119,94 @@ public class FrPaket extends Fragment implements View.OnClickListener {
                 if (jenisPaket.matches("paket data Telkomsel")) {
                     new CustomDialog().makeDialog(getActivity(), "Paket Data", getString(R.string.dialog_title_telkomsel_data) , "paket");
                 } else {
-                    updateUi(idItem, tag, jenisPaket);
+                    //updateUi(idItem, tag, jenisPaket);
+                    productPaket(tag, jenisPaket);
                 }
             }
         });
         return view;
     }
 
-    private void updateUi(final String idItem, String tag, String jenisPaket) {
+    private void productPaket(String tag, String jenisPaket) {
+        layMain.setVisibility(View.GONE);
+        layDetail.setVisibility(View.VISIBLE);
+        int resource = getResources().getIdentifier(tag, "drawable", getActivity().getPackageName());
+        imgjnspaket.setImageDrawable(getResources().getDrawable(resource));
+        txtjnspaket.setText(jenisPaket);
+
+        final int SPLASH_TIME_OUT = 400;
+
+        //final List<String> hargaprovider = new ArrayList<>();
+        final List<DataPaket> kodeprovider = new ArrayList<>();
+        DatabaseReference dataprovider = FirebaseDatabase.getInstance().getReference().child("product").child("paket").child(tag);
+        dataprovider.keepSynced(true);
+        dataprovider.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                kodeprovider.clear();
+
+                Log.d("count : ", "" + dataSnapshot.getChildrenCount());
+                for (DataSnapshot childt : dataSnapshot.getChildren()) {
+                    ProductPaket dummy = childt.getValue(ProductPaket.class);
+                    DataPaket dataPaket = new DataPaket();
+                    dataPaket.harga = String.valueOf(dummy.getHarga());
+                    dataPaket.kode = String.valueOf(dummy.getKode());
+                    dataPaket.keterangan = String.valueOf(dummy.getKet());
+                    //String textBtnToken = ket + "\n Harga: " + harga;
+                    //hargaprovider.add(textBtnToken);
+                    kodeprovider.add(dataPaket);
+                    Log.d("datas : ", String.valueOf(dummy.getHarga()));
+                }
+
+                madapter = new AdapterPaket(getActivity(), kodeprovider);
+                recyclerPaket.setAdapter(madapter);
+                recyclerPaket.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        recyclerPaket.setVisibility(View.VISIBLE);
+                    }
+                }, SPLASH_TIME_OUT);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void initUi() {
+        gridPaket = (GridView) view.findViewById(R.id.gridpaket);
+        //gridPaketDetail = (GridView) findViewById(R.id.gridpaketdetail);
+        recyclerPaket = (RecyclerView) view.findViewById(R.id.recyclerpaket);
+        layMain = (RelativeLayout) view.findViewById(R.id.layMainPaket);
+        layDetail = (RelativeLayout) view.findViewById(R.id.layDetailPaket);
+        txtjnspaket = (TextView) view.findViewById(R.id.txtJnsPaket);
+        imgjnspaket = (ImageView) view.findViewById(R.id.imageJnsPaket);
+        btnmainpaket = (Button) view.findViewById(R.id.btnMainPaket);
+        btnmainpaket.setOnClickListener(this);
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnMainPaket:
+                backToMainPaket();
+        }
+    }
+
+    private void backToMainPaket() {
+
+        layMain.setVisibility(View.VISIBLE);
+        layDetail.setVisibility(View.GONE);
+        recyclerPaket.setVisibility(View.INVISIBLE);
+    }
+
+    /*private void updateUi(final String idItem, String tag, String jenisPaket) {
         layMain.setVisibility(View.GONE);
         layDetail.setVisibility(View.VISIBLE);
 
@@ -188,33 +278,5 @@ public class FrPaket extends Fragment implements View.OnClickListener {
         recyclerPaket.setAdapter(madapter);
         recyclerPaket.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerPaket.setVisibility(View.VISIBLE);
-    }
-
-    private void initUi() {
-        gridPaket = (GridView) view.findViewById(R.id.gridpaket);
-        //gridPaketDetail = (GridView) findViewById(R.id.gridpaketdetail);
-        recyclerPaket = (RecyclerView) view.findViewById(R.id.recyclerpaket);
-        layMain = (RelativeLayout) view.findViewById(R.id.layMainPaket);
-        layDetail = (RelativeLayout) view.findViewById(R.id.layDetailPaket);
-        txtjnspaket = (TextView) view.findViewById(R.id.txtJnsPaket);
-        imgjnspaket = (ImageView) view.findViewById(R.id.imageJnsPaket);
-        btnmainpaket = (Button) view.findViewById(R.id.btnMainPaket);
-        btnmainpaket.setOnClickListener(this);
-    }
-
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btnMainPaket:
-                backToMainPaket();
-        }
-    }
-
-    private void backToMainPaket() {
-
-        layMain.setVisibility(View.VISIBLE);
-        layDetail.setVisibility(View.GONE);
-        recyclerPaket.setVisibility(View.INVISIBLE);
-    }
+    }*/
 }
