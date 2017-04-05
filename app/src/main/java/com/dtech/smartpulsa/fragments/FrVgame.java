@@ -1,11 +1,10 @@
 package com.dtech.smartpulsa.fragments;
 
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,21 +15,21 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.dtech.smartpulsa.configuration.Config;
-import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
+import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.custom.CustomDetailVgame;
-import com.dtech.smartpulsa.custom.CustomDialog;
 import com.dtech.smartpulsa.custom.CustomGridVoucher;
 import com.dtech.smartpulsa.feature.Transaksi;
+import com.dtech.smartpulsa.firedatabase.ProductVgame;
 import com.dtech.smartpulsa.preference.PrefManager;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -82,7 +81,7 @@ public class FrVgame extends Fragment implements View.OnClickListener {
 
     };
 
-    String json_string;
+    //String json_string;
     PrefManager prefManager;
     Transaksi transaksi;
     String firebaseId, email;
@@ -106,16 +105,97 @@ public class FrVgame extends Fragment implements View.OnClickListener {
                 String tag = (String) imageView.getTag();
                 TextView textView = (TextView) view.findViewById(R.id.gridvoucher_text);
                 String jenisVoucher = textView.getText().toString();
-                TextView textView1 = (TextView) view.findViewById(R.id.txtid);
-                String idItem = textView1.getText().toString();
+                //TextView textView1 = (TextView) view.findViewById(R.id.txtid);
+                //String idItem = textView1.getText().toString();
 
-                updateUi(idItem, tag, jenisVoucher);
+                //updateUi(idItem, tag, jenisVoucher);
+                productVgame(tag, jenisVoucher);
             }
         });
         return view;
     }
 
-    private void updateUi(final String jenisVoucher, String tag, String keterangan) {
+    private void productVgame(String tag, String keterangan) {
+        layoutVoucher.setVisibility(View.GONE);
+        layoutDetailVoucher.setVisibility(View.VISIBLE);
+
+        int resource = getResources().getIdentifier(tag, "drawable", getActivity().getPackageName());
+        imgJenisVoucher.setImageDrawable(getResources().getDrawable(resource));
+        txtjnsvoucher.setText(keterangan);
+
+        final List<String> hargavo = new ArrayList<>();
+        final List<String> kodevo = new ArrayList<>();
+        DatabaseReference datavoucher = FirebaseDatabase.getInstance().getReference().child("product").child("voucher").child(tag);
+        datavoucher.keepSynced(true);
+        datavoucher.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                hargavo.clear();
+                kodevo.clear();
+                Log.d("count : ", "" + dataSnapshot.getChildrenCount());
+                for (DataSnapshot childt : dataSnapshot.getChildren()) {
+                    ProductVgame dummy = childt.getValue(ProductVgame.class);
+                    String harga = String.valueOf(dummy.getHarga());
+                    String kode = String.valueOf(dummy.getKode());
+                    hargavo.add("Harga: "+harga);
+                    kodevo.add(kode);
+                    Log.d("datas : ", String.valueOf(dummy.getHarga()));
+                }
+                String[] arraykode = kodevo.toArray(new String[kodevo.size()]);
+                String[] arrayharga = hargavo.toArray(new String[hargavo.size()]);
+
+                gridVoucherDetail.setAdapter(new CustomDetailVgame(getActivity(), arraykode, arrayharga));
+                gridVoucherDetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        TextView tkode = (TextView) view.findViewById(R.id.itemdetailVgame);
+                        String kode = tkode.getText().toString();
+                        String formatTrx = kode+".3003";
+                        Log.d("Format trx",formatTrx);
+                        transaksi = new Transaksi(getActivity());
+                        transaksi.setUser(email);
+                        transaksi.setNomorTuj(kode);
+                        transaksi.setJenisTransaksi(kode);
+                        transaksi.setFirebaseId(firebaseId);
+                        transaksi.setKode(formatTrx);
+                        transaksi.execute();
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void initUi() {
+        gridVoucher = (GridView) view.findViewById(R.id.gridvoucher);
+        gridVoucherDetail = (GridView) view.findViewById(R.id.gridvoucherdetail);
+        txtjnsvoucher = (TextView) view.findViewById(R.id.txtJnsVoucher);
+        imgJenisVoucher = (ImageView) view.findViewById(R.id.imageJnsVoucher);
+        layoutVoucher = (RelativeLayout) view.findViewById(R.id.layVoucher);
+        layoutDetailVoucher = (RelativeLayout) view.findViewById(R.id.layVoucherDetail);
+        mainMenuVoucher = (Button) view.findViewById(R.id.btnMainVoucher);
+        mainMenuVoucher.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnMainVoucher:
+                showMainMenuVoucher();
+        }
+    }
+
+    private void showMainMenuVoucher() {
+        layoutDetailVoucher.setVisibility(View.GONE);
+        layoutVoucher.setVisibility(View.VISIBLE);
+    }
+
+    /*private void updateUi(final String jenisVoucher, String tag, String keterangan) {
         layoutVoucher.setVisibility(View.GONE);
         layoutDetailVoucher.setVisibility(View.VISIBLE);
 
@@ -204,29 +284,5 @@ public class FrVgame extends Fragment implements View.OnClickListener {
                 transaksi.execute();
             }
         });
-    }
-
-    private void initUi() {
-        gridVoucher = (GridView) view.findViewById(R.id.gridvoucher);
-        gridVoucherDetail = (GridView) view.findViewById(R.id.gridvoucherdetail);
-        txtjnsvoucher = (TextView) view.findViewById(R.id.txtJnsVoucher);
-        imgJenisVoucher = (ImageView) view.findViewById(R.id.imageJnsVoucher);
-        layoutVoucher = (RelativeLayout) view.findViewById(R.id.layVoucher);
-        layoutDetailVoucher = (RelativeLayout) view.findViewById(R.id.layVoucherDetail);
-        mainMenuVoucher = (Button) view.findViewById(R.id.btnMainVoucher);
-        mainMenuVoucher.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btnMainVoucher:
-                showMainMenuVoucher();
-        }
-    }
-
-    private void showMainMenuVoucher() {
-        layoutDetailVoucher.setVisibility(View.GONE);
-        layoutVoucher.setVisibility(View.VISIBLE);
-    }
+    }*/
 }

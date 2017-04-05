@@ -3,9 +3,7 @@ package com.dtech.smartpulsa.fragments;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -19,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -27,14 +24,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dtech.smartpulsa.TempActivity;
-import com.dtech.smartpulsa.configuration.Config;
-import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.PredictNumber;
 import com.dtech.smartpulsa.R;
-import com.dtech.smartpulsa.custom.CustomDialog;
+import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.custom.CustomGridToken;
-import com.dtech.smartpulsa.feature.DompetActivity;
 import com.dtech.smartpulsa.feature.Transaksi;
 import com.dtech.smartpulsa.firedatabase.DumDum;
 import com.dtech.smartpulsa.preference.PrefManager;
@@ -43,18 +36,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -73,11 +59,11 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
 
     String trProvider;
     String trNominal;
-    String transaksiKode, numToPred;
+    String numToPred;
 
     String kodeProvider, provider;
     String formatTrx;
-    String nominal;
+    //String nominal;
     String firebaseId;
     String email;
 
@@ -87,9 +73,9 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
     ImageButton imgPin;
 
     SharedPreferences sharedPreferences;
-    String harga;
+    //String harga;
     GridView gridView;
-     String json_string;
+    //String json_string;
     InputMethodManager imm;
 
     @Nullable
@@ -258,7 +244,7 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
                     Log.d("datas : ", String.valueOf(dummy.getHarga()));
                 }
                 String[] arraykode = kodeprovider.toArray(new String[kodeprovider.size()]);
-                String[] arrayharga = hargaprovider.toArray(new String[kodeprovider.size()]);
+                String[] arrayharga = hargaprovider.toArray(new String[hargaprovider.size()]);
 
                 gridView.setAdapter(new CustomGridToken(arrayharga, arraykode, getActivity()));
                 gridView.setOnItemClickListener(FrSingleNumber.this);

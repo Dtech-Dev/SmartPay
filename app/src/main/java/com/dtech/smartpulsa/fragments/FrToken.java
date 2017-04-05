@@ -2,7 +2,6 @@ package com.dtech.smartpulsa.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -21,13 +20,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dtech.smartpulsa.configuration.Config;
-import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
-import com.dtech.smartpulsa.custom.CustomDialog;
+import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.custom.CustomGridToken;
 import com.dtech.smartpulsa.feature.Transaksi;
-import com.dtech.smartpulsa.firedatabase.DumDum;
 import com.dtech.smartpulsa.firedatabase.ProductToken;
 import com.dtech.smartpulsa.preference.PrefManager;
 import com.google.firebase.database.DataSnapshot;
@@ -35,10 +31,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +46,7 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
     View view;
     Transaksi transaksi;
     PrefManager prefManager;
-    String json_string, firebaseId, email;
+    String firebaseId, email;
     ImageButton imgDone;
     GridView gridToken;
     EditText edIdPelanggan;
@@ -73,67 +65,6 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
         //getHargaToken();
         return view;
     }
-
-    /*private void getHargaToken() {
-        class HargaToken extends AsyncTask<Void, Void, String> {
-            RequestHandler rh;
-            @Override
-            protected String doInBackground(Void... voids) {
-                rh = new RequestHandler();
-                String s = rh.sendGetRequest(Config.URL_HARGA_TOKEN);
-                return s;
-            }
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                if (rh.getStatus() == 0) {
-                    new CustomDialog().makeDialog(getActivity(), "Ooopss", getString(R.string.dialog_title_connection_trouble1) , "koneksi");
-                }
-                json_string = s;
-                showHarga();
-            }
-        }
-
-        HargaToken hargaToken= new HargaToken();
-        hargaToken.execute();
-    }*/
-
-    /*private void showHarga() {
-        JSONObject jsonObject = null;
-        ArrayList<String> list = new ArrayList<String>();
-        ArrayList<String> listkode = new ArrayList<String>();
-        try {
-            jsonObject = new JSONObject(json_string);
-            JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_ARRAY);
-
-            for(int i = 0; i<result.length(); i++){
-                JSONObject jo = result.getJSONObject(i);
-                String keterangan = jo.getString(Config.TAG_KETERANGAN_TOKEN);
-                String harga = jo.getString(Config.TAG_HARGA_TOKEN);
-                String kode = jo.getString(Config.TAG_KODE_TOKEN);
-                String textBtnToken = keterangan + "\n harga: " + harga;
-
-
-                listkode.add(kode);
-                list.add(textBtnToken);
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        String[] kodetoken = listkode.toArray(new String[listkode.size()]);
-        String[] hargaToken = list.toArray(new String[list.size()]);
-
-        gridToken.setAdapter(new CustomGridToken(hargaToken, kodetoken, getActivity()));
-        gridToken.setOnItemClickListener(this);
-    }*/
 
     private void initUI() {
         gridToken = (GridView) view.findViewById(R.id.gridToken);
@@ -180,7 +111,7 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
                     Log.d("datas : ", String.valueOf(dummy.getHarga()));
                 }
                 String[] arraykode = kodeprovider.toArray(new String[kodeprovider.size()]);
-                String[] arrayharga = hargaprovider.toArray(new String[kodeprovider.size()]);
+                String[] arrayharga = hargaprovider.toArray(new String[hargaprovider.size()]);
 
                 gridToken.setAdapter(new CustomGridToken(arrayharga, arraykode, getActivity()));
                 gridToken.setOnItemClickListener(FrToken.this);
@@ -262,4 +193,65 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
     public void afterTextChanged(Editable editable) {
 
     }
+
+    /*private void getHargaToken() {
+        class HargaToken extends AsyncTask<Void, Void, String> {
+            RequestHandler rh;
+            @Override
+            protected String doInBackground(Void... voids) {
+                rh = new RequestHandler();
+                String s = rh.sendGetRequest(Config.URL_HARGA_TOKEN);
+                return s;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                if (rh.getStatus() == 0) {
+                    new CustomDialog().makeDialog(getActivity(), "Ooopss", getString(R.string.dialog_title_connection_trouble1) , "koneksi");
+                }
+                json_string = s;
+                showHarga();
+            }
+        }
+
+        HargaToken hargaToken= new HargaToken();
+        hargaToken.execute();
+    }*/
+
+    /*private void showHarga() {
+        JSONObject jsonObject = null;
+        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> listkode = new ArrayList<String>();
+        try {
+            jsonObject = new JSONObject(json_string);
+            JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_ARRAY);
+
+            for(int i = 0; i<result.length(); i++){
+                JSONObject jo = result.getJSONObject(i);
+                String keterangan = jo.getString(Config.TAG_KETERANGAN_TOKEN);
+                String harga = jo.getString(Config.TAG_HARGA_TOKEN);
+                String kode = jo.getString(Config.TAG_KODE_TOKEN);
+                String textBtnToken = keterangan + "\n harga: " + harga;
+
+
+                listkode.add(kode);
+                list.add(textBtnToken);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String[] kodetoken = listkode.toArray(new String[listkode.size()]);
+        String[] hargaToken = list.toArray(new String[list.size()]);
+
+        gridToken.setAdapter(new CustomGridToken(hargaToken, kodetoken, getActivity()));
+        gridToken.setOnItemClickListener(this);
+    }*/
 }
