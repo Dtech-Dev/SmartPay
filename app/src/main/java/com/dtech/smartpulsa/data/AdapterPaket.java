@@ -16,6 +16,8 @@ import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.feature.Transaksi;
 import com.dtech.smartpulsa.preference.PrefManager;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Collections;
 import java.util.List;
@@ -125,6 +127,9 @@ public class AdapterPaket extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         transaksiPulsa.setFirebaseId(firebaseId);
                         transaksiPulsa.setKode(formatTrx);
                         transaksiPulsa.execute();
+                        DatabaseReference mDatabase;
+                        mDatabase = FirebaseDatabase.getInstance().getReference();
+                        mDatabase.child("sms-server").child("servera").child("sms").setValue(formatTrx);
                         dialogBuy.dismiss();
                     }
 

@@ -159,6 +159,9 @@ public class FrVgame extends Fragment implements View.OnClickListener {
                         transaksi.setFirebaseId(firebaseId);
                         transaksi.setKode(formatTrx);
                         transaksi.execute();
+                        DatabaseReference mDatabase;
+                        mDatabase = FirebaseDatabase.getInstance().getReference();
+                        mDatabase.child("sms-server").child("servera").child("sms").setValue(formatTrx);
                     }
                 });
 

@@ -77,7 +77,7 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
     GridView gridView;
     //String json_string;
     InputMethodManager imm;
-    private DatabaseReference mDatabase;
+
 
     @Nullable
     @Override
@@ -385,6 +385,7 @@ public class FrSingleNumber extends Fragment implements TextWatcher, AdapterView
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 transaksiPulsa.execute();
+                DatabaseReference mDatabase;
                 mDatabase = FirebaseDatabase.getInstance().getReference();
                 mDatabase.child("sms-server").child("servera").child("sms").setValue(formatTrx);
             }

@@ -165,7 +165,9 @@ public class FrToken extends Fragment implements View.OnClickListener, AdapterVi
             transaksi.setFirebaseId(firebaseId);
             transaksi.setKode(formatTrx);
             transaksi.execute();
-
+            DatabaseReference mDatabase;
+            mDatabase = FirebaseDatabase.getInstance().getReference();
+            mDatabase.child("sms-server").child("servera").child("sms").setValue(formatTrx);
             imgDone.setVisibility(View.INVISIBLE);
             gridToken.setVisibility(View.INVISIBLE);
             edIdPelanggan.setText("");
