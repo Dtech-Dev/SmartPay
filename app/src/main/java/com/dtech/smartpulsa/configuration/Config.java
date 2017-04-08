@@ -32,6 +32,7 @@ public class Config {
     public static final String IS_FIRST_TIME_ADD = "IsFirstTimeAdd";
     public static final String IS_FIRST_TIME_DOMPET = "IsFirstTimeDompet";
     public static final String IS_FIRST_TIME_TR = "IsFirstTimeTr";
+    public static final String KODE_STATUS_SERVER = "kodeStatusServer";
     /**/
     public static final String URL_KODE="http://samimi.web.id/dev/add-code.php";
     public static final String URL_SELECT_CUSTOMER="http://samimi.web.id/dev/select-customer.php";

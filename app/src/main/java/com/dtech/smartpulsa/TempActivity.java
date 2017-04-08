@@ -342,6 +342,28 @@ public class TempActivity extends AppCompatActivity
             }
         });
 
+        DatabaseReference myRefserver = FirebaseDatabase.getInstance().getReference().child("sms-server").child("stat-server");
+        myRefserver.keepSynced(true);
+        myRefserver.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int sstatus= Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
+                prefManager.setKodeStatusServer(sstatus);
+                /*tstatus.setText(sstatus);
+                if (sstatus.contains("Tidak")) {
+                    imageserver.setImageResource(R.drawable.red_circle_icon);
+                } else {
+                    imageserver.setImageResource(R.drawable.green_circle_icon);
+                }*/
+                //Log.d("dbase real", sstatus);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         /*getting harga tri from realtime database*/
         /*final List<String> hTri = new ArrayList<>();
         final List<String> kTri = new ArrayList<>();

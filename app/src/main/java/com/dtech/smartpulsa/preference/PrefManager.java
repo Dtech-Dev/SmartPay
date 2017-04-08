@@ -36,6 +36,7 @@ public class PrefManager {
     private static final String DISPLAY_STATUS = "status";
     private static final String HARGA_TRI = "th";
     private static final String KODE_TRI = "tk";
+    private static final String KODE_STATUS_SERVER = "kodeStatusServer";
 
 
     public PrefManager(Context context) {
@@ -140,6 +141,12 @@ public class PrefManager {
 
     public void setKodeTri(String kodeTri) {
         editor.putString(KODE_TRI, kodeTri);
+        editor.commit();
+    }
+
+    public void setKodeStatusServer(int kodeServer) {
+        String kodeStatusServer = Integer.toString(kodeServer);
+        editor.putString(KODE_STATUS_SERVER, kodeStatusServer);
         editor.commit();
     }
 

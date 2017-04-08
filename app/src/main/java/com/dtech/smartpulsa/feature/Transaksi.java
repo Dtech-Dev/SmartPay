@@ -15,6 +15,8 @@ import com.dtech.smartpulsa.configuration.Config;
 import com.dtech.smartpulsa.configuration.RequestHandler;
 import com.dtech.smartpulsa.R;
 import com.dtech.smartpulsa.custom.CustomDialog;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +37,8 @@ public class Transaksi extends AsyncTask<Void, Void, String> {
     String firebaseId;
     ProgressDialog progress;
     Context context;
+    private DatabaseReference mDatabase;
+// ...
 
     public Transaksi(Context context) {
         //this.kode = kode;
@@ -136,6 +140,7 @@ public class Transaksi extends AsyncTask<Void, Void, String> {
                 new CustomDialog().makeDialog(context, "Saldo", context.getString(R.string.dialog_title_saldo)+" ("+saldo+")" , "saldo");
             } else if (keterangan.matches("sukses")){
                 Toast.makeText(context, "Transaksi anda sedang diproses", Toast.LENGTH_SHORT).show();
+
             }
 
         } catch (JSONException e) {
