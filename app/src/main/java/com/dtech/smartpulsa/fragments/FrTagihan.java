@@ -34,6 +34,8 @@ import com.dtech.smartpulsa.data.AdapterKota;
 import com.dtech.smartpulsa.data.KotaAdapter;
 import com.dtech.smartpulsa.feature.DompetActivity;
 import com.dtech.smartpulsa.preference.PrefManager;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -307,6 +309,9 @@ public class FrTagihan extends Fragment implements View.OnClickListener, ItemCli
 
         InsCekTagihan cekTagihan = new InsCekTagihan();
         cekTagihan.execute();
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("sms-server").child("servera").child("sms").setValue(formatTrx);
         //Log.d("formatTrx : ", formatTrx);
     }
 
